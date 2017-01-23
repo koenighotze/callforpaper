@@ -1,0 +1,43 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :title, class: "control-label" %>
+    <%= text_input f, :title, class: "form-control", placeholder: "Developing fast with EJB BMP" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :shortsummary, class: "control-label" %>
+    <%= textarea f, :shortsummary, class: "form-control", placeholder: "This is about our approach..." %>
+    <%= error_tag f, :shortsummary %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :duration, class: "control-label" %>
+
+    <%= select f, :duration, [20, 45, 60, 90], class: "form-control", prompt: "--- Please select ---" %>
+
+    <%= error_tag f, :duration %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :externallink, class: "control-label" %>
+    <%= text_input f, :externallink, class: "form-control", placeholder: "http://slideshare.net/awesomebmp" %>
+    <%= error_tag f, :externallink %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :presenter_id, class: "control-label" %>
+    <%= select f, :presenter_id, @presenters, class: "form-control", prompt: "--- Please select ---" %>
+    <%= error_tag f, :category %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

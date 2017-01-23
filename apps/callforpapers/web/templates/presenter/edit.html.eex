@@ -1,0 +1,6 @@
+<h2>Edit presenter</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: presenter_path(@conn, :update, @presenter) %>
+
+<%= link "Back", to: presenter_path(@conn, :index) %>

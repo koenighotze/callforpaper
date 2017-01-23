@@ -1,0 +1,34 @@
+<h2>Listing submissions</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Shortsummary</th>
+      <th>Duration</th>
+      <th>Externallink</th>
+      <th>Presenter</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for submission <- @submissions do %>
+    <tr>
+      <td><%= submission.title %></td>
+      <td><%= submission.shortsummary %></td>
+      <td><%= submission.duration %></td>
+      <td><%= submission.externallink %></td>
+      <td><%= submission.presenter_id %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: submission_path(@conn, :show, submission), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: submission_path(@conn, :edit, submission), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: submission_path(@conn, :delete, submission), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New submission", to: submission_path(@conn, :new) %>

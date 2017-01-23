@@ -1,0 +1,33 @@
+<h2>Show submission</h2>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @submission.title %>
+  </li>
+
+  <li>
+    <strong>Shortsummary:</strong>
+    <%= @submission.shortsummary %>
+  </li>
+
+  <li>
+    <strong>Duration:</strong>
+    <%= @submission.duration %>
+  </li>
+
+  <li>
+    <strong>Externallink:</strong>
+    <%= @submission.externallink %>
+  </li>
+
+  <li>
+    <strong>Presenter:</strong>
+    <%= @submission.presenter_id %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: submission_path(@conn, :edit, @submission) %>
+<%= link "Back", to: submission_path(@conn, :index) %>

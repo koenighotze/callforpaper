@@ -1,0 +1,32 @@
+<h2>Listing presenters</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Bio</th>
+      <th>Picture</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for presenter <- @presenters do %>
+    <tr>
+      <td><%= presenter.name %></td>
+      <td><%= presenter.email %></td>
+      <td><%= presenter.bio %></td>
+      <td><%= presenter.picture %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: presenter_path(@conn, :show, presenter), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: presenter_path(@conn, :edit, presenter), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: presenter_path(@conn, :delete, presenter), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New presenter", to: presenter_path(@conn, :new) %>

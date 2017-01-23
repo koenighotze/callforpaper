@@ -1,0 +1,28 @@
+<h2>Show presenter</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @presenter.name %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @presenter.email %>
+  </li>
+
+  <li>
+    <strong>Bio:</strong>
+    <%= @presenter.bio %>
+  </li>
+
+  <li>
+    <strong>Picture:</strong>
+    <%= @presenter.picture %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: presenter_path(@conn, :edit, @presenter) %>
+<%= link "Back", to: presenter_path(@conn, :index) %>
