@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :cfp_ui, CfpUi.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "secret",
+  password: "",
   database: "cfp_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
