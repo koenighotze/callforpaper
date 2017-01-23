@@ -1,6 +1,0 @@
-<h2>New rating</h2>
-
-<%= render "form.html", changeset: @changeset,
-                        action: rating_path(@conn, :create) %>
-
-<%= link "Back", to: rating_path(@conn, :index) %>
