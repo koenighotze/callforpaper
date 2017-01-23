@@ -1,0 +1,18 @@
+<h2>Show presentation</h2>
+
+<ul>
+
+  <li>
+    <strong>Held at:</strong>
+    <%= @presentation.held_at %>
+  </li>
+
+  <li>
+    <strong>Held where:</strong>
+    <%= @presentation.held_where %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: presentation_path(@conn, :edit, @presentation) %>
+<%= link "Back", to: presentation_path(@conn, :index) %>

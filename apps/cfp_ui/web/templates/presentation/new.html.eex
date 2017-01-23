@@ -1,0 +1,6 @@
+<h2>New presentation</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: presentation_path(@conn, :create) %>
+
+<%= link "Back", to: presentation_path(@conn, :index) %>
