@@ -14,7 +14,7 @@ defmodule Callforpapers.PresenterController do
   end
 
   def create(conn, %{"presenter" => presenter_params}) do
-    changeset = Presenter.changeset(%Presenter{}, presenter_params)
+    changeset = Presenter.registration_changeset(%Presenter{}, presenter_params)
 
     case Repo.insert(changeset) do
       {:ok, _presenter} ->
