@@ -32,11 +32,7 @@ defmodule Callforpapers.SubmissionController do
   def new(conn, _params, current_user) do
     changeset = Submission.changeset(%Submission{})
 
-    conn =
-      conn
-      |> assign(:durations, [20, 45, 60, 90])
-
-    render conn, "new.html", presenters: conn.assigns[:presenters], changeset: changeset
+    render conn, "new.html", durations: [20, 45, 60, 90], presenter: current_user.name, changeset: changeset
   end
 
   def create(conn, %{"submission" => submission_params}, current_user) do
@@ -51,7 +47,7 @@ defmodule Callforpapers.SubmissionController do
         |> put_flash(:info, "Submission created successfully.")
         |> redirect(to: submission_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", durations: [20, 45, 60, 90], presenter: current_user.name, changeset: changeset)
     end
   end
 

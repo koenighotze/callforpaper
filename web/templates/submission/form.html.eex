@@ -20,7 +20,7 @@
   <div class="form-group">
     <%= label f, :duration, class: "control-label" %>
 
-    <%= select f, :duration, [20, 45, 60, 90], class: "form-control", prompt: "--- Please select ---" %>
+    <%= select f, :duration, @durations, class: "form-control", prompt: "--- Please select ---" %>
 
     <%= error_tag f, :duration %>
   </div>
@@ -33,8 +33,7 @@
 
   <div class="form-group">
     <%= label f, :presenter_id, class: "control-label" %>
-    <%= select f, :presenter_id, @presenters, class: "form-control", prompt: "--- Please select ---" %>
-    <%= error_tag f, :category %>
+    <input type="text" readonly="readonly" value="<%= @presenter %>" class="form-control"/>
   </div>
 
   <div class="form-group">

@@ -31,6 +31,8 @@ defmodule Callforpapers.ConnCase do
 
       import Callforpapers.Router.Helpers
 
+      import Callforpapers.TestHelpers
+
       # The default endpoint for testing
       @endpoint Callforpapers.Endpoint
     end

@@ -22,6 +22,8 @@ defmodule Callforpapers.ModelCase do
       import Ecto.Changeset
       import Ecto.Query
       import Callforpapers.ModelCase
+
+      import Callforpapers.TestHelpers
     end
   end
 

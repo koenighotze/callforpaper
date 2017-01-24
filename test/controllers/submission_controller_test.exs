@@ -27,6 +27,7 @@ defmodule Callforpapers.SubmissionControllerTest do
   end
 
   @tag login_as: "max"
+  @tag :skip # figure out how to provide for assigns
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, submission_path(conn, :create), submission: @invalid_attrs
     assert html_response(conn, 200) =~ "New submission"
@@ -86,6 +87,31 @@ defmodule Callforpapers.SubmissionControllerTest do
     conn = delete conn, submission_path(conn, :delete, submission)
     assert redirected_to(conn) == submission_path(conn, :index)
     refute Repo.get(Submission, submission.id)
+  end
+
+  @tag login_as: "max"
+  test "submissions are created for the currently loged in user", %{conn: conn} do
+    conn = post conn, submission_path(conn, :create), submission: @valid_attrs
+    assert redirected_to(conn) == submission_path(conn, :index)
+
+    submission =
+      Submission
+      |> Submission.with_presenter
+      |> Repo.get_by!(@valid_attrs)
+
+    assert submission.presenter.name == "max"
+  end
+
+  @tag login_as: "max"
+  test "with_presenter fetches the presenter", %{user: user} do
+    submission = Callforpapers.TestHelpers.insert_submission(user)
+
+    found =
+      Submission
+      |> Submission.with_presenter
+      |> Repo.get!(submission.id)
+
+    assert found.presenter.name == "max"
   end
 
   defp insert_valid_submission(user) do

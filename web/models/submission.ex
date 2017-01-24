@@ -14,6 +14,10 @@ defmodule Callforpapers.Submission do
     timestamps()
   end
 
+  def with_presenter(query) do
+    from s in query, preload: [:presenter]
+  end
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
