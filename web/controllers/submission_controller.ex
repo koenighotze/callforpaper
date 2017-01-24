@@ -59,27 +59,17 @@ defmodule Callforpapers.SubmissionController do
 
   def show(conn, %{"id" => id}, current_user) do
     submission = submission_by_id(current_user, id)
-      # current_user
-      # |> Presenter.submissions_by_presenter
-      # |> Repo.get!(id)
-
     render(conn, "show.html", submission: submission)
   end
 
   def edit(conn, %{"id" => id}, current_user) do
     submission = submission_by_id(current_user, id)
-      # current_user
-      # |> Presenter.submissions_by_presenter
-      # |> Repo.get!(id)
     changeset = Submission.changeset(submission)
-    render(conn, "edit.html", submission: submission, changeset: changeset)
+    render(conn, "edit.html", durations: [20, 45, 60, 90], submission: submission, presenter: current_user.name, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "submission" => submission_params}, current_user) do
     submission = submission_by_id(current_user, id)
-      # current_user
-      # |> Presenter.submissions_by_presenter
-      # |> Repo.get!(id)
     changeset = Submission.changeset(submission, submission_params)
 
     case Repo.update(changeset) do
@@ -94,9 +84,6 @@ defmodule Callforpapers.SubmissionController do
 
   def delete(conn, %{"id" => id}, current_user) do
     submission = submission_by_id(current_user, id)
-      # current_user
-      # |> Presenter.submissions_by_presenter
-      # |> Repo.get!(id)
 
     Repo.delete!(submission)
 

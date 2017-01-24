@@ -20,13 +20,22 @@
       <td><%= presenter.picture %></td>
 
       <td class="text-right">
-        <%= link "Show", to: presenter_path(@conn, :show, presenter), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: presenter_path(@conn, :edit, presenter), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: presenter_path(@conn, :delete, presenter), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link title: "Show", to: presenter_path(@conn, :show, presenter) do
+            fa_icon("eye")
+          end %>
+        <%= link title: "Edit", to: presenter_path(@conn, :edit, presenter) do
+            fa_icon("pencil")
+          end %>
+
+        <%= link title: "Delete", to: presenter_path(@conn, :delete, presenter), method: :delete, data: [confirm: "Are you sure?"] do
+          fa_icon("trash")
+        end %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link "New presenter", to: presenter_path(@conn, :new) %>
+<%= link title: "New presenter", to: presenter_path(@conn, :new) do
+  fa_icon("plus-square 2x")
+end%>

@@ -23,5 +23,5 @@
 
 nav > li > a:focus, .nav > li > a:hover, .nav > li > form > a:hover, .nav > li > form > a:focus {
     text-decoration: none;
-    background-color: #eee;
+    background-color: #fff;
 }

@@ -1,6 +1,10 @@
 <div class="jumbotron">
   <h2>Call-for-Papers</h2>
   <p class="lead">Simple administration for paper submissions.</p>
+  <%= if !@current_user do %>
+  Please login using the <i class="fa fa-user-circle"></i> button or register as a presenter using the
+  <i class="fa fa-user-plus"></i> button.
+  <%= end %>
 </div>
 
 <div class="row marketing">

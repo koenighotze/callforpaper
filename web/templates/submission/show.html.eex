@@ -29,5 +29,7 @@
 
 </ul>
 
-<%= link "Edit", to: submission_path(@conn, :edit, @submission) %>
-<%= link "Back", to: submission_path(@conn, :index) %>
+<div class="form-group">
+    <%= link "Edit", to: submission_path(@conn, :edit, @submission), class: "btn btn-small btn-primary" %>
+    <%= link "Back", to: submission_path(@conn, :index), class: "btn btn-secondary" %>
+</div>

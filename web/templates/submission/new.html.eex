@@ -3,6 +3,5 @@
 <%= render "form.html", changeset: @changeset,
                         durations: @durations,
                         presenter: @presenter,
+                        conn: @conn,
                         action: submission_path(@conn, :create) %>
-
-<%= link "Back", to: submission_path(@conn, :index) %>

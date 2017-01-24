@@ -23,6 +23,7 @@
   </li>
 
 </ul>
-
-<%= link "Edit", to: presenter_path(@conn, :edit, @presenter) %>
-<%= link "Back", to: presenter_path(@conn, :index) %>
+<div class="form-group">
+    <%= link "Edit", to: presenter_path(@conn, :edit, @presenter), class: "btn btn-small btn-primary" %>
+    <%= link "Back", to: presenter_path(@conn, :index), class: "btn btn-secondary" %>
+</div>

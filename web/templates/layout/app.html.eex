@@ -20,17 +20,37 @@
             <%= if @current_user do %>
               <li><p><%= @current_user.name %></p></li>
               <li>
-                <%= link "Submissions", to: submission_path(@conn, :index) %>
+                <%= link to: submission_path(@conn, :index), title: "Submissions" do
+                  fa_icon("book")
+                end
+                %>
               </li>
               <li>
-                <%= link "Presenters", to: presenter_path(@conn, :index) %>
+                <%= link to: presenter_path(@conn, :index), title: "Presenters" do
+                  fa_icon("user")
+                end
+                %>
               </li>
-              <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>
+              <li>
+                <%= link to: session_path(@conn, :delete, @current_user), method: "delete", title: "Logout" do
+                  fa_icon("power-off")
+                end
+                %>
+              </li>
+              <li><%= link to: page_path(@conn, :index), title: "Home" do
+                fa_icon("home")
+              end
+              %></a></li>
             <% else %>
-              <li><%= link "Register", to: presenter_path(@conn, :new) %></li>
-              <li><%= link "Log in", to: session_path(@conn, :new) %></li>
+              <li><%= link to: presenter_path(@conn, :new), title: "Register" do
+                fa_icon("user-plus", text: "Register")
+              end %></li>
+              <li><%= link to: session_path(@conn, :new), title: "Login" do
+                fa_icon("user-circle", text: "Login")
+              end
+              %></li>
             <% end %>
-            <li><a href="/">Home</a></li>
+
           </ul>
         </nav>
         <span class="logo"></span>
