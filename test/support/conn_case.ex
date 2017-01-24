@@ -1,4 +1,6 @@
 defmodule Callforpapers.ConnCase do
+  import Callforpapers.TestHelpers, only: [insert_presenter: 1]
+
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -12,6 +14,8 @@ defmodule Callforpapers.ConnCase do
   inside a transaction which is reset at the beginning
   of the test unless the test case is marked as async.
   """
+
+
 
   use ExUnit.CaseTemplate
 
@@ -39,6 +43,15 @@ defmodule Callforpapers.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(Callforpapers.Repo, {:shared, self()})
     end
 
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    conn = Phoenix.ConnTest.build_conn()
+
+    if loginname = tags[:login_as] do
+      user = Callforpapers.Repo.get_by(Callforpapers.Presenter, name: loginname) || insert_presenter(name: loginname)
+      conn = Plug.Conn.assign(conn, :current_user, user)
+
+      {:ok, conn: conn, user: user}
+    else
+      {:ok, conn: conn}
+    end
   end
 end

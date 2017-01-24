@@ -39,7 +39,7 @@ defmodule Callforpapers.Presenter do
   def registration_changeset(model, params \\ :empty) do
     model
     |> changeset(params)
-    |> cast(params, ~w(password), [])
+    |> cast(params, ~w(password))
     |> validate_length(:password, min: 8, max: 20)
     |> put_pass_hash()
   end

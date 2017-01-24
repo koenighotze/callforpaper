@@ -13,9 +13,6 @@ defmodule Callforpapers.Auth do
 
   def call(conn, repo) do
     presenter_id = get_session(conn, :presenter_id)
-
-    Logger.info("Presenter id is #{presenter_id}")
-
     cond do
       user = conn.assigns[:current_user]
            -> put_current_user(conn, user)

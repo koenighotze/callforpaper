@@ -3,7 +3,7 @@ defmodule Callforpapers.SubmissionTest do
 
   alias Callforpapers.Submission
 
-  @valid_attrs %{duration: 42, externallink: "some content", shortsummary: "some content", title: "some content"}
+  @valid_attrs %{duration: 42, externallink: "some content", shortsummary: "abcdefghijklmnopqrstuvwxyz", title: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

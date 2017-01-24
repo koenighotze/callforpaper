@@ -19,7 +19,7 @@ defmodule Callforpapers.Submission do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, @required, @optional)
+    |> cast(params, @required ++ @optional)
     |> validate_length(:title, min: 1, max: 50)
     |> validate_length(:shortsummary, min: 20, max: 200)
     |> validate_number(:duration, greater_than_or_equal_to: 20, less_than_or_equal_to: 90)

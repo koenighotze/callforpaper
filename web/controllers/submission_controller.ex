@@ -11,7 +11,7 @@ defmodule Callforpapers.SubmissionController do
     apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
   end
 
-  defp load_presenters(conn, _opts) do
+  def load_presenters(conn, _opts) do
     presenters = Presenter
            |> Presenter.alphabetical
            |> Presenter.names_and_ids
