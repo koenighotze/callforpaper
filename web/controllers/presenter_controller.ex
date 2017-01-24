@@ -2,7 +2,7 @@ defmodule Callforpapers.PresenterController do
   use Callforpapers.Web, :controller
   alias Callforpapers.Presenter
 
-  plug :authenticate_user #when action in [:index, :show]
+  plug :authenticate_user when action in [:index, :show, :edit, :update, :delete]
 
 
   def index(conn, _params) do
