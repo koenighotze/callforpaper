@@ -36,6 +36,8 @@ defmodule Callforpapers.Web do
 
       import Callforpapers.Router.Helpers
       import Callforpapers.Gettext
+
+      import Callforpapers.Auth, only: [ authenticate_user: 2 ]
     end
   end
 
@@ -58,6 +60,8 @@ defmodule Callforpapers.Web do
   def router do
     quote do
       use Phoenix.Router
+
+      import Callforpapers.Auth, only: [ authenticate_user: 2 ]
     end
   end
 

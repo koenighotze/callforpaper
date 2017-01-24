@@ -7,6 +7,8 @@ defmodule Callforpapers.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Callforpapers.Auth, repo: Callforpapers.Repo
+    # plug :authenticate_user
   end
 
   pipeline :api do
@@ -19,6 +21,7 @@ defmodule Callforpapers.Router do
     get "/", PageController, :index
     resources "/presenters", PresenterController
     resources "/submissions", SubmissionController
+    resources "/sessions", SessionController, only: [:new, :delete, :create]
   end
 
   # Other scopes may use custom stacks.
