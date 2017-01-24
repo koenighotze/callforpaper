@@ -9,9 +9,13 @@ defmodule Callforpapers.Presenter do
     field :password, :string, virtual: true
     field :password_hash, :string
 
-    # has_many :submissions, Callforpapers.Submission
+    has_many :submissions, Callforpapers.Submission
 
     timestamps()
+  end
+
+  def submissions_by_presenter(presenter) do
+    assoc(presenter, :submissions)
   end
 
   def alphabetical(query) do

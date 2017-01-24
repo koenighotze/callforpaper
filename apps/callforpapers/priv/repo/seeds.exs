@@ -1,11 +1,15 @@
 # Script for populating the database. You can run it as:
 #
 #     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Callforpapers.Repo.insert!(%Callforpapers.SomeModel{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+
+alias Callforpapers.Presenter
+alias Callforpapers.Submission
+alias Callforpapers.Repo
+[
+  %Presenter{name: "Bratislav Metulski", email: "brasis@lav.se", bio: "None of your business", picture: "", password: "12345678"}
+]
+|> Enum.each(fn presenter ->
+  Repo.get_by(Presenter, email: presenter.email)
+  || Repo.insert!(presenter)
+end)
+

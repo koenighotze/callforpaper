@@ -4,6 +4,8 @@ defmodule Callforpapers.SessionController do
   alias Callforpapers.Repo
   alias Callforpapers.Auth
 
+  plug :authenticate_user when action in [:delete]
+
   def new(conn, _params) do
     render conn, "login.html"
   end

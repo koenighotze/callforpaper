@@ -1,13 +1,17 @@
 defmodule Callforpapers.SubmissionController do
   use Callforpapers.Web, :controller
-
   import Logger
   alias Callforpapers.Submission
   alias Callforpapers.Presenter
 
+  plug :authenticate_user
   plug :load_presenters when action in [:create, :update, :new, :edit]
 
-  def load_presenters(conn, _opts) do
+  def action(conn, _) do
+    apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
+  end
+
+  defp load_presenters(conn, _opts) do
     presenters = Presenter
            |> Presenter.alphabetical
            |> Presenter.names_and_ids
@@ -17,12 +21,15 @@ defmodule Callforpapers.SubmissionController do
     |> assign(:presenters, presenters)
   end
 
-  def index(conn, _params) do
-    submissions = Repo.all(Submission)
+  def index(conn, _params, current_user) do
+    submissions =
+      current_user
+      |> Presenter.submissions_by_presenter
+      |> Repo.all
     render(conn, "index.html", submissions: submissions)
   end
 
-  def new(conn, _params) do
+  def new(conn, _params, current_user) do
     changeset = Submission.changeset(%Submission{})
 
     conn =
@@ -32,8 +39,11 @@ defmodule Callforpapers.SubmissionController do
     render conn, "new.html", presenters: conn.assigns[:presenters], changeset: changeset
   end
 
-  def create(conn, %{"submission" => submission_params}) do
-    changeset = Submission.changeset(%Submission{}, submission_params)
+  def create(conn, %{"submission" => submission_params}, current_user) do
+    changeset =
+      current_user
+      |> build_assoc(:submissions)
+      |> Submission.changeset(submission_params)
 
     case Repo.insert(changeset) do
       {:ok, _submission} ->
@@ -45,19 +55,35 @@ defmodule Callforpapers.SubmissionController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    submission = Repo.get!(Submission, id)
+  defp submission_by_id(current_user, id) do
+    current_user
+      |> Presenter.submissions_by_presenter
+      |> Repo.get!(id)
+  end
+
+  def show(conn, %{"id" => id}, current_user) do
+    submission = submission_by_id(current_user, id)
+      # current_user
+      # |> Presenter.submissions_by_presenter
+      # |> Repo.get!(id)
+
     render(conn, "show.html", submission: submission)
   end
 
-  def edit(conn, %{"id" => id}) do
-    submission = Repo.get!(Submission, id)
+  def edit(conn, %{"id" => id}, current_user) do
+    submission = submission_by_id(current_user, id)
+      # current_user
+      # |> Presenter.submissions_by_presenter
+      # |> Repo.get!(id)
     changeset = Submission.changeset(submission)
     render(conn, "edit.html", submission: submission, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "submission" => submission_params}) do
-    submission = Repo.get!(Submission, id)
+  def update(conn, %{"id" => id, "submission" => submission_params}, current_user) do
+    submission = submission_by_id(current_user, id)
+      # current_user
+      # |> Presenter.submissions_by_presenter
+      # |> Repo.get!(id)
     changeset = Submission.changeset(submission, submission_params)
 
     case Repo.update(changeset) do
@@ -70,11 +96,12 @@ defmodule Callforpapers.SubmissionController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    submission = Repo.get!(Submission, id)
+  def delete(conn, %{"id" => id}, current_user) do
+    submission = submission_by_id(current_user, id)
+      # current_user
+      # |> Presenter.submissions_by_presenter
+      # |> Repo.get!(id)
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
     Repo.delete!(submission)
 
     conn

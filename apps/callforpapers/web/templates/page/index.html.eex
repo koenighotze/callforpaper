@@ -5,14 +5,16 @@
 
 <div class="row marketing">
   <div class="col-lg-6">
+    <%= if @current_user do %>
     <h4>Resources</h4>
     <ul>
       <li>
-        <!-- %= link "Submissions", to: submission_path(@conn, :index) % -->
+        <%= link "Submissions", to: submission_path(@conn, :index) %>
       </li>
       <li>
-        <!-- %= link "Presenters", to: presenter_path(@conn, :index) % -->
+        <%= link "Presenters", to: presenter_path(@conn, :index) %>
       </li>
     </ul>
+    <% end %>
   </div>
 </div>
