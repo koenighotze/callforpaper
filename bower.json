@@ -1,0 +1,20 @@
+{
+  "name": "callforpapers",
+  "description": "",
+  "main": "",
+  "authors": [
+    "David Schmitz <david.schmitz.privat@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/koenighotze/callforpaper",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "^4.7.0"
+  }
+}
