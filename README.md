@@ -2,7 +2,7 @@
 
 http://callforpapers.herokuapp.com/
 
-Current build status: [![Build Status](https://travis-ci.org/koenighotze/callforpapers.svg?branch=master)](https://travis-ci.org/koenighotze/callforpapers)
+Current build status: [![Build Status](https://travis-ci.org/koenighotze/callforpapers.svg?branch=master)](https://travis-ci.org/koenighotze/callforpaper)
 
 ## TODO
 
