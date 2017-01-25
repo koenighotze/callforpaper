@@ -18,7 +18,7 @@
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
             <%= if @current_user do %>
-              <li><p><%= @current_user.name %></p></li>
+              <li><p><%= @current_user.name %> (<%= @current_user.role %>) </p></li>
               <li>
                 <%= link to: submission_path(@conn, :index), title: "Submissions" do
                   fa_icon("book")
@@ -26,21 +26,16 @@
                 %>
               </li>
               <li>
-                <%= link to: presenter_path(@conn, :index), title: "Presenters" do
-                  fa_icon("user")
-                end
-                %>
+                <%= if Callforpapers.Presenter.is_organizer?(@current_user) do %>
+                  <%= link fa_icon("user"), to: presenter_path(@conn, :index), title: "Presenters" %>
+                <% else %>
+                  <%= link fa_icon("user"), to: presenter_path(@conn, :show, @current_user), title: "Presenters" %>
+                <% end %>
               </li>
               <li>
-                <%= link to: session_path(@conn, :delete, @current_user), method: "delete", title: "Logout" do
-                  fa_icon("power-off")
-                end
-                %>
+                <%= link  fa_icon("power-off"), to: session_path(@conn, :delete, @current_user), method: "delete", title: "Logout" %>
               </li>
-              <li><%= link to: page_path(@conn, :index), title: "Home" do
-                fa_icon("home")
-              end
-              %></a></li>
+              <li><%= link fa_icon("home"), to: page_path(@conn, :index), title: "Home" %></a></li>
             <% else %>
               <li><%= link to: presenter_path(@conn, :new), title: "Register" do
                 fa_icon("user-plus", text: "Register")

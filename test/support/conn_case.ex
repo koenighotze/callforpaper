@@ -1,5 +1,5 @@
 defmodule Callforpapers.ConnCase do
-  import Callforpapers.TestHelpers, only: [insert_presenter: 1]
+  import Callforpapers.TestHelpers, only: [insert_presenter: 1, insert_organizer: 1]
 
   @moduledoc """
   This module defines the test case to be used by
@@ -48,7 +48,8 @@ defmodule Callforpapers.ConnCase do
     conn = Phoenix.ConnTest.build_conn()
 
     if loginname = tags[:login_as] do
-      user = Callforpapers.Repo.get_by(Callforpapers.Presenter, name: loginname) || insert_presenter(name: loginname)
+      user = Callforpapers.Repo.get_by(Callforpapers.Presenter, name: loginname)
+             || if tags[:as_organizer], do: insert_organizer(name: loginname), else: insert_presenter(name: loginname)
       conn = Plug.Conn.assign(conn, :current_user, user)
 
       {:ok, conn: conn, user: user}
