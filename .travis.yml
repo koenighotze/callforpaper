@@ -9,5 +9,3 @@ services:
 - postgresql
 before_script:
 - psql -c 'create database callforpapers_test;' -U postgres
-- psql -c 'create database conference_test;' -U postgres
-- psql -c 'create database ratings_test;' -U postgres
