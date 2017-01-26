@@ -48,7 +48,7 @@ defmodule Callforpapers.ConnCase do
     conn = Phoenix.ConnTest.build_conn()
 
     if loginname = tags[:login_as] do
-      user = Callforpapers.Repo.get_by(Callforpapers.Presenter, name: loginname)
+      user = Callforpapers.Repo.get_by(Callforpapers.User, name: loginname)
              || if tags[:as_organizer], do: insert_organizer(name: loginname), else: insert_presenter(name: loginname)
       conn = Plug.Conn.assign(conn, :current_user, user)
 

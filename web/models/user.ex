@@ -1,7 +1,7 @@
-defmodule Callforpapers.Presenter do
+defmodule Callforpapers.User do
   use Callforpapers.Web, :model
 
-  schema "presenters" do
+  schema "users" do
     field :name, :string
     field :email, :string
     field :bio, :string
@@ -9,23 +9,27 @@ defmodule Callforpapers.Presenter do
     field :password, :string, virtual: true
     field :password_hash, :string
 
-    field :role, :string
+    field :role, :string, default: "presenter"
 
     has_many :submissions, Callforpapers.Submission
 
     timestamps()
   end
 
-  def is_organizer?(presenter) do
-    presenter.role == "organizer"
+  def filter_on_presesenters(query) do
+    query # todo
   end
 
-  def is_presenter?(presenter) do
-    presenter.role == "presenter"
+  def is_organizer?(user) do
+    user.role == "organizer"
   end
 
-  def submissions_by_presenter(presenter) do
-    assoc(presenter, :submissions)
+  def is_presenter?(user) do
+    user.role == "presenter"
+  end
+
+  def submissions_by_presenter(user) do
+    assoc(user, :submissions)
   end
 
   def alphabetical(query) do

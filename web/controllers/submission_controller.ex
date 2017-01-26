@@ -1,8 +1,7 @@
 defmodule Callforpapers.SubmissionController do
   use Callforpapers.Web, :controller
-  import Logger
   alias Callforpapers.Submission
-  alias Callforpapers.Presenter
+  alias Callforpapers.User
 
   plug :authenticate_user
   plug :load_presenters when action in [:create, :update, :new, :edit]
@@ -12,9 +11,10 @@ defmodule Callforpapers.SubmissionController do
   end
 
   def load_presenters(conn, _opts) do
-    presenters = Presenter
-           |> Presenter.alphabetical
-           |> Presenter.names_and_ids
+    presenters = User
+           |> User.alphabetical
+           |> User.names_and_ids
+           |> User.filter_on_presesenters
            |> Repo.all
 
     conn
@@ -24,7 +24,7 @@ defmodule Callforpapers.SubmissionController do
   def index(conn, _params, current_user) do
     submissions =
       current_user
-      |> Presenter.submissions_by_presenter
+      |> User.submissions_by_presenter
       |> Repo.all
     render(conn, "index.html", submissions: submissions)
   end
@@ -53,7 +53,7 @@ defmodule Callforpapers.SubmissionController do
 
   defp submission_by_id(current_user, id) do
     current_user
-      |> Presenter.submissions_by_presenter
+      |> User.submissions_by_presenter
       |> Repo.get!(id)
   end
 

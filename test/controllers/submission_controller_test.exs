@@ -99,7 +99,7 @@ defmodule Callforpapers.SubmissionControllerTest do
       |> Submission.with_presenter
       |> Repo.get_by!(@valid_attrs)
 
-    assert submission.presenter.name == "max"
+    assert submission.user.name == "max"
   end
 
   @tag login_as: "max"
@@ -111,7 +111,7 @@ defmodule Callforpapers.SubmissionControllerTest do
       |> Submission.with_presenter
       |> Repo.get!(submission.id)
 
-    assert found.presenter.name == "max"
+    assert found.user.name == "max"
   end
 
   defp insert_valid_submission(user) do

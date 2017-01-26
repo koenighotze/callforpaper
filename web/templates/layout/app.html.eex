@@ -26,10 +26,10 @@
                 %>
               </li>
               <li>
-                <%= if Callforpapers.Presenter.is_organizer?(@current_user) do %>
-                  <%= link fa_icon("user"), to: presenter_path(@conn, :index), title: "Presenters" %>
+                <%= if Callforpapers.User.is_organizer?(@current_user) do %>
+                  <%= link fa_icon("user"), to: user_path(@conn, :index), title: "Presenters" %>
                 <% else %>
-                  <%= link fa_icon("user"), to: presenter_path(@conn, :show, @current_user), title: "Presenters" %>
+                  <%= link fa_icon("user"), to: user_path(@conn, :show, @current_user), title: "Presenters" %>
                 <% end %>
               </li>
               <li>
@@ -37,7 +37,7 @@
               </li>
               <li><%= link fa_icon("home"), to: page_path(@conn, :index), title: "Home" %></a></li>
             <% else %>
-              <li><%= link to: presenter_path(@conn, :new), title: "Register" do
+              <li><%= link to: user_path(@conn, :new), title: "Register" do
                 fa_icon("user-plus", text: "Register")
               end %></li>
               <li><%= link to: session_path(@conn, :new), title: "Login" do

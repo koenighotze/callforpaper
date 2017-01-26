@@ -24,7 +24,7 @@
 
   <li>
     <strong>Presenter:</strong>
-    <%= @submission.presenter_id %>
+    <%= @submission.user_id %>
   </li>
 
 </ul>

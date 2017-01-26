@@ -4,7 +4,7 @@ defmodule Callforpapers.Auth do
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   import Phoenix.Controller
   import Logger
-  alias Callforpapers.Presenter
+  alias Callforpapers.User
   alias Callforpapers.Router.Helpers
 
   def init(opts) do
@@ -12,11 +12,11 @@ defmodule Callforpapers.Auth do
   end
 
   def call(conn, repo) do
-    presenter_id = get_session(conn, :presenter_id)
+    user_id = get_session(conn, :user_id)
     cond do
       user = conn.assigns[:current_user]
            -> put_current_user(conn, user)
-      user = presenter_id && repo.get(Presenter, presenter_id)
+      user = user_id && repo.get(User, user_id)
            -> put_current_user(conn, user)
       true -> assign(conn, :current_user, nil)
     end
@@ -26,7 +26,7 @@ defmodule Callforpapers.Auth do
     info("Logging in")
     conn
     |> put_current_user(user)
-    |> put_session(:presenter_id, user.id)
+    |> put_session(:user_id, user.id)
     |> configure_session(renew: true)
   end
 
@@ -51,7 +51,7 @@ defmodule Callforpapers.Auth do
 
   def login_by_username_and_password(conn, email, passwd, opts) do
     repo = Keyword.fetch!(opts, :repo)
-    user = repo.get_by(Callforpapers.Presenter, email: email)
+    user = repo.get_by(Callforpapers.User, email: email)
 
     cond do
       user && checkpw(passwd, user.password_hash)

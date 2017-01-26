@@ -19,7 +19,7 @@
       <td><%= submission.shortsummary %></td>
       <td><%= submission.duration %></td>
       <td><%= submission.externallink %></td>
-      <td><%= submission.presenter_id %></td>
+      <td><%= submission.user_id %></td>
 
       <td class="text-right">
         <%= link title: "Show", to: submission_path(@conn, :show, submission) do

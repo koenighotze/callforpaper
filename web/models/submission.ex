@@ -9,13 +9,13 @@ defmodule Callforpapers.Submission do
     field :shortsummary, :string
     field :duration, :integer
     field :externallink, :string
-    belongs_to :presenter, Callforpapers.Presenter
+    belongs_to :user, Callforpapers.User
 
     timestamps()
   end
 
   def with_presenter(query) do
-    from s in query, preload: [:presenter]
+    from s in query, preload: [:user]
   end
 
   @doc """
@@ -27,7 +27,7 @@ defmodule Callforpapers.Submission do
     |> validate_length(:title, min: 1, max: 50)
     |> validate_length(:shortsummary, min: 20, max: 200)
     |> validate_number(:duration, greater_than_or_equal_to: 20, less_than_or_equal_to: 90)
-    |> assoc_constraint(:presenter)
+    |> assoc_constraint(:user)
     |> validate_required(@required)
   end
 end
