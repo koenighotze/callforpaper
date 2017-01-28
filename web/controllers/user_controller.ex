@@ -46,7 +46,6 @@ defmodule Callforpapers.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    # current_user = conn.assigns.current_user
     user = Repo.get!(User, id)
     render(conn, "show.html", user: user)
   end

@@ -1,0 +1,32 @@
+<h2>Listing conferences</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Start</th>
+      <th>End</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for conference <- @conferences do %>
+    <tr>
+      <td><%= conference.title %></td>
+      <td><%= conference.start %></td>
+      <td><%= conference.end %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: conference_path(@conn, :show, conference), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: conference_path(@conn, :edit, conference), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: conference_path(@conn, :delete, conference), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link title: "New user", to: conference_path(@conn, :new) do
+  fa_icon("plus-square 2x")
+end%>

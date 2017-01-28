@@ -1,0 +1,24 @@
+<h2>Show conference</h2>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @conference.title %>
+  </li>
+
+  <li>
+    <strong>Start:</strong>
+    <%= @conference.start %>
+  </li>
+
+  <li>
+    <strong>End:</strong>
+    <%= @conference.end %>
+  </li>
+
+</ul>
+<div class="form-group">
+  <%= link "Edit", to: conference_path(@conn, :edit, @conference),  class: "btn btn-small btn-primary" %>
+  <%= link "Back", to: conference_path(@conn, :index), class: "btn btn-small btn-secondary" %>
+</div>

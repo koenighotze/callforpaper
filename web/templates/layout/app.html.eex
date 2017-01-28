@@ -18,34 +18,42 @@
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
             <%= if @current_user do %>
-              <li><p><%= @current_user.name %> (<%= @current_user.role %>) </p></li>
               <li>
-                <%= link to: submission_path(@conn, :index), title: "Submissions" do
-                  fa_icon("book")
-                end
+                <%=
+                  link @current_user.name, to: user_path(@conn, :show, @current_user), title: "Your account"
                 %>
               </li>
-              <li>
-                <%= if Callforpapers.User.is_organizer?(@current_user) do %>
+
+              <%= if Callforpapers.User.is_organizer?(@current_user) do %>
+                <li>
+                  <%= link fa_icon("graduation-cap"), to: conference_path(@conn, :index), title: "Conferences" %>
+                </li>
+
+                <li>
                   <%= link fa_icon("user"), to: user_path(@conn, :index), title: "Presenters" %>
-                <% else %>
-                  <%= link fa_icon("user"), to: user_path(@conn, :show, @current_user), title: "Presenters" %>
-                <% end %>
+                </li>
+              <% end %>
+
+              <li>
+                <%= link fa_icon("book"), to: submission_path(@conn, :index), title: "Submissions" %>
               </li>
+
               <li>
                 <%= link  fa_icon("power-off"), to: session_path(@conn, :delete, @current_user), method: "delete", title: "Logout" %>
               </li>
-              <li><%= link fa_icon("home"), to: page_path(@conn, :index), title: "Home" %></a></li>
-            <% else %>
-              <li><%= link to: user_path(@conn, :new), title: "Register" do
-                fa_icon("user-plus", text: "Register")
-              end %></li>
-              <li><%= link to: session_path(@conn, :new), title: "Login" do
-                fa_icon("user-circle", text: "Login")
-              end
-              %></li>
-            <% end %>
 
+              <li>
+                <%= link fa_icon("home"), to: page_path(@conn, :index), title: "Home" %>
+              </li>
+
+            <% else %>
+              <li>
+                <%= link fa_icon("user-plus", text: "Register"), to: user_path(@conn, :new), title: "Register"%>
+              </li>
+              <li>
+                <%= link fa_icon("user-circle", text: "Login"), to: session_path(@conn, :new), title: "Login" %>
+              </li>
+            <% end %>
           </ul>
         </nav>
         <span class="logo"></span>

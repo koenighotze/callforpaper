@@ -1,6 +1,8 @@
 defmodule Callforpapers.Router do
   use Callforpapers.Web, :router
 
+  import Callforpapers.Auth, only: [authenticate_user: 2, authenticate_organizer: 2]
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -9,6 +11,19 @@ defmodule Callforpapers.Router do
     plug :put_secure_browser_headers
     plug Callforpapers.Auth, repo: Callforpapers.Repo
   end
+
+  pipeline :registered_users do
+    plug :authenticate_user
+  end
+
+  pipeline :organizers do
+    plug :authenticate_organizer
+  end
+
+  # pipeline :organization do
+  #   plug :authenticate_user when action in [:index, :show, :edit, :update, :delete]
+  #   plug :authenticate_organizer when action in [:index, :show, :edit, :update, :delete]
+  # end
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -19,8 +34,14 @@ defmodule Callforpapers.Router do
 
     get "/", PageController, :index
     resources "/users", UserController
-    resources "/submissions", SubmissionController
     resources "/sessions", SessionController, only: [:new, :delete, :create]
+    resources "/submissions", SubmissionController
+  end
+
+  scope "/organization/", Callforpapers do
+    pipe_through [:browser, :registered_users, :organizers] # Use the default browser stack
+
+    resources "/conferences", ConferenceController
   end
 
   # Other scopes may use custom stacks.

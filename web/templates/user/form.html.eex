@@ -37,7 +37,6 @@
 
   <div class="form-group">
     <%= label f, :role, class: "control-label" %>
-
     <%= select f, :role, ~w(presenter organizer), class: "form-control", prompt: "--- Please select ---" %>
 
     <%= error_tag f, :role %>

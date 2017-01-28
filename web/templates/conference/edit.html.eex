@@ -1,0 +1,7 @@
+<h2>Edit conference</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        conn: @conn,
+                        action: conference_path(@conn, :update, @conference) %>
+
+

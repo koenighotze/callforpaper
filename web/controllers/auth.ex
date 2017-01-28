@@ -72,4 +72,17 @@ defmodule Callforpapers.Auth do
       _ -> conn
     end
   end
+
+  def authenticate_organizer(conn, _opts) do
+    user = conn.assigns.current_user
+
+    cond do
+      User.is_organizer?(user) -> conn
+      conn.params["id"] == "#{user.id}" -> conn
+      true -> conn
+              |> put_status(:not_found)
+              |> render(Callforpapers.ErrorView, "404.html")
+              |> Plug.Conn.halt()
+    end
+  end
 end
