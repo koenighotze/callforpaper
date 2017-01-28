@@ -7,7 +7,11 @@ config :callforpapers, Callforpapers.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, :console,
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id],
+  level: :info
+  # compile_time_purge_level: :debug
 
 # Configure your database
 config :callforpapers, Callforpapers.Repo,
