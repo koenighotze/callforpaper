@@ -42,6 +42,7 @@ defmodule Callforpapers.Router do
     pipe_through [:browser, :registered_users, :organizers] # Use the default browser stack
 
     resources "/conferences", ConferenceController
+    resources "/callforpapers", CallforpapersController
   end
 
   # Other scopes may use custom stacks.

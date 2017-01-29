@@ -1,0 +1,28 @@
+<h2>Show callforpapers</h2>
+
+<ul>
+
+  <li>
+    <strong>Start:</strong>
+    <%= @callforpapers.start %>
+  </li>
+
+  <li>
+    <strong>End:</strong>
+    <%= @callforpapers.end %>
+  </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @callforpapers.status %>
+  </li>
+
+  <li>
+    <strong>Conference:</strong>
+    <%= @callforpapers.conference_id %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: callforpapers_path(@conn, :edit, @callforpapers) %>
+<%= link "Back", to: callforpapers_path(@conn, :index) %>
