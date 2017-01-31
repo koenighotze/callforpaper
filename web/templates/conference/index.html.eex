@@ -18,9 +18,9 @@
       <td><%= conference.end %></td>
 
       <td class="text-right">
-        <%= link "Show", to: conference_path(@conn, :show, conference), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: conference_path(@conn, :edit, conference), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: conference_path(@conn, :delete, conference), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link fa_icon("eye"), title: "Show", to: conference_path(@conn, :show, conference) %>
+        <%= link fa_icon("pencil"), title: "Edit", to: conference_path(@conn, :edit, conference) %>
+        <%= link fa_icon("trash"), title: "Delete", to: conference_path(@conn, :delete, conference), method: :delete, data: [confirm: "Are you sure?"] %>
       </td>
     </tr>
 <% end %>

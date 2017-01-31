@@ -22,16 +22,9 @@
       <td><%= submission.user_id %></td>
 
       <td class="text-right">
-        <%= link title: "Show", to: submission_path(@conn, :show, submission) do
-            fa_icon("eye")
-          end %>
-        <%= link title: "Edit", to: submission_path(@conn, :edit, submission) do
-            fa_icon("pencil")
-          end %>
-
-        <%= link title: "Delete", to: submission_path(@conn, :delete, submission), method: :delete, data: [confirm: "Are you sure?"] do
-          fa_icon("trash")
-        end %>
+        <%= link fa_icon("eye"), title: "Show", to: submission_path(@conn, :show, submission) %>
+        <%= link fa_icon("pencil"), title: "Edit", to: submission_path(@conn, :edit, submission) %>
+        <%= link fa_icon("trash"), title: "Delete", to: submission_path(@conn, :delete, submission), method: :delete, data: [confirm: "Are you sure?"] %>
       </td>
     </tr>
 <% end %>
