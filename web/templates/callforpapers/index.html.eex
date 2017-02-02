@@ -20,9 +20,9 @@
       <td><%= callforpapers.conference_id %></td>
 
       <td class="text-right">
-        <%= link "Show", to: callforpapers_path(@conn, :show, callforpapers), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: callforpapers_path(@conn, :edit, callforpapers), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: callforpapers_path(@conn, :delete, callforpapers), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link fa_icon("eye"), title: "Show", to: callforpapers_path(@conn, :show, callforpapers) %>
+        <%= link fa_icon("pencil"), title: "Edit", to: callforpapers_path(@conn, :edit, callforpapers) %>
+        <%= link fa_icon("trash"), title: "Delete", to: callforpapers_path(@conn, :delete, callforpapers), method: :delete, data: [confirm: "Are you sure?"] %>
       </td>
     </tr>
 <% end %>

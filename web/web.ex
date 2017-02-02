@@ -23,6 +23,8 @@ defmodule Callforpapers.Web do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+
+      alias Callforpapers.Validators
     end
   end
 

@@ -20,16 +20,9 @@
       <td><%= user.picture %></td>
 
       <td class="text-right">
-        <%= link title: "Show", to: user_path(@conn, :show, user) do
-            fa_icon("eye")
-          end %>
-        <%= link title: "Edit", to: user_path(@conn, :edit, user) do
-            fa_icon("pencil")
-          end %>
-
-        <%= link title: "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"] do
-          fa_icon("trash")
-        end %>
+        <%= link fa_icon("eye"), title: "Show", to: user_path(@conn, :show, user) %>
+        <%= link fa_icon("pencil"), title: "Edit", to: user_path(@conn, :edit, user) %>
+        <%= link fa_icon("trash"), title: "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"] %>
       </td>
     </tr>
 <% end %>

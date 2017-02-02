@@ -45,20 +45,8 @@ defmodule Callforpapers.User do
     struct
     |> cast(params, [:name, :email, :bio, :picture, :role])
     |> validate_required([:name, :email, :bio, :role])
-    |> validate_role(:role, ["presenter", "organizer"])
+    |> Validators.validate_enum(:role, ["presenter", "organizer"])
     |> unique_constraint(:email)
-  end
-
-  def validate_role(changeset, field, allowed, options \\ []) do
-    validate_change(changeset,
-                    field,
-                    fn _, role ->
-                      if role in allowed do
-                        []
-                      else
-                        [{field, options[:message] || "is invalid"}]
-                      end
-                    end)
   end
 
   def registration_changeset(model, params \\ :empty) do

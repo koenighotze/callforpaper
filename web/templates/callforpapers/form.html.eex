@@ -19,7 +19,8 @@
 
   <div class="form-group">
     <%= label f, :status, class: "control-label" %>
-    <%= text_input f, :status, class: "form-control" %>
+    <%= select f, :status, @cfp_stati, class: "form-control", prompt: "--- Please select ---" %>
+
     <%= error_tag f, :status %>
   </div>
 

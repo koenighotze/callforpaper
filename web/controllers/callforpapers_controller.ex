@@ -10,7 +10,7 @@ defmodule Callforpapers.CallforpapersController do
 
   def new(conn, _params) do
     changeset = Callforpapers.changeset(%Callforpapers{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, cfp_stati: Callforpapers.valid_stati)
   end
 
   def create(conn, %{"callforpapers" => callforpapers_params}) do
@@ -22,7 +22,7 @@ defmodule Callforpapers.CallforpapersController do
         |> put_flash(:info, "Callforpapers created successfully.")
         |> redirect(to: callforpapers_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, cfp_stati: Callforpapers.valid_stati)
     end
   end
 
@@ -34,7 +34,7 @@ defmodule Callforpapers.CallforpapersController do
   def edit(conn, %{"id" => id}) do
     callforpapers = Repo.get!(Callforpapers, id)
     changeset = Callforpapers.changeset(callforpapers)
-    render(conn, "edit.html", callforpapers: callforpapers, changeset: changeset)
+    render(conn, "edit.html", callforpapers: callforpapers, changeset: changeset, cfp_stati: Callforpapers.valid_stati)
   end
 
   def update(conn, %{"id" => id, "callforpapers" => callforpapers_params}) do
@@ -47,7 +47,7 @@ defmodule Callforpapers.CallforpapersController do
         |> put_flash(:info, "Callforpapers updated successfully.")
         |> redirect(to: callforpapers_path(conn, :show, callforpapers))
       {:error, changeset} ->
-        render(conn, "edit.html", callforpapers: callforpapers, changeset: changeset)
+        render(conn, "edit.html", callforpapers: callforpapers, changeset: changeset, cfp_stati: Callforpapers.valid_stati)
     end
   end
 

@@ -26,16 +26,17 @@
 
               <%= if Callforpapers.User.is_organizer?(@current_user) do %>
                 <li>
+                  <%= link fa_icon("user"), to: user_path(@conn, :index), title: "Presenters" %>
+                </li>
+
+                <li>
                   <%= link fa_icon("graduation-cap"), to: conference_path(@conn, :index), title: "Conferences" %>
                 </li>
 
                 <li>
-                  <%= link fa_icon("graduation-cap"), to: callforpapers_path(@conn, :index), title: "Call-for-Papers" %>
+                  <%= link fa_icon("volume-control-phone"), to: callforpapers_path(@conn, :index), title: "Call-for-Papers" %>
                 </li>
 
-                <li>
-                  <%= link fa_icon("user"), to: user_path(@conn, :index), title: "Presenters" %>
-                </li>
               <% end %>
 
               <li>
