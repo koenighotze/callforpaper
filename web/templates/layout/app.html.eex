@@ -30,6 +30,10 @@
                 </li>
 
                 <li>
+                  <%= link fa_icon("graduation-cap"), to: callforpapers_path(@conn, :index), title: "Call-for-Papers" %>
+                </li>
+
+                <li>
                   <%= link fa_icon("user"), to: user_path(@conn, :index), title: "Presenters" %>
                 </li>
               <% end %>

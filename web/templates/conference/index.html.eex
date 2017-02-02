@@ -27,6 +27,4 @@
   </tbody>
 </table>
 
-<%= link title: "New user", to: conference_path(@conn, :new) do
-  fa_icon("plus-square 2x")
-end%>
+<%= link fa_icon("plus-square 2x"), title: "New user", to: conference_path(@conn, :new) %>

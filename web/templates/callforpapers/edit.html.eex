@@ -1,6 +1,6 @@
 <h2>Edit callforpapers</h2>
 
 <%= render "form.html", changeset: @changeset,
+                        conn: @conn,
                         action: callforpapers_path(@conn, :update, @callforpapers) %>
 
-<%= link "Back", to: callforpapers_path(@conn, :index) %>

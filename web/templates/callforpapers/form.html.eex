@@ -25,5 +25,6 @@
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
+    <%= link "Back", to: callforpapers_path(@conn, :index), class: "btn btn-secondary" %>
   </div>
 <% end %>

@@ -29,4 +29,4 @@
   </tbody>
 </table>
 
-<%= link "New callforpapers", to: callforpapers_path(@conn, :new) %>
+<%= link fa_icon("plus-square 2x"), title: "New user", to: callforpapers_path(@conn, :new) %>
