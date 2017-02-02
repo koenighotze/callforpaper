@@ -1,5 +1,5 @@
 defmodule Callforpapers.ConnCase do
-  import Callforpapers.TestHelpers, only: [insert_presenter: 1, insert_organizer: 1]
+  import Callforpapers.TestHelpers, only: [insert_presenter: 1, insert_organizer: 1, insert_conference: 2]
 
   @moduledoc """
   This module defines the test case to be used by

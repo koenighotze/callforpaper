@@ -35,4 +35,12 @@ defmodule Callforpapers.CallforpapersTest do
 
     assert all_valid
   end
+
+  test "titles_and_ids returns titles and ids" do
+    Repo.all(Callforpapers.titles_and_ids(Callforpapers))
+  end
+
+  test "filter_on_organizer only returns only the organizers confs" do
+    refute true
+  end
 end

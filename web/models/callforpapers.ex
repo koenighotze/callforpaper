@@ -13,6 +13,13 @@ defmodule Callforpapers.Callforpapers do
     timestamps()
   end
 
+  def titles_and_ids(query) do
+    # from q in query select: {q: }
+  end
+
+  def filter_on_organizer(query) do
+  end
+
   def valid_state?(status) do
     status in @valid_stati
   end

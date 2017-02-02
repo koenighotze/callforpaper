@@ -1,7 +1,9 @@
 defmodule Callforpapers.CallforpapersControllerTest do
   use Callforpapers.ConnCase
 
-  alias Callforpapers.Callforpapers
+  alias Callforpapers.CallforpapersController
+
+
   @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 4, year: 2010}, status: "open"}
   @invalid_attrs %{}
 
@@ -37,7 +39,7 @@ defmodule Callforpapers.CallforpapersControllerTest do
   @tag login_as: "max"
   @tag :as_organizer
   test "shows chosen resource", %{conn: conn} do
-    callforpapers = Repo.insert! %Callforpapers{}
+    callforpapers = Repo.insert! %Callforpapers.Callforpapers{}
     conn = get conn, callforpapers_path(conn, :show, callforpapers)
     assert html_response(conn, 200) =~ "Show callforpapers"
   end
@@ -53,7 +55,7 @@ defmodule Callforpapers.CallforpapersControllerTest do
   @tag login_as: "max"
   @tag :as_organizer
   test "renders form for editing chosen resource", %{conn: conn} do
-    callforpapers = Repo.insert! %Callforpapers{}
+    callforpapers = Repo.insert! %Callforpapers.Callforpapers{}
     conn = get conn, callforpapers_path(conn, :edit, callforpapers)
     assert html_response(conn, 200) =~ "Edit callforpapers"
   end
@@ -61,7 +63,7 @@ defmodule Callforpapers.CallforpapersControllerTest do
   @tag login_as: "max"
   @tag :as_organizer
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
-    callforpapers = Repo.insert! %Callforpapers{}
+    callforpapers = Repo.insert! %Callforpapers.Callforpapers{}
     conn = put conn, callforpapers_path(conn, :update, callforpapers), callforpapers: @valid_attrs
     assert redirected_to(conn) == callforpapers_path(conn, :show, callforpapers)
     assert Repo.get_by(Callforpapers, @valid_attrs)
@@ -70,7 +72,7 @@ defmodule Callforpapers.CallforpapersControllerTest do
   @tag login_as: "max"
   @tag :as_organizer
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    callforpapers = Repo.insert! %Callforpapers{}
+    callforpapers = Repo.insert! %Callforpapers.Callforpapers{}
     conn = put conn, callforpapers_path(conn, :update, callforpapers), callforpapers: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit callforpapers"
   end
@@ -78,9 +80,33 @@ defmodule Callforpapers.CallforpapersControllerTest do
   @tag login_as: "max"
   @tag :as_organizer
   test "deletes chosen resource", %{conn: conn} do
-    callforpapers = Repo.insert! %Callforpapers{}
+    callforpapers = Repo.insert! %Callforpapers.Callforpapers{}
     conn = delete conn, callforpapers_path(conn, :delete, callforpapers)
     assert redirected_to(conn) == callforpapers_path(conn, :index)
-    refute Repo.get(Callforpapers, callforpapers.id)
+    refute Repo.get(Callforpapers.Callforpapers, callforpapers.id)
   end
+
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "load_conferences loads the conferences for the current user", %{conn: conn, user: user} do
+    insert_conference(user)
+
+    CallforpapersController.load_conferences(conn, [])
+
+    conferences = Repo.get_by(Callforpapers.Conference, %{user_id: user.id})
+
+    assert conn.assigns[:conferences] == conferences
+  end
+
+
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "load_conferences returns empty list if no conferences are found", %{conn: conn, user: user} do
+    CallforpapersController.load_conferences(conn, [])
+
+    conferences = Repo.get_by(Callforpapers.Conference, %{user_id: user.id})
+
+    assert conn.assigns[:conferences] == []
+  end
+
 end
