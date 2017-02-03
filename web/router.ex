@@ -33,8 +33,14 @@ defmodule Callforpapers.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    resources "/users", UserController
+    resources "/users", UserController, only: [:new, :create]
     resources "/sessions", SessionController, only: [:new, :delete, :create]
+  end
+
+  scope "/", Callforpapers do
+    pipe_through [:browser, :registered_users]
+
+    resources "/users", UserController, only: [:show, :index, :edit, :delete, :update]
     resources "/submissions", SubmissionController
     resources "/filings", FilingController
   end

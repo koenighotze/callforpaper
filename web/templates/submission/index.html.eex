@@ -7,8 +7,6 @@
       <th>Shortsummary</th>
       <th>Duration</th>
       <th>Externallink</th>
-      <th>Presenter</th>
-
       <th></th>
     </tr>
   </thead>
@@ -19,7 +17,6 @@
       <td><%= submission.shortsummary %></td>
       <td><%= submission.duration %></td>
       <td><%= submission.externallink %></td>
-      <td><%= submission.user_id %></td>
 
       <td class="text-right">
         <%= link fa_icon("eye"), title: "Show", to: submission_path(@conn, :show, submission) %>

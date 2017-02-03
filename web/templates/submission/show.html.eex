@@ -22,11 +22,6 @@
     <%= @submission.externallink %>
   </li>
 
-  <li>
-    <strong>Presenter:</strong>
-    <%= @submission.user_id %>
-  </li>
-
 </ul>
 
 <div class="form-group">
