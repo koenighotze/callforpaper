@@ -9,6 +9,7 @@ defmodule Callforpapers.Submission do
     field :shortsummary, :string
     field :duration, :integer
     field :externallink, :string
+
     belongs_to :user, Callforpapers.User
 
     timestamps()

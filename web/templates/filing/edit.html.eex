@@ -1,0 +1,6 @@
+<h2>Edit filing</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: filing_path(@conn, :update, @filing) %>
+
+<%= link "Back", to: filing_path(@conn, :index) %>

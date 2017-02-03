@@ -1,0 +1,23 @@
+<h2>Show filing</h2>
+
+<ul>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @filing.status %>
+  </li>
+
+  <li>
+    <strong>Submission:</strong>
+    <%= @filing.submission_id %>
+  </li>
+
+  <li>
+    <strong>Cfp:</strong>
+    <%= @filing.cfp_id %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: filing_path(@conn, :edit, @filing) %>
+<%= link "Back", to: filing_path(@conn, :index) %>

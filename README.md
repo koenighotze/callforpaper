@@ -15,4 +15,4 @@ Current build status: [![Build Status](https://travis-ci.org/koenighotze/callfor
 ** Rate available presentation
 
 
--> initial CFP open
+-> Measure test coverage

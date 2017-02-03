@@ -36,6 +36,7 @@ defmodule Callforpapers.Router do
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :delete, :create]
     resources "/submissions", SubmissionController
+    resources "/filings", FilingController
   end
 
   scope "/organization/", Callforpapers do

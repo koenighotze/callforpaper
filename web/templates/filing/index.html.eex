@@ -1,0 +1,30 @@
+<h2>Listing filings</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Submission</th>
+      <th>Cfp</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for filing <- @filings do %>
+    <tr>
+      <td><%= filing.status %></td>
+      <td><%= filing.submission_id %></td>
+      <td><%= filing.cfp_id %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: filing_path(@conn, :show, filing), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: filing_path(@conn, :edit, filing), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: filing_path(@conn, :delete, filing), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New filing", to: filing_path(@conn, :new) %>
