@@ -4,27 +4,27 @@
 
   <li>
     <strong>Start:</strong>
-    <%= @callforpapers.start %>
+    <%= @cfp.start %>
   </li>
 
   <li>
     <strong>End:</strong>
-    <%= @callforpapers.end %>
+    <%= @cfp.end %>
   </li>
 
   <li>
     <strong>Status:</strong>
-    <%= @callforpapers.status %>
+    <%= @cfp.status %>
   </li>
 
   <li>
     <strong>Conference:</strong>
-    <%= @callforpapers.conference_id %>
+    <%= @cfp.conference.title %>
   </li>
 
 </ul>
 
 <div class="form-group">
-  <%= link "Edit", to: callforpapers_path(@conn, :edit, @callforpapers),  class: "btn btn-small btn-primary" %>
+  <%= link "Edit", to: callforpapers_path(@conn, :edit, @cfp),  class: "btn btn-small btn-primary" %>
   <%= link "Back", to: callforpapers_path(@conn, :index), class: "btn btn-small btn-secondary" %>
 </div>

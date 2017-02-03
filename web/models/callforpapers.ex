@@ -1,4 +1,4 @@
-defmodule Callforpapers.Callforpapers do
+defmodule Callforpapers.Cfp do
   use Callforpapers.Web, :model
 
   @valid_stati ~w(open closed)
@@ -13,11 +13,8 @@ defmodule Callforpapers.Callforpapers do
     timestamps()
   end
 
-  def titles_and_ids(query) do
-    # from q in query select: {q: }
-  end
-
-  def filter_on_organizer(query) do
+  def with_conference(query) do
+    from s in query, preload: [:conference]
   end
 
   def valid_state?(status) do

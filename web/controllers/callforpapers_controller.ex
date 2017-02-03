@@ -1,15 +1,15 @@
 defmodule Callforpapers.CallforpapersController do
   use Callforpapers.Web, :controller
 
-  alias Callforpapers.Callforpapers, as: Cfp
-  alias Callforpapers.Conferences
+  alias Callforpapers.Cfp
+  alias Callforpapers.Conference
 
-
+  plug :load_conferences when action in [:create, :update, :new, :edit]
 
   def load_conferences(conn, _params) do
-    conferences = Callforpapers.Conferences
-           |> Cfp.titles_and_ids
-           |> Cfp.filter_on_organizer
+    conferences = Conference
+           |> Conference.titles_and_ids
+           |> Conference.filter_on_organizer(conn.assigns.current_user)
            |> Repo.all
 
     conn
@@ -17,17 +17,24 @@ defmodule Callforpapers.CallforpapersController do
   end
 
   def index(conn, _params) do
-    callforpapers = Repo.all(Cfp)
+    callforpapers = Cfp |> Cfp.with_conference |> Repo.all
     render(conn, "index.html", callforpapers: callforpapers)
   end
 
   def new(conn, _params) do
-    changeset = Cfp.changeset(%Cfp{})
+    changeset =
+        %Conference{}
+        |> build_assoc(:callforpapers)
+        |> Cfp.changeset(%{status: "open"})
+
     render(conn, "new.html", changeset: changeset, cfp_stati: Cfp.valid_stati)
   end
 
-  def create(conn, %{"callforpapers" => callforpapers_params}) do
-    changeset = Cfp.changeset(%Cfp{}, callforpapers_params)
+  def create(conn, %{"cfp" => callforpapers_params}) do
+    changeset =
+        Repo.get(Conference, callforpapers_params["conference_id"])
+        |> build_assoc(:callforpapers)
+        |> Cfp.changeset(callforpapers_params)
 
     case Repo.insert(changeset) do
       {:ok, _callforpapers} ->
@@ -40,17 +47,17 @@ defmodule Callforpapers.CallforpapersController do
   end
 
   def show(conn, %{"id" => id}) do
-    callforpapers = Repo.get!(Cfp, id)
-    render(conn, "show.html", callforpapers: callforpapers)
+    callforpapers = Repo.get!(Cfp |> Cfp.with_conference, id)
+    render(conn, "show.html", cfp: callforpapers)
   end
 
   def edit(conn, %{"id" => id}) do
     callforpapers = Repo.get!(Cfp, id)
     changeset = Cfp.changeset(callforpapers)
-    render(conn, "edit.html", callforpapers: callforpapers, changeset: changeset, cfp_stati: Cfp.valid_stati)
+    render(conn, "edit.html", cfp: callforpapers, changeset: changeset, cfp_stati: Cfp.valid_stati)
   end
 
-  def update(conn, %{"id" => id, "callforpapers" => callforpapers_params}) do
+  def update(conn, %{"id" => id, "cfp" => callforpapers_params}) do
     callforpapers = Repo.get!(Cfp, id)
     changeset = Cfp.changeset(callforpapers, callforpapers_params)
 
@@ -60,7 +67,7 @@ defmodule Callforpapers.CallforpapersController do
         |> put_flash(:info, "Callforpapers updated successfully.")
         |> redirect(to: callforpapers_path(conn, :show, callforpapers))
       {:error, changeset} ->
-        render(conn, "edit.html", callforpapers: callforpapers, changeset: changeset, cfp_stati: Cfp.valid_stati)
+        render(conn, "edit.html", cfp: callforpapers, changeset: changeset, cfp_stati: Cfp.valid_stati)
     end
   end
 

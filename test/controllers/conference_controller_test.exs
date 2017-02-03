@@ -84,6 +84,7 @@ defmodule Callforpapers.ConferenceControllerTest do
     refute Repo.get(Conference, conference.id)
   end
 
+  @tag :skip # implement me
   test "presenters cannot acces the conference", %{conn: conn} do
     # todo
   end

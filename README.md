@@ -13,3 +13,6 @@ Current build status: [![Build Status](https://travis-ci.org/koenighotze/callfor
 ** Talks in a schedule are send to rating
 * Rating
 ** Rate available presentation
+
+
+-> initial CFP open

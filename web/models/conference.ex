@@ -7,8 +7,17 @@ defmodule Callforpapers.Conference do
     field :end, Ecto.Date
 
     belongs_to :user, Callforpapers.User
+    has_many :callforpapers, Callforpapers.Cfp
 
     timestamps()
+  end
+
+  def titles_and_ids(query) do
+    from q in query, select: {q.title, q.id}
+  end
+
+  def filter_on_organizer(query, user) do
+    from q in query, where: q.user_id == ^user.id
   end
 
   @doc """

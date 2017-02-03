@@ -3,5 +3,6 @@
 <%= render "form.html", changeset: @changeset,
                         conn: @conn,
                         cfp_stati: @cfp_stati,
+                        conferences: @conferences,
                         action: callforpapers_path(@conn, :create) %>
 
