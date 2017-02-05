@@ -16,3 +16,7 @@ Current build status: [![Build Status](https://travis-ci.org/koenighotze/callfor
 
 
 -> Measure test coverage
+-> User can view all open Cfps
+-> edit / delete only open filing
+
+-> Organizer can accept / reject filings

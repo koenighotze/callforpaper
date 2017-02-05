@@ -21,12 +21,18 @@
 
       <td class="text-right">
         <%= link fa_icon("eye"), title: "Show", to: callforpapers_path(@conn, :show, callforpapers) %>
-        <%= link fa_icon("pencil"), title: "Edit", to: callforpapers_path(@conn, :edit, callforpapers) %>
-        <%= link fa_icon("trash"), title: "Delete", to: callforpapers_path(@conn, :delete, callforpapers), method: :delete, data: [confirm: "Are you sure?"] %>
+        <%= if Callforpapers.User.is_organizer?(@current_user) do %>
+          <%= link fa_icon("pencil"), title: "Edit", to: callforpapers_path(@conn, :edit, callforpapers) %>
+          <%= link fa_icon("trash"), title: "Delete", to: callforpapers_path(@conn, :delete, callforpapers), method: :delete, data: [confirm: "Are you sure?"] %>
+        <% else %>
+          <%= link fa_icon("mail-reply-all"), title: "File submissions", to: filing_path(@conn, :new) %>
+        <% end %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link fa_icon("plus-square 2x"), title: "New user", to: callforpapers_path(@conn, :new) %>
+<%= if Callforpapers.User.is_organizer?(@current_user) do %>
+  <%= link fa_icon("plus-square 2x"), title: "New CfP", to: callforpapers_path(@conn, :new) %>
+<% end %>

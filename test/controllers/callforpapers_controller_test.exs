@@ -9,8 +9,14 @@ defmodule Callforpapers.CallforpapersControllerTest do
   @invalid_attrs %{start: nil}
 
   @tag login_as: "max"
+  test "lists all entries on index for simple user", %{conn: conn} do
+    conn = get conn, callforpapers_path(conn, :index)
+    assert html_response(conn, 200) =~ "Listing callforpapers"
+  end
+
+  @tag login_as: "max"
   @tag :as_organizer
-  test "lists all entries on index", %{conn: conn} do
+  test "lists all entries on index for organizer", %{conn: conn} do
     conn = get conn, callforpapers_path(conn, :index)
     assert html_response(conn, 200) =~ "Listing callforpapers"
   end
@@ -111,7 +117,4 @@ defmodule Callforpapers.CallforpapersControllerTest do
     assert conn.assigns[:conferences] == nil
   end
 
-  def insert_cfp(conference) do
-    Repo.insert! conference |> build_assoc(:callforpapers) |> Cfp.changeset(@valid_attrs)
-  end
 end

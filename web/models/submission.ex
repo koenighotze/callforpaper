@@ -15,6 +15,10 @@ defmodule Callforpapers.Submission do
     timestamps()
   end
 
+  def title_and_id(query) do
+    from s in query, select: {s.title, s.id}
+  end
+
   def with_presenter(query) do
     from s in query, preload: [:user]
   end

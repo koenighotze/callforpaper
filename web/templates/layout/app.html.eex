@@ -32,15 +32,18 @@
                 <li>
                   <%= link fa_icon("graduation-cap"), to: conference_path(@conn, :index), title: "Conferences" %>
                 </li>
-
-                <li>
-                  <%= link fa_icon("volume-control-phone"), to: callforpapers_path(@conn, :index), title: "Call-for-Papers" %>
-                </li>
-
               <% end %>
 
               <li>
+                  <%= link fa_icon("volume-control-phone"), to: callforpapers_path(@conn, :index), title: "Call-for-Papers" %>
+              </li>
+
+              <li>
                 <%= link fa_icon("book"), to: submission_path(@conn, :index), title: "Submissions" %>
+              </li>
+
+              <li>
+                <%= link fa_icon("mail-reply-all"), to: filing_path(@conn, :index), title: "Filings" %>
               </li>
 
               <li>

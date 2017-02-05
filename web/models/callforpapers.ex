@@ -13,6 +13,10 @@ defmodule Callforpapers.Cfp do
     timestamps()
   end
 
+  def only_open(query) do
+    from s in query, where: s.status == "open"
+  end
+
   def with_conference(query) do
     from s in query, preload: [:conference]
   end

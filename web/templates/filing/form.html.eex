@@ -6,12 +6,23 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :status, class: "control-label" %>
-    <%= text_input f, :status, class: "form-control" %>
-    <%= error_tag f, :status %>
+    <%= label f, :cfp_id, class: "control-label" %>
+
+    <%= select f, :cfp_id, @callforpapers, class: "form-control", prompt: "--- Please select ---" %>
+
+    <%= error_tag f, :cfp_id %>
+  </div>
+
+    <div class="form-group">
+    <%= label f, :submission_id, class: "control-label" %>
+
+    <%= select f, :submission_id, @submissions, class: "form-control", prompt: "--- Please select ---" %>
+
+    <%= error_tag f, :submission_id %>
   </div>
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
+    <%= link "Back", to: filing_path(@conn, :index), class: "btn btn-secondary" %>
   </div>
 <% end %>

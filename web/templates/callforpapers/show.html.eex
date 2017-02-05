@@ -25,6 +25,8 @@
 </ul>
 
 <div class="form-group">
-  <%= link "Edit", to: callforpapers_path(@conn, :edit, @cfp),  class: "btn btn-small btn-primary" %>
+  <%= if Callforpapers.User.is_organizer?(@current_user) do %>
+    <%= link "Edit", to: callforpapers_path(@conn, :edit, @cfp),  class: "btn btn-small btn-primary" %>
+  <% end %>
   <%= link "Back", to: callforpapers_path(@conn, :index), class: "btn btn-small btn-secondary" %>
 </div>

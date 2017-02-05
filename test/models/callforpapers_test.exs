@@ -35,4 +35,5 @@ defmodule Callforpapers.CallforpapersTest do
 
     assert all_valid
   end
+
 end

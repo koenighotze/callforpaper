@@ -43,13 +43,14 @@ defmodule Callforpapers.Router do
     resources "/users", UserController, only: [:show, :index, :edit, :delete, :update]
     resources "/submissions", SubmissionController
     resources "/filings", FilingController
+    resources "/callforpapers", CallforpapersController, only: [:show, :index]
   end
 
   scope "/organization/", Callforpapers do
     pipe_through [:browser, :registered_users, :organizers] # Use the default browser stack
 
     resources "/conferences", ConferenceController
-    resources "/callforpapers", CallforpapersController
+    resources "/callforpapers", CallforpapersController, only: [:edit, :delete, :update, :create, :new]
   end
 
   # Other scopes may use custom stacks.

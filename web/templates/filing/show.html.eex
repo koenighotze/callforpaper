@@ -19,5 +19,9 @@
 
 </ul>
 
-<%= link "Edit", to: filing_path(@conn, :edit, @filing) %>
-<%= link "Back", to: filing_path(@conn, :index) %>
+<div class="form-group">
+  <%= if @filing.status == "open" do %>
+    <%= link "Edit", to: filing_path(@conn, :edit, @filing),  class: "btn btn-small btn-primary" %>
+  <% end %>
+  <%= link "Back", to: filing_path(@conn, :index), class: "btn btn-small btn-secondary" %>
+</div>
