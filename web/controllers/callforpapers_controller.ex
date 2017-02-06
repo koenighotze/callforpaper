@@ -3,6 +3,7 @@ defmodule Callforpapers.CallforpapersController do
 
   alias Callforpapers.Cfp
   alias Callforpapers.Conference
+  alias Callforpapers.Filing
 
   plug :load_conferences when action in [:create, :update, :new, :edit]
 
@@ -48,7 +49,16 @@ defmodule Callforpapers.CallforpapersController do
 
   def show(conn, %{"id" => id}) do
     callforpapers = Repo.get!(Cfp |> Cfp.with_conference, id)
-    render(conn, "show.html", cfp: callforpapers)
+
+    filings =
+      (from f in Filing, where: f.cfp_id == ^id, preload: [{:submission, :user}])
+      |> Repo.all
+      |> Enum.map(fn filing -> %{id: filing.id, presenter: filing.submission.user.name, submission_id: filing.submission.id, title: filing.submission.title, status: filing.status} end)
+      |> Enum.sort(fn a, b -> a.title < b.title end)
+
+    IO.puts("#{inspect filings}")
+
+    render(conn, "show.html", cfp: callforpapers, filings: filings)
   end
 
   def edit(conn, %{"id" => id}) do

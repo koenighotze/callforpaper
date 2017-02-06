@@ -38,14 +38,15 @@
                   <%= link fa_icon("volume-control-phone"), to: callforpapers_path(@conn, :index), title: "Call-for-Papers" %>
               </li>
 
-              <li>
-                <%= link fa_icon("book"), to: submission_path(@conn, :index), title: "Submissions" %>
-              </li>
+              <%= if Callforpapers.User.is_presenter?(@current_user) do %>
+                <li>
+                  <%= link fa_icon("book"), to: submission_path(@conn, :index), title: "Submissions" %>
+                </li>
 
-              <li>
-                <%= link fa_icon("mail-reply-all"), to: filing_path(@conn, :index), title: "Filings" %>
-              </li>
-
+                <li>
+                  <%= link fa_icon("mail-reply-all"), to: filing_path(@conn, :index), title: "Filings" %>
+                </li>
+              <% end %>
               <li>
                 <%= link  fa_icon("power-off"), to: session_path(@conn, :delete, @current_user), method: "delete", title: "Logout" %>
               </li>

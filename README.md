@@ -14,9 +14,8 @@ Current build status: [![Build Status](https://travis-ci.org/koenighotze/callfor
 * Rating
 ** Rate available presentation
 
-
 -> Measure test coverage
 -> User can view all open Cfps
 -> edit / delete only open filing
-
 -> Organizer can accept / reject filings
+-> Restrict actions of filings to current user or organizer

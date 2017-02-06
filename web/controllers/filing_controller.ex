@@ -9,6 +9,10 @@ defmodule Callforpapers.FilingController do
   plug :load_callforpapers when action in [:create, :update, :new, :edit]
   plug :load_submissions when action in [:create, :update, :new, :edit]
 
+  def action(conn, _) do
+    apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
+  end
+
   def load_callforpapers(conn, _params) do
     cfps = Cfp
            |> Cfp.with_conference
@@ -32,18 +36,18 @@ defmodule Callforpapers.FilingController do
     |> assign(:submissions, submissions)
   end
 
-  def index(conn, _params) do
-    filings = Filing |> Filing.with_cfp |> Filing.with_submission |> Repo.all
+  def index(conn, _params, current_user) do
+    filings = Filing |> Filing.with_cfp |> Filing.with_submission |> Repo.all |> Enum.filter(fn f -> f.submission.user.id == current_user.id end)
     render(conn, "index.html", filings: filings)
   end
 
-  def new(conn, _params) do
+  def new(conn, _params, _current_user) do
     changeset = Filing.changeset(%Filing{})
 
     render(conn, "new.html", changeset: changeset, submissions: conn.assigns.submissions, callforpapers: conn.assigns.callforpapers)
   end
 
-  def create(conn, %{"filing" => filing_params}) do
+  def create(conn, %{"filing" => filing_params}, _current_user) do
     changeset = Filing.changeset(%Filing{}, filing_params)
 
     case Repo.insert(changeset) do
@@ -56,18 +60,18 @@ defmodule Callforpapers.FilingController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => id}, _current_user) do
     filing = Repo.get!(Filing, id)
     render(conn, "show.html", filing: filing)
   end
 
-  def edit(conn, %{"id" => id}) do
+  def edit(conn, %{"id" => id}, _current_user) do
     filing = Repo.get!(Filing, id)
     changeset = Filing.changeset(filing)
     render(conn, "edit.html", filing: filing, changeset: changeset, submissions: conn.assigns.submissions, callforpapers: conn.assigns.callforpapers)
   end
 
-  def update(conn, %{"id" => id, "filing" => filing_params}) do
+  def update(conn, %{"id" => id, "filing" => filing_params}, _current_user) do
     filing = Repo.get!(Filing, id)
     changeset = Filing.changeset(filing, filing_params)
 
@@ -81,7 +85,7 @@ defmodule Callforpapers.FilingController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"id" => id}, _current_user) do
     filing = Repo.get!(Filing, id)
 
     # Here we use delete! (with a bang) because we expect

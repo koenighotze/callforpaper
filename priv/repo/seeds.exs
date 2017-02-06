@@ -17,9 +17,7 @@ import Ecto, only: [build_assoc: 2]
   || Repo.insert!(User.registration_changeset(%User{}, user))
 end)
 
-
 organizer = Repo.get_by(User, email: "hugo@organize.de")
-
 [
   %{title: "Extreme Agile Digital Experience", start: ~D{2016-08-01}, end: ~D{2016-08-12}},
   %{title: "DevCon Summer Camp", start: ~D{2017-05-01}, end: ~D{2017-05-12}}
@@ -31,4 +29,10 @@ organizer = Repo.get_by(User, email: "hugo@organize.de")
      |> Conference.changeset(conf)
      |> Repo.insert!
 end)
+
+presenter = Repo.get_by(User, email: "brasis@lav.se")
+conference = Repo.get_by(Conference, title: "Extreme Agile Digital Experience")
+
+# todo add call for paper
+# todo file paper
 

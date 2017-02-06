@@ -3,6 +3,11 @@
 <ul>
 
   <li>
+    <strong>Conference:</strong>
+    <%= @cfp.conference.title %>
+  </li>
+
+  <li>
     <strong>Start:</strong>
     <%= @cfp.start %>
   </li>
@@ -17,16 +22,42 @@
     <%= @cfp.status %>
   </li>
 
-  <li>
-    <strong>Conference:</strong>
-    <%= @cfp.conference.title %>
-  </li>
-
 </ul>
 
 <div class="form-group">
   <%= if Callforpapers.User.is_organizer?(@current_user) do %>
     <%= link "Edit", to: callforpapers_path(@conn, :edit, @cfp),  class: "btn btn-small btn-primary" %>
+    <%= if @cfp.status == "open" do %>
+      <%= link "Close", to: callforpapers_path(@conn, :edit, @cfp),  class: "btn btn-small btn-primary" %>
+    <% else %>
+      <%= link "Open", to: callforpapers_path(@conn, :edit, @cfp),  class: "btn btn-small btn-primary" %>
+    <% end %>
   <% end %>
   <%= link "Back", to: callforpapers_path(@conn, :index), class: "btn btn-small btn-secondary" %>
 </div>
+
+<h2>Currently filed submissions</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Submission</th>
+      <th>Presenter</th>
+      <th>Status</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for filing <- @filings do %>
+    <tr>
+      <td><%= filing.title %></td>
+      <td><%= filing.presenter %></td>
+      <td><%= filing.status %></td>
+      <td class="text-right">
+
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

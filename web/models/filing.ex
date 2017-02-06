@@ -16,7 +16,7 @@ defmodule Callforpapers.Filing do
   end
 
   def with_submission(query) do
-    from q in query, preload: :submission
+    from q in query, preload: [{:submission, :user}]
   end
 
   @doc """

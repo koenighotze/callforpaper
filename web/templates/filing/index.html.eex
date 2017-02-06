@@ -19,6 +19,7 @@
 
       <td class="text-right">
         <%= link fa_icon("eye"), title: "Show", to: filing_path(@conn, :show, filing) %>
+
         <%= if filing.status == "open" do %>
           <%= link fa_icon("pencil"), title: "Edit", to: filing_path(@conn, :edit, filing) %>
           <%= link fa_icon("trash"), title: "Delete", to: filing_path(@conn, :delete, filing), method: :delete, data: [confirm: "Are you sure?"] %>
