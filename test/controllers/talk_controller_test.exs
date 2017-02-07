@@ -10,13 +10,13 @@ defmodule Callforpapers.TalkControllerTest do
   @tag login_as: "max"
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, talk_path(conn, :index)
-    assert html_response(conn, 200) =~ "Listing submissions"
+    assert html_response(conn, 200) =~ "Listing talks"
   end
 
   @tag login_as: "max"
   test "renders form for new resources", %{conn: conn} do
     conn = get conn, talk_path(conn, :new)
-    assert html_response(conn, 200) =~ "New submission"
+    assert html_response(conn, 200) =~ "New talk"
   end
 
   @tag login_as: "max"
@@ -30,14 +30,14 @@ defmodule Callforpapers.TalkControllerTest do
   @tag :skip # figure out how to provide for assigns
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, talk_path(conn, :create), submission: @invalid_attrs
-    assert html_response(conn, 200) =~ "New submission"
+    assert html_response(conn, 200) =~ "New talk"
   end
 
   @tag login_as: "max"
   test "shows chosen resource", %{conn: conn, user: user} do
     submission = insert_valid_submission(user)
     conn = get conn, talk_path(conn, :show, submission)
-    assert html_response(conn, 200) =~ "Show submission"
+    assert html_response(conn, 200) =~ "Show talk"
   end
 
   @tag login_as: "max"
@@ -55,7 +55,7 @@ defmodule Callforpapers.TalkControllerTest do
     conn = SubmissionController.load_presenters(conn, [])
 
     conn = get conn, talk_path(conn, :edit, submission)
-    assert html_response(conn, 200) =~ "Edit submission"
+    assert html_response(conn, 200) =~ "Edit talk"
   end
 
   @tag login_as: "max"
@@ -78,7 +78,7 @@ defmodule Callforpapers.TalkControllerTest do
 
     IO.puts "#{inspect conn}"
     conn = put conn, talk_path(conn, :update, submission), submission: @invalid_attrs
-    assert html_response(conn, 200) =~ "Edit submission"
+    assert html_response(conn, 200) =~ "Edit talk"
   end
 
   @tag login_as: "max"

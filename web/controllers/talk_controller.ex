@@ -32,7 +32,7 @@ defmodule Callforpapers.TalkController do
   def new(conn, _params, current_user) do
     changeset = Submission.changeset(%Submission{})
 
-    render conn, "new.html", durations: [20, 45, 60, 90], presenter: current_user.name, changeset: changeset
+    render conn, "new.html", durations: ["Quickie (20 min)", "Presentation (45 min)", "University / Lab (2 h)"], presenter: current_user.name, changeset: changeset
   end
 
   def create(conn, %{"submission" => submission_params}, current_user) do
