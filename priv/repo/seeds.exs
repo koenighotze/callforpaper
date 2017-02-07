@@ -3,7 +3,7 @@
 #     mix run priv/repo/seeds.exs
 
 alias Callforpapers.User
-alias Callforpapers.Submission
+alias Callforpapers.Talk
 alias Callforpapers.Conference
 alias Callforpapers.Repo
 

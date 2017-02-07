@@ -4,7 +4,7 @@ defmodule Callforpapers.FilingController do
   alias Callforpapers.Filing
   alias Callforpapers.Cfp
   alias Callforpapers.User
-  alias Callforpapers.Talk, as: Submission
+  alias Callforpapers.Talk
 
   plug :load_callforpapers when action in [:create, :update, :new, :edit]
   plug :load_submissions when action in [:create, :update, :new, :edit]
@@ -28,8 +28,8 @@ defmodule Callforpapers.FilingController do
   def load_submissions(conn, _params) do
     submissions =
       conn.assigns.current_user
-      |> User.submissions_by_presenter
-      |> Submission.title_and_id
+      |> User.talks_by_presenter
+      |> Talk.title_and_id
       |> Repo.all
 
     conn

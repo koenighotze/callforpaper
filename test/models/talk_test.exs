@@ -1,18 +1,18 @@
-defmodule Callforpapers.SubmissionTest do
+defmodule Callforpapers.TalkTest do
   use Callforpapers.ModelCase
 
-  alias Callforpapers.Talk, as: Submission
+  alias Callforpapers.Talk
 
   @valid_attrs %{duration: 42, externallink: "some content", shortsummary: "abcdefghijklmnopqrstuvwxyz", title: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
-    changeset = Submission.changeset(%Submission{}, @valid_attrs)
+    changeset = Talk.changeset(%Talk{}, @valid_attrs)
     assert changeset.valid?
   end
 
   test "changeset with invalid attributes" do
-    changeset = Submission.changeset(%Submission{}, @invalid_attrs)
+    changeset = Talk.changeset(%Talk{}, @invalid_attrs)
     refute changeset.valid?
   end
 end

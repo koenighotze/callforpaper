@@ -36,7 +36,7 @@
   <%= link "Back", to: callforpapers_path(@conn, :index), class: "btn btn-small btn-secondary" %>
 </div>
 
-<h2>Currently filed submissions</h2>
+<h2>Current Submissions</h2>
 
 <table class="table">
   <thead>

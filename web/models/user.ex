@@ -29,7 +29,7 @@ defmodule Callforpapers.User do
     user.role == "presenter"
   end
 
-  def submissions_by_presenter(user) do
+  def talks_by_presenter(user) do
     assoc(user, :submissions)
   end
 

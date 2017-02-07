@@ -2,7 +2,7 @@ defmodule Callforpapers.TestHelpers do
   import Ecto
   alias Callforpapers.Repo
   alias Callforpapers.User
-  alias Callforpapers.Talk, as: Submission
+  alias Callforpapers.Talk
   alias Callforpapers.Conference
   alias Callforpapers.Cfp
 
@@ -23,11 +23,13 @@ defmodule Callforpapers.TestHelpers do
     |> Repo.insert!()
   end
 
-  def insert_submission(presenter, attrs \\ %{}) do
+  def insert_submission(presenter, attrs \\ %{}), do: insert_talk(presenter, attrs)
+
+  def insert_talk(presenter, attrs \\ %{}) do
     changes = Dict.merge(@default_submission, attrs)
     presenter
     |> build_assoc(:submissions)
-    |> Submission.changeset(changes)
+    |> Talk.changeset(changes)
     |> Repo.insert!()
   end
 
