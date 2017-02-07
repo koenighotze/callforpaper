@@ -53,10 +53,7 @@ defmodule Callforpapers.CallforpapersController do
     filings =
       (from f in Filing, where: f.cfp_id == ^id, preload: [{:submission, :user}])
       |> Repo.all
-      |> Enum.map(fn filing -> %{id: filing.id, presenter: filing.submission.user.name, submission_id: filing.submission.id, title: filing.submission.title, status: filing.status} end)
-      |> Enum.sort(fn a, b -> a.title < b.title end)
-
-    IO.puts("#{inspect filings}")
+      |> Enum.sort(fn a, b -> Filing.title(a) < Filing.title(b) end)
 
     render(conn, "show.html", cfp: callforpapers, filings: filings)
   end

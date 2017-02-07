@@ -1,3 +1,4 @@
+
 defmodule Callforpapers.Router do
   use Callforpapers.Web, :router
 
@@ -43,7 +44,20 @@ defmodule Callforpapers.Router do
     resources "/users", UserController, only: [:show, :index, :edit, :delete, :update]
     resources "/submissions", SubmissionController
     resources "/filings", FilingController
+    #  do
+    #   post "/acceptance", FilingController, :accept, as: :accept
+    #   post "/rejection", FilingController, :reject, as: :reject
+    # end
     resources "/callforpapers", CallforpapersController, only: [:show, :index]
+  end
+
+scope "/filings", Callforpapers do
+    pipe_through [:browser, :registered_users, :organizers]
+
+    resources "/filings", FilingController, only: [] do
+      post "/acceptance", FilingController, :accept, as: :accept
+      post "/rejection", FilingController, :reject, as: :reject
+    end
   end
 
   scope "/organization/", Callforpapers do

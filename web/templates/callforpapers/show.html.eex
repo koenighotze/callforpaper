@@ -51,11 +51,17 @@
   <tbody>
 <%= for filing <- @filings do %>
     <tr>
-      <td><%= filing.title %></td>
-      <td><%= filing.presenter %></td>
+      <td><%= Filing.title(filing) %></td>
+      <td><%= Filing.presenter(filing) %></td>
       <td><%= filing.status %></td>
       <td class="text-right">
+        <%= if !Filing.accepted?(filing) do %>
+          <%= button "Accept", to: filing_accept_path(@conn, :accept, filing.id),  class: "btn btn-small btn-primary" %>
+        <% end %>
 
+        <%= if !Filing.rejected?(filing) do %>
+          <%= button "Reject", to: filing_reject_path(@conn, :reject, filing.id),  class: "btn btn-small btn-primary" %>
+        <% end %>
       </td>
     </tr>
 <% end %>

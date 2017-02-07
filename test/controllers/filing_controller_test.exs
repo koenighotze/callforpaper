@@ -74,6 +74,49 @@ defmodule Callforpapers.FilingControllerTest do
     refute Repo.get(Filing, filing.id)
   end
 
+  @tag login_as: "max"
+  test "presenters cannot accept talks", %{conn: conn} do
+    res = post conn, filing_accept_path(conn, :accept, 1)
+    assert html_response(res, 404) =~ "Page not found"
+  end
+
+  @tag login_as: "max"
+  test "presenters cannot reject talks", %{conn: conn} do
+    res = post conn, filing_reject_path(conn, :reject, 1)
+    assert html_response(res, 404) =~ "Page not found"
+  end
+
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "organizers can accept filings", %{conn: conn, user: user} do
+    filing = insert_filing(user)
+
+    conn = post conn, filing_accept_path(conn, :accept, filing.id)
+    assert redirected_to(conn) == callforpapers_path(conn, :show, filing.cfp_id)
+
+    updated = Repo.get(Filing, filing.id)
+    assert Filing.accepted?(updated)
+  end
+
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "organizers can reject filings", %{conn: conn, user: user} do
+    filing = insert_filing(user)
+
+    conn = post conn, filing_reject_path(conn, :reject, filing.id)
+    assert redirected_to(conn) == callforpapers_path(conn, :show, filing.cfp_id)
+
+    updated = Repo.get(Filing, filing.id)
+    assert Filing.rejected?(updated)
+  end
+
+  defp insert_filing(organizer) do
+    presenter = insert_presenter
+    submission = insert_submission(presenter)
+    callforpapers = organizer |> insert_conference |> insert_cfp
+    Repo.insert! %Filing{submission_id: submission.id, cfp_id: callforpapers.id}
+  end
+
   # Tests:
   #  Filing only visible to each user
   #  Filing may be retracted

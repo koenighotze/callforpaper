@@ -36,6 +36,24 @@ defmodule Callforpapers.FilingController do
     |> assign(:submissions, submissions)
   end
 
+  def accept(conn, %{"filing_id" => filing_id}, _current_user) do
+    filing =
+      Repo.get(Filing, filing_id)
+      |> Filing.accept
+      |> Repo.update!
+
+    redirect(conn, to: callforpapers_path(conn, :show, filing.cfp_id))
+  end
+
+  def reject(conn, %{"filing_id" => filing_id}, _current_user) do
+    filing =
+      Repo.get(Filing, filing_id)
+      |> Filing.reject
+      |> Repo.update!
+
+    redirect(conn, to: callforpapers_path(conn, :show, filing.cfp_id))
+  end
+
   def index(conn, _params, current_user) do
     filings = Filing |> Filing.with_cfp |> Filing.with_submission |> Repo.all |> Enum.filter(fn f -> f.submission.user.id == current_user.id end)
     render(conn, "index.html", filings: filings)

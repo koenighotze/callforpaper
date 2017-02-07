@@ -19,6 +19,36 @@ defmodule Callforpapers.Filing do
     from q in query, preload: [{:submission, :user}]
   end
 
+  def open?(%{status: "open"}), do: true
+  def open?(_), do: false
+
+  def accepted?(%{status: "accepted"}), do: true
+  def accepted?(_), do: false
+
+  def rejected?(%{status: "rejected"}), do: true
+  def rejected?(_), do: false
+
+  def reject(filing) do
+    filing
+    |> changeset(%{status: "rejected"})
+  end
+
+  def accept(filing) do
+    filing
+    |> changeset(%{status: "accepted"})
+  end
+
+  # %{id: filing.id, presenter: filing.submission.user.name, submission_id: filing.submission.id, title: filing.submission.title, status: filing.status}
+  #
+  #
+  def presenter(filing) do
+    filing.submission.user.name
+  end
+
+  def title(filing) do
+    filing.submission.title
+  end
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
