@@ -3,7 +3,7 @@ defmodule Callforpapers.CallforpapersController do
 
   alias Callforpapers.Cfp
   alias Callforpapers.Conference
-  alias Callforpapers.Filing
+  alias Callforpapers.Submission
 
   plug :load_conferences when action in [:create, :update, :new, :edit]
 
@@ -50,12 +50,12 @@ defmodule Callforpapers.CallforpapersController do
   def show(conn, %{"id" => id}) do
     callforpapers = Repo.get!(Cfp |> Cfp.with_conference, id)
 
-    filings =
-      (from f in Filing, where: f.cfp_id == ^id, preload: [{:submission, :user}])
+    submissions =
+      (from f in Submission, where: f.cfp_id == ^id, preload: [{:submission, :user}])
       |> Repo.all
-      |> Enum.sort(fn a, b -> Filing.title(a) < Filing.title(b) end)
+      |> Enum.sort(fn a, b -> Submission.title(a) < Submission.title(b) end)
 
-    render(conn, "show.html", cfp: callforpapers, filings: filings)
+    render(conn, "show.html", cfp: callforpapers, submissions: submissions)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -66,6 +66,8 @@ defmodule Callforpapers.CallforpapersController do
 
   def update(conn, %{"id" => id, "cfp" => callforpapers_params}) do
     callforpapers = Repo.get!(Cfp, id)
+
+    # todo update conference does not work
     changeset = Cfp.changeset(callforpapers, callforpapers_params)
 
     case Repo.update(changeset) do

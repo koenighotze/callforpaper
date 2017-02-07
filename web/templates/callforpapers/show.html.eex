@@ -49,18 +49,18 @@
     </tr>
   </thead>
   <tbody>
-<%= for filing <- @filings do %>
+<%= for submission <- @submissions do %>
     <tr>
-      <td><%= Filing.title(filing) %></td>
-      <td><%= Filing.presenter(filing) %></td>
-      <td><%= filing.status %></td>
+      <td><%= Submission.title(submission) %></td>
+      <td><%= Submission.presenter(submission) %></td>
+      <td><%= submission.status %></td>
       <td class="text-right">
-        <%= if !Filing.accepted?(filing) do %>
-          <%= button "Accept", to: filing_accept_path(@conn, :accept, filing.id),  class: "btn btn-small btn-primary" %>
+        <%= if !Submission.accepted?(submission) do %>
+          <%= button "Accept", to: submission_accept_path(@conn, :accept, submission.id),  class: "btn btn-small btn-primary" %>
         <% end %>
 
-        <%= if !Filing.rejected?(filing) do %>
-          <%= button "Reject", to: filing_reject_path(@conn, :reject, filing.id),  class: "btn btn-small btn-primary" %>
+        <%= if !Submission.rejected?(submission) do %>
+          <%= button "Reject", to: submission_reject_path(@conn, :reject, submission.id),  class: "btn btn-small btn-primary" %>
         <% end %>
       </td>
     </tr>

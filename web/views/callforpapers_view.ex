@@ -1,4 +1,4 @@
 defmodule Callforpapers.CallforpapersView do
   use Callforpapers.Web, :view
-  alias Callforpapers.Filing
+  alias Callforpapers.Submission
 end

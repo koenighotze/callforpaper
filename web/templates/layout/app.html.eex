@@ -44,7 +44,7 @@
                 </li>
 
                 <li>
-                  <%= link fa_icon("mail-reply-all"), to: filing_path(@conn, :index), title: "Filings" %>
+                  <%= link fa_icon("mail-reply-all"), to: submission_path(@conn, :index), title: "Filings" %>
                 </li>
               <% end %>
               <li>

@@ -10,7 +10,8 @@ config :callforpapers, Callforpapers.Endpoint,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id],
-  level: :warn  # compile_time_purge_level: :debug
+  level: :warn #,
+#  compile_time_purge_level: :debug
 
 # Configure your database
 config :callforpapers, Callforpapers.Repo,

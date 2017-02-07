@@ -1,4 +1,4 @@
-defmodule Callforpapers.Filing do
+defmodule Callforpapers.Submission do
   use Callforpapers.Web, :model
 
   schema "filings" do
@@ -15,7 +15,7 @@ defmodule Callforpapers.Filing do
     from q in query, preload: [{:cfp, :conference}]
   end
 
-  def with_submission(query) do
+  def with_talk(query) do
     from q in query, preload: [{:submission, :user}]
   end
 
@@ -55,7 +55,7 @@ defmodule Callforpapers.Filing do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:status, :submission_id, :cfp_id])
-    |> validate_required([:status])
+    |> validate_required([:status, :submission_id, :cfp_id])
     |> Validators.validate_enum(:status, valid_states)
     |> assoc_constraint(:submission)
     |> assoc_constraint(:cfp)

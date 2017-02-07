@@ -21,11 +21,6 @@ defmodule Callforpapers.Router do
     plug :authenticate_organizer
   end
 
-  # pipeline :organization do
-  #   plug :authenticate_user when action in [:index, :show, :edit, :update, :delete]
-  #   plug :authenticate_organizer when action in [:index, :show, :edit, :update, :delete]
-  # end
-
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -43,20 +38,20 @@ defmodule Callforpapers.Router do
 
     resources "/users", UserController, only: [:show, :index, :edit, :delete, :update]
     resources "/talks", TalkController
-    resources "/filings", FilingController
+    resources "/submissions", SubmissionController
     #  do
-    #   post "/acceptance", FilingController, :accept, as: :accept
-    #   post "/rejection", FilingController, :reject, as: :reject
+    #   post "/acceptance", SubmissionController, :accept, as: :accept
+    #   post "/rejection", SubmissionController, :reject, as: :reject
     # end
     resources "/callforpapers", CallforpapersController, only: [:show, :index]
   end
 
-scope "/filings", Callforpapers do
-    pipe_through [:browser, :registered_users, :organizers]
+  scope "/", Callforpapers do
+    pipe_through [:browser, :organizers]
 
-    resources "/filings", FilingController, only: [] do
-      post "/acceptance", FilingController, :accept, as: :accept
-      post "/rejection", FilingController, :reject, as: :reject
+    resources "/submissions", SubmissionController, only: [:accept, :reject] do
+      post "/acceptance", SubmissionController, :accept, as: :accept
+      post "/rejection", SubmissionController, :reject, as: :reject
     end
   end
 

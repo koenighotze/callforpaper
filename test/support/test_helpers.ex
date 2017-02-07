@@ -3,6 +3,7 @@ defmodule Callforpapers.TestHelpers do
   alias Callforpapers.Repo
   alias Callforpapers.User
   alias Callforpapers.Talk
+  alias Callforpapers.Submission
   alias Callforpapers.Conference
   alias Callforpapers.Cfp
 
@@ -49,5 +50,12 @@ defmodule Callforpapers.TestHelpers do
     |> build_assoc(:callforpapers)
     |> Cfp.changeset(changes)
     |> Repo.insert!()
+  end
+
+  def insert_filing(organizer) do
+    presenter = insert_presenter
+    submission = insert_submission(presenter)
+    callforpapers = organizer |> insert_conference |> insert_cfp
+    Repo.insert! %Submission{submission_id: submission.id, cfp_id: callforpapers.id}
   end
 end

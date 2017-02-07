@@ -35,7 +35,7 @@ defmodule Callforpapers.TalkControllerTest do
 
   @tag login_as: "max"
   test "shows chosen resource", %{conn: conn, user: user} do
-    submission = insert_valid_submission(user)
+    submission = insert_valid_talk(user)
     conn = get conn, talk_path(conn, :show, submission)
     assert html_response(conn, 200) =~ "Show talk"
   end
@@ -50,7 +50,7 @@ defmodule Callforpapers.TalkControllerTest do
   @tag login_as: "max"
   @tag :skip # Try to prefetch assign for @presenters
   test "renders form for editing chosen resource", %{conn: conn, user: user} do
-    submission = insert_valid_submission(user)
+    submission = insert_valid_talk(user)
 
     conn = TalkController.load_presenters(conn, [])
 
@@ -62,17 +62,17 @@ defmodule Callforpapers.TalkControllerTest do
   test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user} do
     update = %{externallink: "some content"}
 
-    submission = insert_valid_submission(user)
+    talk = insert_valid_talk(user)
 
-    conn = put conn, talk_path(conn, :update, submission), submission: update
-    assert redirected_to(conn) == talk_path(conn, :show, submission)
+    conn = put conn, talk_path(conn, :update, talk), talk: update
+    assert redirected_to(conn) == talk_path(conn, :show, talk)
     assert Repo.get_by(Talk, Map.merge(@valid_attrs, update))
   end
 
   @tag login_as: "max"
   @tag :skip
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user: user} do
-    submission = insert_valid_submission(user)
+    submission = insert_valid_talk(user)
 
     conn = TalkController.load_presenters(conn, [])
 
@@ -83,7 +83,7 @@ defmodule Callforpapers.TalkControllerTest do
 
   @tag login_as: "max"
   test "deletes chosen resource", %{conn: conn, user: user} do
-    submission = insert_valid_submission(user)
+    submission = insert_valid_talk(user)
     conn = delete conn, talk_path(conn, :delete, submission)
     assert redirected_to(conn) == talk_path(conn, :index)
     refute Repo.get(Talk, submission.id)
@@ -114,7 +114,7 @@ defmodule Callforpapers.TalkControllerTest do
     assert found.user.name == "max"
   end
 
-  defp insert_valid_submission(user) do
+  defp insert_valid_talk(user) do
     changeset =
       user
       |> build_assoc(:submissions)

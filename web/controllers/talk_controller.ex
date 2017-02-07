@@ -22,11 +22,11 @@ defmodule Callforpapers.TalkController do
   end
 
   def index(conn, _params, current_user) do
-    submissions =
+    talks =
       current_user
       |> User.talks_by_presenter
       |> Repo.all
-    render(conn, "index.html", submissions: submissions)
+    render(conn, "index.html", talks: talks)
   end
 
   def new(conn, _params, current_user) do
@@ -35,11 +35,11 @@ defmodule Callforpapers.TalkController do
     render conn, "new.html", durations: ["Quickie (20 min)", "Presentation (45 min)", "University / Lab (2 h)"], presenter: current_user.name, changeset: changeset
   end
 
-  def create(conn, %{"submission" => submission_params}, current_user) do
+  def create(conn, %{"submission" => params}, current_user) do
     changeset =
       current_user
       |> build_assoc(:submissions)
-      |> Talk.changeset(submission_params)
+      |> Talk.changeset(params)
 
     case Repo.insert(changeset) do
       {:ok, _submission} ->
@@ -58,34 +58,34 @@ defmodule Callforpapers.TalkController do
   end
 
   def show(conn, %{"id" => id}, current_user) do
-    submission = talk_by_id(current_user, id)
-    render(conn, "show.html", submission: submission)
+    talk = talk_by_id(current_user, id)
+    render(conn, "show.html", talk: talk)
   end
 
   def edit(conn, %{"id" => id}, current_user) do
-    submission = talk_by_id(current_user, id)
-    changeset = Talk.changeset(submission)
-    render(conn, "edit.html", durations: [20, 45, 60, 90], submission: submission, presenter: current_user.name, changeset: changeset)
+    talk = talk_by_id(current_user, id)
+    changeset = Talk.changeset(talk)
+    render(conn, "edit.html", durations: [20, 45, 60, 90], talk: talk, presenter: current_user.name, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "submission" => submission_params}, current_user) do
-    submission = talk_by_id(current_user, id)
-    changeset = Talk.changeset(submission, submission_params)
+  def update(conn, %{"id" => id, "talk" => params}, current_user) do
+    talk = talk_by_id(current_user, id)
+    changeset = Talk.changeset(talk, params)
 
     case Repo.update(changeset) do
-      {:ok, submission} ->
+      {:ok, talk} ->
         conn
         |> put_flash(:info, "Talk updated successfully.")
-        |> redirect(to: talk_path(conn, :show, submission))
+        |> redirect(to: talk_path(conn, :show, talk))
       {:error, changeset} ->
-        render(conn, "edit.html", submission: submission, changeset: changeset)
+        render(conn, "edit.html", talk: talk, changeset: changeset)
     end
   end
 
   def delete(conn, %{"id" => id}, current_user) do
-    submission = talk_by_id(current_user, id)
+    talk = talk_by_id(current_user, id)
 
-    Repo.delete!(submission)
+    Repo.delete!(talk)
 
     conn
     |> put_flash(:info, "Talk deleted successfully.")

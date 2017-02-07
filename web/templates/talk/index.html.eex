@@ -11,17 +11,17 @@
     </tr>
   </thead>
   <tbody>
-<%= for submission <- @submissions do %>
+<%= for talk <- @talks do %>
     <tr>
-      <td><%= submission.title %></td>
-      <td><%= submission.shortsummary %></td>
-      <td><%= submission.duration %></td>
-      <td><%= submission.externallink %></td>
+      <td><%= talk.title %></td>
+      <td><%= talk.shortsummary %></td>
+      <td><%= talk.duration %></td>
+      <td><%= talk.externallink %></td>
 
       <td class="text-right">
-        <%= link fa_icon("eye"), title: "Show", to: talk_path(@conn, :show, submission) %>
-        <%= link fa_icon("pencil"), title: "Edit", to: talk_path(@conn, :edit, submission) %>
-        <%= link fa_icon("trash"), title: "Delete", to: talk_path(@conn, :delete, submission), method: :delete, data: [confirm: "Are you sure?"] %>
+        <%= link fa_icon("eye"), title: "Show", to: talk_path(@conn, :show, talk) %>
+        <%= link fa_icon("pencil"), title: "Edit", to: talk_path(@conn, :edit, talk) %>
+        <%= link fa_icon("trash"), title: "Delete", to: talk_path(@conn, :delete, talk), method: :delete, data: [confirm: "Are you sure?"] %>
       </td>
     </tr>
 <% end %>

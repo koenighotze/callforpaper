@@ -16,13 +16,13 @@
     <div class="form-group">
     <%= label f, :submission_id, class: "control-label" %>
 
-    <%= select f, :submission_id, @submissions, class: "form-control", prompt: "--- Please select ---" %>
+    <%= select f, :submission_id, @talks, class: "form-control", prompt: "--- Please select ---" %>
 
     <%= error_tag f, :submission_id %>
   </div>
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
-    <%= link "Back", to: filing_path(@conn, :index), class: "btn btn-secondary" %>
+    <%= link "Back", to: submission_path(@conn, :index), class: "btn btn-secondary" %>
   </div>
 <% end %>

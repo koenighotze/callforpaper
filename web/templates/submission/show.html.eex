@@ -1,0 +1,27 @@
+<h2>Show submission</h2>
+
+<ul>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @submission.status %>
+  </li>
+
+  <li>
+    <strong>Talk:</strong>
+    <%= @submission.submission_id %>
+  </li>
+
+  <li>
+    <strong>Cfp:</strong>
+    <%= @submission.cfp_id %>
+  </li>
+
+</ul>
+
+<div class="form-group">
+  <%= if @submission.status == "open" do %>
+    <%= link "Edit", to: submission_path(@conn, :edit, @submission),  class: "btn btn-small btn-primary" %>
+  <% end %>
+  <%= link "Back", to: submission_path(@conn, :index), class: "btn btn-small btn-secondary" %>
+</div>

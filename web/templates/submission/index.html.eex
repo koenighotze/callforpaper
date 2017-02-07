@@ -1,0 +1,33 @@
+<h2>Listing submissions</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Talk</th>
+      <th>Cfp</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for submission <- @submissions do %>
+    <tr>
+      <td><%= submission.status %></td>
+      <td><%= submission.submission.title %></td>
+      <td><%= submission.cfp.conference.title %></td>
+
+      <td class="text-right">
+        <%= link fa_icon("eye"), title: "Show", to: submission_path(@conn, :show, submission) %>
+
+        <%= if submission.status == "open" do %>
+          <%= link fa_icon("pencil"), title: "Edit", to: submission_path(@conn, :edit, submission) %>
+          <%= link fa_icon("trash"), title: "Delete", to: submission_path(@conn, :delete, submission), method: :delete, data: [confirm: "Are you sure?"] %>
+        <% end %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link fa_icon("plus-square 2x"), title: "New submission", to: submission_path(@conn, :new) %>

@@ -4,27 +4,27 @@
 
   <li>
     <strong>Title:</strong>
-    <%= @submission.title %>
+    <%= @talk.title %>
   </li>
 
   <li>
     <strong>Shortsummary:</strong>
-    <%= @submission.shortsummary %>
+    <%= @talk.shortsummary %>
   </li>
 
   <li>
     <strong>Duration:</strong>
-    <%= @submission.duration %>
+    <%= @talk.duration %>
   </li>
 
   <li>
     <strong>Externallink:</strong>
-    <%= @submission.externallink %>
+    <%= @talk.externallink %>
   </li>
 
 </ul>
 
 <div class="form-group">
-    <%= link "Edit", to: talk_path(@conn, :edit, @submission), class: "btn btn-small btn-primary" %>
+    <%= link "Edit", to: talk_path(@conn, :edit, @talk), class: "btn btn-small btn-primary" %>
     <%= link "Back", to: talk_path(@conn, :index), class: "btn btn-secondary" %>
 </div>
