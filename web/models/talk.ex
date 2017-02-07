@@ -1,4 +1,4 @@
-defmodule Callforpapers.Submission do
+defmodule Callforpapers.Talk do
   use Callforpapers.Web, :model
 
   @required [:title, :shortsummary, :duration]

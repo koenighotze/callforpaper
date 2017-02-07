@@ -1,6 +1,6 @@
-defmodule Callforpapers.SubmissionController do
+defmodule Callforpapers.TalkController do
   use Callforpapers.Web, :controller
-  alias Callforpapers.Submission
+  alias Callforpapers.Talk, as: Submission
   alias Callforpapers.User
 
   plug :authenticate_user
@@ -45,7 +45,7 @@ defmodule Callforpapers.SubmissionController do
       {:ok, _submission} ->
         conn
         |> put_flash(:info, "Submission created successfully.")
-        |> redirect(to: submission_path(conn, :index))
+        |> redirect(to: talk_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", durations: [20, 45, 60, 90], presenter: current_user.name, changeset: changeset)
     end
@@ -76,7 +76,7 @@ defmodule Callforpapers.SubmissionController do
       {:ok, submission} ->
         conn
         |> put_flash(:info, "Submission updated successfully.")
-        |> redirect(to: submission_path(conn, :show, submission))
+        |> redirect(to: talk_path(conn, :show, submission))
       {:error, changeset} ->
         render(conn, "edit.html", submission: submission, changeset: changeset)
     end
@@ -89,6 +89,6 @@ defmodule Callforpapers.SubmissionController do
 
     conn
     |> put_flash(:info, "Submission deleted successfully.")
-    |> redirect(to: submission_path(conn, :index))
+    |> redirect(to: talk_path(conn, :index))
   end
 end

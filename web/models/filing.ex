@@ -3,7 +3,7 @@ defmodule Callforpapers.Filing do
 
   schema "filings" do
     field :status, :string, default: "open"
-    belongs_to :submission, Callforpapers.Submission
+    belongs_to :submission, Callforpapers.Talk
     belongs_to :cfp, Callforpapers.Cfp
 
     timestamps()

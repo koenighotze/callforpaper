@@ -1,7 +1,7 @@
-<h2>Edit submission</h2>
+<h2>Edit talk</h2>
 
 <%= render "form.html", changeset: @changeset,
                         durations: @durations,
                         conn: @conn,
-                        action: submission_path(@conn, :update, @submission) %>
+                        action: talk_path(@conn, :update, @submission) %>
 

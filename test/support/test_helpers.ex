@@ -2,7 +2,7 @@ defmodule Callforpapers.TestHelpers do
   import Ecto
   alias Callforpapers.Repo
   alias Callforpapers.User
-  alias Callforpapers.Submission
+  alias Callforpapers.Talk, as: Submission
   alias Callforpapers.Conference
   alias Callforpapers.Cfp
 

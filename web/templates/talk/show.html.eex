@@ -1,4 +1,4 @@
-<h2>Show submission</h2>
+<h2>Show talk</h2>
 
 <ul>
 
@@ -25,6 +25,6 @@
 </ul>
 
 <div class="form-group">
-    <%= link "Edit", to: submission_path(@conn, :edit, @submission), class: "btn btn-small btn-primary" %>
-    <%= link "Back", to: submission_path(@conn, :index), class: "btn btn-secondary" %>
+    <%= link "Edit", to: talk_path(@conn, :edit, @submission), class: "btn btn-small btn-primary" %>
+    <%= link "Back", to: talk_path(@conn, :index), class: "btn btn-secondary" %>
 </div>

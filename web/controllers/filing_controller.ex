@@ -4,7 +4,7 @@ defmodule Callforpapers.FilingController do
   alias Callforpapers.Filing
   alias Callforpapers.Cfp
   alias Callforpapers.User
-  alias Callforpapers.Submission
+  alias Callforpapers.Talk, as: Submission
 
   plug :load_callforpapers when action in [:create, :update, :new, :edit]
   plug :load_submissions when action in [:create, :update, :new, :edit]

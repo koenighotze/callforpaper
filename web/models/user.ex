@@ -11,7 +11,7 @@ defmodule Callforpapers.User do
 
     field :role, :string, default: "presenter"
 
-    has_many :submissions, Callforpapers.Submission
+    has_many :submissions, Callforpapers.Talk
     has_many :conferences, Callforpapers.Conference
 
     timestamps()

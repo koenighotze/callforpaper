@@ -1,7 +1,7 @@
 defmodule Callforpapers.SubmissionTest do
   use Callforpapers.ModelCase
 
-  alias Callforpapers.Submission
+  alias Callforpapers.Talk, as: Submission
 
   @valid_attrs %{duration: 42, externallink: "some content", shortsummary: "abcdefghijklmnopqrstuvwxyz", title: "some content"}
   @invalid_attrs %{}

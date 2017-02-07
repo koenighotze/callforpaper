@@ -42,7 +42,7 @@ defmodule Callforpapers.Router do
     pipe_through [:browser, :registered_users]
 
     resources "/users", UserController, only: [:show, :index, :edit, :delete, :update]
-    resources "/submissions", SubmissionController
+    resources "/talks", TalkController
     resources "/filings", FilingController
     #  do
     #   post "/acceptance", FilingController, :accept, as: :accept
