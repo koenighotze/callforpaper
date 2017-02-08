@@ -15,4 +15,11 @@ defmodule Callforpapers.TalkTest do
     changeset = Talk.changeset(%Talk{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+  test "presenter returns the presenter of the talk" do
+  end
+
+  test "title returns the presenter of the talk" do
+  end
+
 end

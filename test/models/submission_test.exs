@@ -1,5 +1,5 @@
 defmodule Callforpapers.SubmissionTest do
-  use Callforpapers.ModelCase
+  use Callforpapers.ModelCase, async: true
   import Callforpapers.TestHelpers
   alias Callforpapers.Submission
 
@@ -48,5 +48,28 @@ defmodule Callforpapers.SubmissionTest do
 
     assert found.cfp.start == cfp.start
     assert found.cfp.conference.title != ""
+  end
+
+  defp prepare_submission do
+    cfp = insert_organizer |> insert_conference |> insert_cfp
+    presenter = insert_presenter
+    talk = presenter |> insert_talk
+    submission = %Submission{submission_id: talk.id, cfp_id: cfp.id} |> Repo.insert!
+    submission = Submission.with_talk(Submission) |> Repo.get(submission.id)
+
+    %{cfp: cfp, presenter: presenter, talk: talk, submission: submission}
+  end
+
+  test "presenter returns the presenter of the talk" do
+    %{presenter: presenter, submission: submission} = prepare_submission
+
+    assert Submission.presenter(submission) == presenter.name
+  end
+
+  test "title returns the presenter of the talk" do
+    %{submission: submission, talk: talk} = prepare_submission
+
+    assert Submission.title(submission) == talk.title
+
   end
 end
