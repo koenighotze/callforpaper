@@ -8,7 +8,7 @@ defmodule Callforpapers.Validators do
                       if role in allowed do
                         []
                       else
-                        [{field, options[:message] || "is invalid"}]
+                        [{field, options[:message] || "is invalid, must be in #{Enum.join(allowed, ~s( ))}"}]
                       end
                     end)
   end

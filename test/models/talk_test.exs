@@ -16,10 +16,4 @@ defmodule Callforpapers.TalkTest do
     refute changeset.valid?
   end
 
-  test "presenter returns the presenter of the talk" do
-  end
-
-  test "title returns the presenter of the talk" do
-  end
-
 end
