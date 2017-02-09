@@ -52,8 +52,8 @@ defmodule Callforpapers.TestHelpers do
     |> Repo.insert!()
   end
 
-  def insert_filing(organizer) do
-    presenter = insert_presenter
+  def insert_filing(organizer, presenter \\ nil) do
+    presenter = presenter || insert_presenter
     submission = insert_submission(presenter)
     callforpapers = organizer |> insert_conference |> insert_cfp
     Repo.insert! %Submission{submission_id: submission.id, cfp_id: callforpapers.id}

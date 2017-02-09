@@ -14,9 +14,15 @@ Current build status: [![Build Status](https://travis-ci.org/koenighotze/callfor
 * Rating
 ** Rate available presentation
 
--> Measure test coverage
-
+-> submit only for open cfp
+-> cannot submit same talk for same cfp multiple times
+-> back on show for presenters goes to home
 -> Restrict actions of filings to current user or organizer
 -> cascade delete?
 -> close
 -> update Cfp
+-> insert conf only if organizer
+-> insert cfp only if organizer
+
+Add canary
+http://learningelixir.joekain.com/canary-authorization-with-phoenix/
