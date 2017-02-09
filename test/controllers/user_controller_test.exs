@@ -96,4 +96,12 @@ defmodule Callforpapers.UserControllerTest do
     assert conn.status == 404
     assert Repo.get(User, presenter.id)
   end
+
+  @tag login_as: "max"
+  test "the navigating 'back' link is not shown", %{conn: conn, user: user} do
+    conn = get conn, user_path(conn, :show, user)
+    # <a class=\"btn btn-secondary\" href=\"/users\">Back</a>\n</div>
+    refute html_response(conn, 200) =~ "Back</a>"
+  end
+
 end
