@@ -36,5 +36,6 @@ defmodule Callforpapers.Cfp do
     |> validate_required([:start, :end, :status])
     |> Validators.validate_enum(:status, @valid_stati)
     |> assoc_constraint(:conference)
+    |> cast_assoc(:conference)
   end
 end

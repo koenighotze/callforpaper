@@ -1,6 +1,7 @@
 defmodule Callforpapers.CallforpapersController do
   use Callforpapers.Web, :controller
 
+  alias Ecto.Changeset
   alias Callforpapers.Cfp
   alias Callforpapers.Conference
   alias Callforpapers.Submission
@@ -65,10 +66,21 @@ defmodule Callforpapers.CallforpapersController do
   end
 
   def update(conn, %{"id" => id, "cfp" => callforpapers_params}) do
-    callforpapers = Repo.get!(Cfp, id)
+    callforpapers = Repo.get!(Cfp, id) |> Repo.preload(:conference)
+    conf_id = callforpapers_params["conference_id"] || callforpapers.conference_id
 
-    # todo update conference does not work
-    changeset = Cfp.changeset(callforpapers, callforpapers_params)
+    # in german: ekliger Gulasch...das muss doch einfacher gehen
+    changeset =
+      if conf_id == callforpapers.conference_id do
+        Cfp.changeset(callforpapers, callforpapers_params)
+      else
+        new_conf = Repo.get!(Conference, conf_id)
+
+        %Cfp{id: callforpapers.id}
+          |> Changeset.change
+          |> Cfp.changeset(callforpapers_params)
+          |> Changeset.put_assoc(:conference, new_conf)
+      end
 
     case Repo.update(changeset) do
       {:ok, callforpapers} ->
