@@ -100,8 +100,14 @@ defmodule Callforpapers.UserControllerTest do
   @tag login_as: "max"
   test "the navigating 'back' link is not shown", %{conn: conn, user: user} do
     conn = get conn, user_path(conn, :show, user)
-    # <a class=\"btn btn-secondary\" href=\"/users\">Back</a>\n</div>
     refute html_response(conn, 200) =~ "Back</a>"
   end
 
+
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "the navigating 'back' link is shown if organizer", %{conn: conn, user: user} do
+    conn = get conn, user_path(conn, :show, user)
+    assert html_response(conn, 200) =~ "Back</a>"
+  end
 end
