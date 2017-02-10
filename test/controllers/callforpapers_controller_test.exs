@@ -117,4 +117,24 @@ defmodule Callforpapers.CallforpapersControllerTest do
     assert conn.assigns[:conferences] == nil
   end
 
+  @tag login_as: "max"
+  test "presenters cannot create cfps", %{conn: conn} do
+    conn = get conn, callforpapers_path(conn, :new)
+    assert html_response(conn, 404)
+  end
+
+  @tag login_as: "max"
+  test "presenters cannot modify cfps", %{conn: conn, user: presenter} do
+    callforpapers = presenter |> insert_conference |> insert_cfp
+    conn = put conn, callforpapers_path(conn, :update, callforpapers), cfp: @valid_attrs
+
+    assert html_response(conn, 404)
+  end
+
+  @tag login_as: "max"
+  test "presenters cannot delete cfps", %{conn: conn, user: presenter} do
+    callforpapers = presenter |> insert_conference |> insert_cfp
+    conn = delete conn, callforpapers_path(conn, :delete, callforpapers)
+    assert html_response(conn, 404)
+  end
 end

@@ -39,11 +39,8 @@ defmodule Callforpapers.Router do
     resources "/users", UserController, only: [:show, :index, :edit, :delete, :update]
     resources "/talks", TalkController
     resources "/submissions", SubmissionController
-    #  do
-    #   post "/acceptance", SubmissionController, :accept, as: :accept
-    #   post "/rejection", SubmissionController, :reject, as: :reject
-    # end
     resources "/callforpapers", CallforpapersController, only: [:show, :index]
+    resources "/conferences", ConferenceController, only: [:show, :index]
   end
 
   scope "/", Callforpapers do

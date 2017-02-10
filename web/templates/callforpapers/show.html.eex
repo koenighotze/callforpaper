@@ -36,34 +36,35 @@
   <%= link "Back", to: callforpapers_path(@conn, :index), class: "btn btn-small btn-secondary" %>
 </div>
 
-<h2>Current Submissions</h2>
+<%= if User.is_organizer?(@current_user) do %>
+  <h2>Current Submissions</h2>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Submission</th>
-      <th>Presenter</th>
-      <th>Status</th>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Submission</th>
+        <th>Presenter</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+  <%= for submission <- @submissions do %>
+      <tr>
+        <td><%= Submission.title(submission) %></td>
+        <td><%= Submission.presenter(submission) %></td>
+        <td><%= submission.status %></td>
+        <td class="text-right">
+          <%= if !Submission.accepted?(submission) do %>
+            <%= button "Accept", to: submission_accept_path(@conn, :accept, submission.id),  class: "btn btn-small btn-primary" %>
+          <% end %>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for submission <- @submissions do %>
-    <tr>
-      <td><%= Submission.title(submission) %></td>
-      <td><%= Submission.presenter(submission) %></td>
-      <td><%= submission.status %></td>
-      <td class="text-right">
-        <%= if !Submission.accepted?(submission) do %>
-          <%= button "Accept", to: submission_accept_path(@conn, :accept, submission.id),  class: "btn btn-small btn-primary" %>
-        <% end %>
-
-        <%= if !Submission.rejected?(submission) do %>
-          <%= button "Reject", to: submission_reject_path(@conn, :reject, submission.id),  class: "btn btn-small btn-primary" %>
-        <% end %>
-      </td>
-    </tr>
+          <%= if !Submission.rejected?(submission) do %>
+            <%= button "Reject", to: submission_reject_path(@conn, :reject, submission.id),  class: "btn btn-small btn-primary" %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+    </tbody>
+  </table>
 <% end %>
-  </tbody>
-</table>

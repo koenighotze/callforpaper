@@ -85,4 +85,16 @@ defmodule Callforpapers.Auth do
               |> Plug.Conn.halt()
     end
   end
+
+  def presenter_only(conn, _opts) do
+    conn =
+      if User.is_organizer?(conn.assigns.current_user) do
+        conn
+        |> Phoenix.Controller.put_flash(:error, "Only for presenters")
+        |> redirect(to: Helpers.page_path(conn, :index))
+        |> halt()
+      else
+        conn
+      end
+  end
 end

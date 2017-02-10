@@ -2,8 +2,11 @@ defmodule Callforpapers.TalkController do
   use Callforpapers.Web, :controller
   alias Callforpapers.Talk
   alias Callforpapers.User
+  import Logger
+  import Callforpapers.Auth, only: [ presenter_only: 2, authenticate_user: 2 ]
 
   plug :authenticate_user
+  plug :presenter_only when action in [:create, :update, :new, :edit, :delete]
   plug :load_presenters when action in [:create, :update, :new, :edit]
 
   def action(conn, _) do
@@ -51,25 +54,25 @@ defmodule Callforpapers.TalkController do
     end
   end
 
-  defp talk_by_id(current_user, id) do
+  def talk_by_user(current_user, id) do
     current_user
       |> User.talks_by_presenter
       |> Repo.get!(id)
   end
 
   def show(conn, %{"id" => id}, current_user) do
-    talk = talk_by_id(current_user, id)
+    talk = talk_by_user(current_user, id)
     render(conn, "show.html", talk: talk)
   end
 
   def edit(conn, %{"id" => id}, current_user) do
-    talk = talk_by_id(current_user, id)
+    talk = talk_by_user(current_user, id)
     changeset = Talk.changeset(talk)
     render(conn, "edit.html", durations: [20, 45, 60, 90], talk: talk, presenter: current_user.name, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "talk" => params}, current_user) do
-    talk = talk_by_id(current_user, id)
+    talk = talk_by_user(current_user, id)
     changeset = Talk.changeset(talk, params)
 
     case Repo.update(changeset) do
@@ -83,7 +86,7 @@ defmodule Callforpapers.TalkController do
   end
 
   def delete(conn, %{"id" => id}, current_user) do
-    talk = talk_by_id(current_user, id)
+    talk = talk_by_user(current_user, id)
 
     Repo.delete!(talk)
 

@@ -5,6 +5,9 @@ defmodule Callforpapers.SubmissionController do
   alias Callforpapers.Cfp
   alias Callforpapers.User
   alias Callforpapers.Talk
+  import Callforpapers.Auth, only: [ presenter_only: 2 ]
+
+  plug :presenter_only when action in [:create, :update, :new, :edit, :delete]
 
   plug :load_callforpapers when action in [:create, :update, :new, :edit]
   plug :load_submissions when action in [:create, :update, :new, :edit]

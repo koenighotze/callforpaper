@@ -19,8 +19,10 @@
 
       <td class="text-right">
         <%= link fa_icon("eye"), title: "Show", to: conference_path(@conn, :show, conference) %>
-        <%= link fa_icon("pencil"), title: "Edit", to: conference_path(@conn, :edit, conference) %>
-        <%= link fa_icon("trash"), title: "Delete", to: conference_path(@conn, :delete, conference), method: :delete, data: [confirm: "Are you sure?"] %>
+        <%= if User.is_organizer?(@current_user) do %>
+          <%= link fa_icon("pencil"), title: "Edit", to: conference_path(@conn, :edit, conference) %>
+          <%= link fa_icon("trash"), title: "Delete", to: conference_path(@conn, :delete, conference), method: :delete, data: [confirm: "Are you sure?"] %>
+        <% end %>
       </td>
     </tr>
 <% end %>

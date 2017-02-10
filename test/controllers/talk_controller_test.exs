@@ -76,7 +76,6 @@ defmodule Callforpapers.TalkControllerTest do
 
     conn = TalkController.load_presenters(conn, [])
 
-    IO.puts "#{inspect conn}"
     conn = put conn, talk_path(conn, :update, submission), submission: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit talk"
   end
@@ -112,6 +111,40 @@ defmodule Callforpapers.TalkControllerTest do
       |> Repo.get!(submission.id)
 
     assert found.user.name == "max"
+  end
+
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "organizers cannot add talks", %{conn: conn} do
+    conn = post conn, talk_path(conn, :create), talk: @valid_attrs
+    assert redirected_to(conn) == page_path(conn, :index)
+
+    refute Repo.get_by(Talk, @valid_attrs)
+  end
+
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "organizers cannot delete talks", %{conn: conn, user: organizer} do
+    talk = insert_valid_talk(organizer)
+    conn = delete conn, talk_path(conn, :delete, talk)
+    assert redirected_to(conn) == page_path(conn, :index)
+  end
+
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "organizers cannot modify talks", %{conn: conn, user: organizer} do
+    talk = insert_valid_talk(organizer)
+    conn = delete conn, talk_path(conn, :delete, talk)
+    assert redirected_to(conn) == page_path(conn, :index)
+  end
+
+  @tag login_as: "max"
+  test "talk with user returns talk only if user matches", %{user: presenter} do
+    orga = insert_organizer
+    inserted_talk = insert_valid_talk(presenter)
+    loaded_talk = TalkController.talk_by_user(presenter, inserted_talk.id)
+    assert loaded_talk == inserted_talk
+    assert catch_error(TalkController.talk_by_user(orga, inserted_talk.id))
   end
 
   defp insert_valid_talk(user) do

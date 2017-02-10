@@ -18,8 +18,6 @@
       <td><%= submission.cfp.conference.title %></td>
 
       <td class="text-right">
-        <%= link fa_icon("eye"), title: "Show", to: submission_path(@conn, :show, submission) %>
-
         <%= if submission.status == "open" do %>
           <%= link fa_icon("pencil"), title: "Edit", to: submission_path(@conn, :edit, submission) %>
           <%= link fa_icon("trash"), title: "Delete", to: submission_path(@conn, :delete, submission), method: :delete, data: [confirm: "Are you sure?"] %>

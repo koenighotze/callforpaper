@@ -37,7 +37,7 @@ defmodule Callforpapers.ConferenceControllerTest do
   @tag login_as: "max"
   @tag :as_organizer
   test "shows chosen resource", %{conn: conn} do
-    conference = Repo.insert! %Conference{}
+    conference = Repo.insert! %Conference{} |> Conference.changeset(@valid_attrs)
     conn = get conn, conference_path(conn, :show, conference)
     assert html_response(conn, 200) =~ "Show conference"
   end
@@ -84,8 +84,32 @@ defmodule Callforpapers.ConferenceControllerTest do
     refute Repo.get(Conference, conference.id)
   end
 
-  @tag :skip # implement me
-  test "presenters cannot acces the conference", %{conn: conn} do
-    # todo
+  @tag login_as: "max"
+  test "presenters cannot modify conferences", %{conn: conn} do
+    conference = Repo.insert! %Conference{} |> Conference.changeset(@valid_attrs)
+    conn = put conn, conference_path(conn, :update, conference), conference: %{title: "foo"}
+    assert html_response(conn, 404)
+    assert Repo.get_by!(Conference, @valid_attrs)
+  end
+
+  @tag login_as: "max"
+  test "presenters cannot delete conferences", %{conn: conn} do
+    conference = Repo.insert! %Conference{} |> Conference.changeset(@valid_attrs)
+    conn = delete conn, conference_path(conn, :delete, conference)
+    assert html_response(conn, 404)
+    assert Repo.get(Conference, conference.id)
+  end
+
+  @tag login_as: "max"
+  test "presenters can view all conferences", %{conn: conn} do
+    conn = get conn, conference_path(conn, :index)
+    assert html_response(conn, 200) =~ "Listing conferences"
+  end
+
+  @tag login_as: "max"
+  test "presenters can view conference details", %{conn: conn} do
+    conference = Repo.insert! %Conference{} |> Conference.changeset(@valid_attrs)
+    conn = get conn, conference_path(conn, :show, conference)
+    assert html_response(conn, 200) =~ "Show conference"
   end
 end

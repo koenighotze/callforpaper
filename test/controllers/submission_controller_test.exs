@@ -118,15 +118,14 @@ defmodule Callforpapers.SubmissionControllerTest do
   end
 
 
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "organizers cannot submit talks", %{conn: conn, user: organizer} do
+    cfp = organizer |> insert_conference |> insert_cfp
+    talk = insert_presenter |> insert_talk
+    conn = post conn, submission_path(conn, :create), submission: Dict.merge(@valid_attrs, cfp_id: cfp.id, submission_id: talk.id)
+    refute Repo.get_by(Submission, @valid_attrs)
 
-  # Tests:
-  #  Filing only visible to each user
-  #  Filing may be retracted
-  #  done Filing is initially in state open
-  #  done State may only be open, accepted, rejected
-  #
-  #  Organizer:
-  #  may rejected, accept filing
-  #  may view all filings for a cfp
-  #
+    assert redirected_to(conn) == page_path(conn, :index)
+  end
 end
