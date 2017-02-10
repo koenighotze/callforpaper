@@ -13,7 +13,14 @@
   <tbody>
 <%= for submission <- @submissions do %>
     <tr>
-      <td><%= submission.status %></td>
+      <td>
+          <%= if submission.status == "accepted" do %>
+            <%= fa_icon("check") %>
+          <% end %>
+          <% if submission.status == "rejected" do %>
+            <%= fa_icon("remove") %>
+          <% end %>
+      </td>
       <td><%= submission.submission.title %></td>
       <td><%= submission.cfp.conference.title %></td>
 

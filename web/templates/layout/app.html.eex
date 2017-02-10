@@ -26,7 +26,7 @@
 
               <%= if Callforpapers.User.is_organizer?(@current_user) do %>
                 <li>
-                  <%= link fa_icon("user"), to: user_path(@conn, :index), title: "Presenters" %>
+                  <%= link fa_icon("users"), to: user_path(@conn, :index), title: "Presenters" %>
                 </li>
 
                 <li>

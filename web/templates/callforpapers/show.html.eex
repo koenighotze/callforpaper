@@ -53,7 +53,14 @@
       <tr>
         <td><%= Submission.title(submission) %></td>
         <td><%= Submission.presenter(submission) %></td>
-        <td><%= submission.status %></td>
+        <td>
+          <%= if submission.status == "accepted" do %>
+            <%= fa_icon("check") %>
+          <% end %>
+          <% if submission.status == "rejected" do %>
+            <%= fa_icon("remove") %>
+          <% end %>
+        </td>
         <td class="text-right">
           <%= if !Submission.accepted?(submission) do %>
             <%= button "Accept", to: submission_accept_path(@conn, :accept, submission.id),  class: "btn btn-small btn-primary" %>

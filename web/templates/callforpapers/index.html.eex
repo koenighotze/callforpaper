@@ -16,7 +16,13 @@
     <tr>
       <td><%= callforpapers.start %></td>
       <td><%= callforpapers.end %></td>
-      <td><%= callforpapers.status %></td>
+      <td>
+          <%= if callforpapers.status == "open" do %>
+            <%= fa_icon("lock") %>
+          <% else %>
+            <%= fa_icon("unlock") %>
+          <% end %>
+      </td>
       <td><%= callforpapers.conference.title %></td>
 
       <td class="text-right">
