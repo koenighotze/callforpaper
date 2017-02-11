@@ -35,16 +35,16 @@
               <% end %>
 
               <li>
-                  <%= link fa_icon("volume-control-phone"), to: callforpapers_path(@conn, :index), title: "Call-for-Papers" %>
+                  <%= link fa_icon("volume-up"), to: callforpapers_path(@conn, :index), title: "Call-for-Papers" %>
               </li>
 
               <%= if Callforpapers.User.is_presenter?(@current_user) do %>
                 <li>
-                  <%= link fa_icon("book"), to: talk_path(@conn, :index), title: "Talks" %>
+                  <%= link fa_icon("book"), to: talk_path(@conn, :index), title: "My talks" %>
                 </li>
 
                 <li>
-                  <%= link fa_icon("mail-reply-all"), to: submission_path(@conn, :index), title: "Filings" %>
+                  <%= link fa_icon("send"), to: submission_path(@conn, :index), title: "My Submissions" %>
                 </li>
               <% end %>
               <li>

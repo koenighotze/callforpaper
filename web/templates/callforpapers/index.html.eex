@@ -18,9 +18,9 @@
       <td><%= callforpapers.end %></td>
       <td>
           <%= if callforpapers.status == "open" do %>
-            <%= fa_icon("lock") %>
-          <% else %>
             <%= fa_icon("unlock") %>
+          <% else %>
+            <%= fa_icon("lock") %>
           <% end %>
       </td>
       <td><%= callforpapers.conference.title %></td>
@@ -31,7 +31,7 @@
           <%= link fa_icon("pencil"), title: "Edit", to: callforpapers_path(@conn, :edit, callforpapers) %>
           <%= link fa_icon("trash"), title: "Delete", to: callforpapers_path(@conn, :delete, callforpapers), method: :delete, data: [confirm: "Are you sure?"] %>
         <% else %>
-          <%= link fa_icon("mail-reply-all"), title: "File submissions", to: submission_path(@conn, :new) %>
+          <%= link fa_icon("send"), title: "Submit talk", to: submission_path(@conn, :new) %>
         <% end %>
       </td>
     </tr>
