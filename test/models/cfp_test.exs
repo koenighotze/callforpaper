@@ -4,7 +4,7 @@ defmodule Callforpapers.CallforpapersTest do
   alias Callforpapers.Cfp
   alias Ecto.Changeset
 
-  @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 4, year: 2010}, status: "open"}
+  @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 3, year: 2010}, status: "open"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
@@ -76,4 +76,20 @@ defmodule Callforpapers.CallforpapersTest do
     assert Ecto.Date.to_erl(loaded.start) == {2000, 10, 10}
   end
 
+
+  test "the start day must not be the same as the end day" do
+    cfp =
+      %Cfp{}
+      |> Cfp.changeset(%{start: ~D{2000-10-10}, end: ~D{2000-10-10}, status: "open"})
+
+    refute cfp.valid?
+  end
+
+    test "the start day must not be after the end day" do
+    cfp =
+      %Cfp{}
+      |> Cfp.changeset(%{start: ~D{2000-10-11}, end: ~D{2000-10-10}, status: "open"})
+
+    refute cfp.valid?
+  end
 end

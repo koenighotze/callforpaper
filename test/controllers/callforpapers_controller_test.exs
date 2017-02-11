@@ -5,7 +5,7 @@ defmodule Callforpapers.CallforpapersControllerTest do
   alias Callforpapers.Conference
   alias Callforpapers.Cfp
 
-  @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 4, year: 2010}, status: "open"}
+  @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 3, year: 2010}, status: "open"}
   @invalid_attrs %{start: nil}
 
   @tag login_as: "max"

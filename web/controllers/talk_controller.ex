@@ -2,7 +2,6 @@ defmodule Callforpapers.TalkController do
   use Callforpapers.Web, :controller
   alias Callforpapers.Talk
   alias Callforpapers.User
-  import Logger
   import Callforpapers.Auth, only: [ presenter_only: 2, authenticate_user: 2 ]
 
   plug :authenticate_user

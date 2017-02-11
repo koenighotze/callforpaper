@@ -37,5 +37,12 @@ defmodule Callforpapers.Cfp do
     |> Validators.validate_enum(:status, @valid_stati)
     |> assoc_constraint(:conference)
     |> cast_assoc(:conference)
+    |> Validators.validate_before(:start, :end)
+  end
+
+  defimpl String.Chars, for: Callforpapers.Cfp do
+    def to_string(cfp) do
+      "#{cfp.start}-#{cfp.end} #{cfp.status}"
+    end
   end
 end
