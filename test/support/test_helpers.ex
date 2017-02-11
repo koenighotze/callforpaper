@@ -9,7 +9,7 @@ defmodule Callforpapers.TestHelpers do
 
   @default_presenter %{name: "Bratislav Metulski", email: "brasis@lav.se", bio: "None of your business", picture: "", password: "12345678", role: "presenter"}
   @default_submission %{duration: 42, shortsummary: "some cadsasddasadsadsadsdasadsadsontent", title: "some content"}
-  @default_conference %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 5, year: 2010}, title: "some title"}
+  @default_conference %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 3, year: 2010}, title: "some title"}
   @default_cfp %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 3, year: 2010}, status: "open"}
 
   def insert_organizer(attrs \\ %{}) do

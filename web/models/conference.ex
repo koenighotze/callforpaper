@@ -29,5 +29,12 @@ defmodule Callforpapers.Conference do
     |> validate_required([:title, :start, :end])
     |> validate_length(:title, min: 10, max: 50)
     |> assoc_constraint(:user)
+    |> Validators.validate_before(:start, :end)
+  end
+
+  defimpl String.Chars, for: Callforpapers.Conference do
+    def to_string(conf) do
+      "#{conf.start}-#{conf.end} #{conf.title}"
+    end
   end
 end

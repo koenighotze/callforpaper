@@ -11,8 +11,8 @@ alias Callforpapers.Cfp
 
 import Ecto, only: [build_assoc: 2]
 
-default_conference = %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 4, year: 2010}, title: "some title"}
-default_cfp = %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 4, year: 2010}, status: "open"}
+default_conference = %{end: %{day: 17, month: 5, year: 2010}, start: %{day: 17, month: 4, year: 2010}, title: "some title"}
+default_cfp = %{end: %{day: 17, month: 5, year: 2010}, start: %{day: 17, month: 4, year: 2010}, status: "open"}
 lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmon."
 
 [

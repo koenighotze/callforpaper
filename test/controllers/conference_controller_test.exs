@@ -2,7 +2,7 @@ defmodule Callforpapers.ConferenceControllerTest do
   use Callforpapers.ConnCase
 
   alias Callforpapers.Conference
-  @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 4, year: 2010}, title: "some content"}
+  @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 3, year: 2010}, title: "some content"}
   @invalid_attrs %{}
 
   @tag login_as: "max"
