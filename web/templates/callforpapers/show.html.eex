@@ -57,8 +57,8 @@
           <%= if submission.status == "accepted" do %>
             <%= fa_icon("check") %>
           <% end %>
-          <% if submission.status == "rejected" do %>
-            <%= fa_icon("remove") %>
+          <%= if submission.status == "rejected" do %>
+            <%= fa_icon("times") %>
           <% end %>
         </td>
         <td class="text-right">

@@ -27,7 +27,6 @@ defmodule Callforpapers.SubmissionController do
     |> assign(:callforpapers, cfps)
   end
 
-  # todo refactor me
   def load_submissions(conn, _params) do
     talks =
       conn.assigns.current_user
@@ -45,7 +44,9 @@ defmodule Callforpapers.SubmissionController do
       |> Submission.accept
       |> Repo.update!
 
-    redirect(conn, to: callforpapers_path(conn, :show, submission.cfp_id))
+    conn
+      |> put_flash(:info, "Talk submission was accepted.")
+      |> redirect(to: callforpapers_path(conn, :show, submission.cfp_id))
   end
 
   def reject(conn, %{"submission_id" => submission_id}, _current_user) do
@@ -54,7 +55,9 @@ defmodule Callforpapers.SubmissionController do
       |> Submission.reject
       |> Repo.update!
 
-    redirect(conn, to: callforpapers_path(conn, :show, submission.cfp_id))
+    conn
+      |> put_flash(:info, "Talk submission was rejected.")
+      |> redirect(to: callforpapers_path(conn, :show, submission.cfp_id))
   end
 
   def index(conn, _params, current_user) do
