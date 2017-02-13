@@ -2,6 +2,32 @@ defmodule Callforpapers.ConferenceController do
   use Callforpapers.Web, :controller
 
   alias Callforpapers.Conference
+  alias Callforpapers.Cfp
+  alias Callforpapers.Submission
+
+  plug :load_accepted_talks when action in [ :show ]
+
+  def load_accepted_talks(conn, _param) do
+    %{params: %{"id" => conference_id}} = conn
+    # todo: refactor me
+    all_cfp_ids = Repo.all(from c in Cfp, where: c.conference_id == ^conference_id, select: c.id)
+
+    talks = Repo.all(from s in Submission,
+                           preload: [{:submission, :user}],
+                           where: s.status == "accepted" and s.cfp_id in ^all_cfp_ids)
+            |> Enum.map(fn s ->
+              %{
+                title: s.submission.title,
+                presenter: s.submission.user.name,
+                shortsummary: s.submission.shortsummary,
+                duration: s.submission.duration,
+                externallink: s.submission.externallink,
+              }
+            end)
+
+    conn
+    |> assign(:accepted_talks, talks)
+  end
 
   def index(conn, _params) do
     conferences = Repo.all(Conference)
@@ -28,7 +54,7 @@ defmodule Callforpapers.ConferenceController do
 
   def show(conn, %{"id" => id}) do
     conference = Repo.get!(Conference, id)
-    render(conn, "show.html", conference: conference)
+    render(conn, "show.html", conference: conference, accepted_talks: conn.assigns.accepted_talks)
   end
 
   def edit(conn, %{"id" => id}) do

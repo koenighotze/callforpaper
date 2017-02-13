@@ -2,6 +2,9 @@ defmodule Callforpapers.ConferenceControllerTest do
   use Callforpapers.ConnCase
 
   alias Callforpapers.Conference
+  alias Callforpapers.Submission
+  alias Callforpapers.Cfp
+  alias Callforpapers.ConferenceController
   @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 3, year: 2010}, title: "some content"}
   @invalid_attrs %{}
 
@@ -111,5 +114,34 @@ defmodule Callforpapers.ConferenceControllerTest do
     conference = Repo.insert! %Conference{} |> Conference.changeset(@valid_attrs)
     conn = get conn, conference_path(conn, :show, conference)
     assert html_response(conn, 200) =~ "Show conference"
+  end
+
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "load_accepted_talks loads the accepted talks", %{conn: conn, user: organizer} do
+    conference = organizer |> insert_conference
+    callforpapers = conference |> insert_cfp
+    presenter = insert_presenter
+
+    accepted =
+      insert_submission_for_cfp(presenter, callforpapers)
+      |> Submission.accept
+      |> Repo.update!
+
+    insert_submission_for_cfp(presenter, callforpapers)
+      |> Submission.reject
+      |> Repo.update!
+
+    insert_submission_for_cfp(presenter, callforpapers)
+
+    conn = get conn, conference_path(conn, :show, conference)
+
+    assert conn.assigns.accepted_talks == [ %{duration: 42, externallink: nil, presenter: "Bratislav Metulski", shortsummary: "some cadsasddasadsadsadsdasadsadsontent", title: "some content"} ]
+  end
+
+
+  def insert_submission_for_cfp(presenter, cfp) do
+    talk = presenter |> insert_talk
+    Repo.insert! %Submission{submission_id: talk.id, cfp_id: cfp.id}
   end
 end

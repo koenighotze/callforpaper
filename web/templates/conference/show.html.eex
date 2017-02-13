@@ -22,3 +22,32 @@
   <%= link "Edit", to: conference_path(@conn, :edit, @conference),  class: "btn btn-small btn-primary" %>
   <%= link "Back", to: conference_path(@conn, :index), class: "btn btn-small btn-secondary" %>
 </div>
+
+<%= if length(@accepted_talks) > 0 do %>
+
+<h2>Accepted talks</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Presenter</th>
+      <th>Shortsummary</th>
+      <th>Duration</th>
+      <th>Externallink</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for talk <- @accepted_talks do %>
+    <tr>
+      <td><%= talk.title %></td>
+      <td><%= talk.presenter %></td>
+      <td><%= talk.shortsummary %></td>
+      <td><%= talk.duration %></td>
+      <td><%= talk.externallink %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<% end %>
