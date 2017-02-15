@@ -4,6 +4,8 @@ defmodule Callforpapers.TalkController do
   alias Callforpapers.User
   import Callforpapers.Auth, only: [ presenter_only: 2, authenticate_user: 2 ]
 
+  @valid_durations [20, 45, 60, 90]
+
   plug :authenticate_user
   plug :presenter_only when action in [:create, :update, :new, :edit, :delete]
   plug :load_presenters when action in [:create, :update, :new, :edit]
@@ -34,14 +36,11 @@ defmodule Callforpapers.TalkController do
   def new(conn, _params, current_user) do
     changeset = Talk.changeset(%Talk{})
 
-    render conn, "new.html", durations: ["Quickie (20 min)", "Presentation (45 min)", "University / Lab (2 h)"], presenter: current_user.name, changeset: changeset
+    render conn, "new.html", durations: @valid_durations, presenter: current_user.name, changeset: changeset
   end
 
-  def create(conn, %{"submission" => params}, current_user) do
-    changeset =
-      current_user
-      |> build_assoc(:submissions)
-      |> Talk.changeset(params)
+  def create(conn, %{"talk" => params}, current_user) do
+    changeset = User.add_talk(current_user, params)
 
     case Repo.insert(changeset) do
       {:ok, _submission} ->
@@ -49,7 +48,7 @@ defmodule Callforpapers.TalkController do
         |> put_flash(:info, "Talk created successfully.")
         |> redirect(to: talk_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", durations: [20, 45, 60, 90], presenter: current_user.name, changeset: changeset)
+        render(conn, "new.html", durations: @valid_durations, presenter: current_user.name, changeset: changeset)
     end
   end
 
@@ -67,7 +66,7 @@ defmodule Callforpapers.TalkController do
   def edit(conn, %{"id" => id}, current_user) do
     talk = talk_by_user(current_user, id)
     changeset = Talk.changeset(talk)
-    render(conn, "edit.html", durations: [20, 45, 60, 90], talk: talk, presenter: current_user.name, changeset: changeset)
+    render(conn, "edit.html", durations: @valid_durations, talk: talk, presenter: current_user.name, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "talk" => params}, current_user) do

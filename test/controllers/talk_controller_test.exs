@@ -21,7 +21,7 @@ defmodule Callforpapers.TalkControllerTest do
 
   @tag login_as: "max"
   test "creates resource and redirects when data is valid", %{conn: conn} do
-    conn = post conn, talk_path(conn, :create), submission: @valid_attrs
+    conn = post conn, talk_path(conn, :create), talk: @valid_attrs
     assert redirected_to(conn) == talk_path(conn, :index)
     assert Repo.get_by(Talk, @valid_attrs)
   end
@@ -29,7 +29,7 @@ defmodule Callforpapers.TalkControllerTest do
   @tag login_as: "max"
   @tag :skip # figure out how to provide for assigns
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, talk_path(conn, :create), submission: @invalid_attrs
+    conn = post conn, talk_path(conn, :create), talk: @invalid_attrs
     assert html_response(conn, 200) =~ "New talk"
   end
 
@@ -76,7 +76,7 @@ defmodule Callforpapers.TalkControllerTest do
 
     conn = TalkController.load_presenters(conn, [])
 
-    conn = put conn, talk_path(conn, :update, submission), submission: @invalid_attrs
+    conn = put conn, talk_path(conn, :update, submission), talk: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit talk"
   end
 
@@ -90,7 +90,7 @@ defmodule Callforpapers.TalkControllerTest do
 
   @tag login_as: "max"
   test "submissions are created for the currently loged in user", %{conn: conn} do
-    conn = post conn, talk_path(conn, :create), submission: @valid_attrs
+    conn = post conn, talk_path(conn, :create), talk: @valid_attrs
     assert redirected_to(conn) == talk_path(conn, :index)
 
     submission =
@@ -145,6 +145,14 @@ defmodule Callforpapers.TalkControllerTest do
     loaded_talk = TalkController.talk_by_user(presenter, inserted_talk.id)
     assert loaded_talk == inserted_talk
     assert catch_error(TalkController.talk_by_user(orga, inserted_talk.id))
+  end
+
+  @tag login_as: "max"
+  test "talk titles must be unique per presenter", %{conn: conn, user: presenter} do
+    talk = presenter |> insert_valid_talk
+
+    conn = post conn, talk_path(conn, :create), talk: Dict.merge(@invalid_attrs, %{title: talk.title})
+    assert html_response(conn, 200) =~ "New talk"
   end
 
   defp insert_valid_talk(user) do

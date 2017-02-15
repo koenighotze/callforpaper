@@ -1,6 +1,8 @@
 defmodule Callforpapers.User do
   use Callforpapers.Web, :model
 
+  alias Callforpapers.Talk
+
   schema "users" do
     field :name, :string
     field :email, :string
@@ -63,4 +65,26 @@ defmodule Callforpapers.User do
       _ -> changeset
     end
   end
+
+  def add_talk(user, talk_params) do
+    user
+      |> build_assoc(:submissions)
+      |> Talk.changeset(talk_params)
+      |> validate_unique_title(user)
+  end
+
+  def validate_unique_title(changeset, user) do
+    validate_change(changeset,
+                    :title,
+                    fn _, title ->
+                      talk = Talk.talk_with_title(user, title) |> Callforpapers.Repo.one
+                      if nil == talk do
+                        []
+                      else
+                        [{:title, "is already taken."}]
+                      end
+                    end)
+  end
+
+
 end

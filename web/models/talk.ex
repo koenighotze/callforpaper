@@ -23,6 +23,16 @@ defmodule Callforpapers.Talk do
     from s in query, preload: [:user]
   end
 
+  def talks(user) do
+    from t in Callforpapers.Talk, where: t.user_id == ^user.id
+  end
+
+  def talk_with_title(user, title) do
+    talks = talks(user)
+
+    from t in talks, where: t.title == ^title
+  end
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
