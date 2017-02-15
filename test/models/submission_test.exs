@@ -18,6 +18,16 @@ defmodule Callforpapers.SubmissionTest do
     refute changeset.valid?
   end
 
+  test "cfp_id is mandatory" do
+    changeset = Submission.changeset(%Submission{}, Dict.delete(@valid_attrs, :cfp_id))
+    refute changeset.valid?
+  end
+
+  test "submission_id is mandatory" do
+    changeset = Submission.changeset(%Submission{}, Dict.delete(@valid_attrs, :submission_id))
+    refute changeset.valid?
+  end
+
   test "initially the state of a Submission is open" do
     filing = %Submission{}
 

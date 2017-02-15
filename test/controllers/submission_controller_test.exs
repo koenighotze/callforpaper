@@ -2,6 +2,7 @@ defmodule Callforpapers.SubmissionControllerTest do
   use Callforpapers.ConnCase
 
   alias Callforpapers.Submission
+  alias Callforpapers.Cfp
   @valid_attrs %{status: "open"}
   @invalid_attrs %{status: "blafasel"}
 
@@ -29,7 +30,8 @@ defmodule Callforpapers.SubmissionControllerTest do
 
   @tag login_as: "max"
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, submission_path(conn, :create), submission: @invalid_attrs
+    cfp = insert_organizer |> insert_conference |> insert_cfp
+    conn = post conn, submission_path(conn, :create), submission: Dict.merge(@invalid_attrs, cfp_id: cfp.id)
     assert html_response(conn, 200) =~ "New submission"
   end
 
@@ -117,7 +119,6 @@ defmodule Callforpapers.SubmissionControllerTest do
     assert Submission.rejected?(updated)
   end
 
-
   @tag login_as: "max"
   @tag :as_organizer
   test "organizers cannot submit talks", %{conn: conn, user: organizer} do
@@ -127,5 +128,21 @@ defmodule Callforpapers.SubmissionControllerTest do
     refute Repo.get_by(Submission, @valid_attrs)
 
     assert redirected_to(conn) == page_path(conn, :index)
+  end
+
+  @tag login_as: "max"
+  test "a presentation cannot be submitted to a closed cfp", %{conn: conn, user: presenter} do
+    talk = presenter |> insert_talk
+    cfp =
+      insert_organizer
+      |> insert_conference
+      |> insert_cfp
+      |> Cfp.changeset(%{status: "closed"})
+      |> Repo.update!
+
+    conn = post conn, submission_path(conn, :create), submission: Dict.merge(@valid_attrs, cfp_id: cfp.id, submission_id: talk.id)
+
+    assert redirected_to(conn) == submission_path(conn, :index)
+    refute Repo.get_by(Submission, %{cfp_id: cfp.id, submission_id: talk.id})
   end
 end

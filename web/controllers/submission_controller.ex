@@ -61,7 +61,12 @@ defmodule Callforpapers.SubmissionController do
   end
 
   def index(conn, _params, current_user) do
-    submissions = Submission |> Submission.with_cfp |> Submission.with_talk |> Repo.all |> Enum.filter(fn f -> f.submission.user.id == current_user.id end)
+    submissions =
+      Submission
+      |> Submission.with_cfp
+      |> Submission.with_talk
+      |> Repo.all
+      |> Enum.filter(fn f -> f.submission.user.id == current_user.id end)
     render(conn, "index.html", submissions: submissions)
   end
 
@@ -74,6 +79,13 @@ defmodule Callforpapers.SubmissionController do
   def create(conn, %{"submission" => submission_params}, _current_user) do
     changeset = Submission.changeset(%Submission{}, submission_params)
 
+    case Repo.one(from c in Cfp, where: c.status == "closed" and c.id == ^submission_params["cfp_id"]) do
+      nil -> insert_submission(conn, changeset)
+      _ -> redirect(conn, to: submission_path(conn, :index))
+    end
+  end
+
+  defp insert_submission(conn, changeset) do
     case Repo.insert(changeset) do
       {:ok, _submission} ->
         conn
