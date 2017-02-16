@@ -12,7 +12,7 @@ defmodule Callforpapers.PageViewTest do
   end
 
   test "entry for presenter", %{conn: conn} do
-    content = render_to_string(Callforpapers.PageView, "index.html", conn: conn, current_user: %User{name: "Max", role: "presenter"})
+    content = render_to_string(Callforpapers.PageView, "index.html", conn: conn, current_user: %User{id: 12, name: "Max", role: "presenter"})
 
     assert !String.contains?(content, "login")
     assert !String.contains?(content, "register")

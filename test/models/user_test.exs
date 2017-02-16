@@ -51,8 +51,7 @@ defmodule Callforpapers.UserTest do
   test "the talk name must be unique per user" do
     presenter = insert_presenter
 
-    talk =
-      presenter
+    presenter
       |> User.add_talk(@valid_talk_attrs)
       |> Repo.insert!
 

@@ -3,7 +3,6 @@ defmodule Callforpapers.ConferenceControllerTest do
 
   alias Callforpapers.Conference
   alias Callforpapers.Submission
-  alias Callforpapers.ConferenceController
   @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 3, year: 2010}, title: "some content"}
   @invalid_attrs %{}
 
