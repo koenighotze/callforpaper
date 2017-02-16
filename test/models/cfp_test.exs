@@ -76,7 +76,6 @@ defmodule Callforpapers.CallforpapersTest do
     assert Ecto.Date.to_erl(loaded.start) == {2000, 10, 10}
   end
 
-
   test "the start day must not be the same as the end day" do
     cfp =
       %Cfp{}
@@ -85,11 +84,21 @@ defmodule Callforpapers.CallforpapersTest do
     refute cfp.valid?
   end
 
-    test "the start day must not be after the end day" do
+  test "the start day must not be after the end day" do
     cfp =
       %Cfp{}
       |> Cfp.changeset(%{start: ~D{2000-10-11}, end: ~D{2000-10-10}, status: "open"})
 
     refute cfp.valid?
+  end
+
+  test "deleting a cfp should cascade to the submissions" do
+    cfp = insert_organizer |> insert_conference |> insert_cfp(%{start: ~D{2010-01-01}})
+    talk = insert_presenter |> insert_talk
+
+    submission = submit_talk(talk, cfp)
+
+    Repo.delete!(cfp)
+    refute Repo.get(Callforpapers.Submission, submission.id)
   end
 end
