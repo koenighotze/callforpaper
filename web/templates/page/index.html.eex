@@ -1,9 +1,44 @@
 <div class="jumbotron">
-  <h2>Call-for-Papers</h2>
-  <p class="lead">Simple administration for paper submissions.</p>
+  <p class="lead">Simple administration for paper submissions and call-for-papers.</p>
   <%= if !@current_user do %>
-  Please login using the <i class="fa fa-user-circle"></i> button or register as a presenter using the
-  <i class="fa fa-user-plus"></i> button.
+    Please login using the <%= link fa_icon("user-circle", text: "Login"), to: session_path(@conn, :new), title: "Login" %> button or register as a presenter using the
+    <%= link fa_icon("user-plus", text: "Register"), to: user_path(@conn, :new), title: "Register"%> button.
+  <%= else %>
+    <div class="menu-container">
+    <div class="menu-list">
+      <%= if Callforpapers.User.is_organizer?(@current_user) do %>
+        <div class="menu-item">
+          <%= link fa_icon("users"), to: user_path(@conn, :index), title: "Presenters" %>
+          allows managment of all registered users.
+        </div>
+
+        <div class="menu-item">
+          <%= link fa_icon("graduation-cap"), to: conference_path(@conn, :index), title: "Conferences" %> takes you to the conference administration.
+        </div>
+      <% end %>
+
+      <div class="menu-item">
+        <%= link fa_icon("volume-up"), to: callforpapers_path(@conn, :index), title: "Call-for-Papers" %> takes you to the call-for-papers section.
+      </div>
+
+      <%= if Callforpapers.User.is_presenter?(@current_user) do %>
+        <div class="menu-item">
+          <%= link fa_icon("book"), to: talk_path(@conn, :index), title: "My talks" %> shows you your current presentations.
+        </div>
+
+        <div class="menu-item">
+          <%= link fa_icon("send"), to: submission_path(@conn, :index), title: "My Submissions" %> takes you to your submissions.
+        </div>
+      <% end %>
+
+      <div class="menu-item">
+        <%= link  fa_icon("power-off"), to: session_path(@conn, :delete, @current_user), method: "delete", title: "Logout" %> logs you off.
+      </div>
+      <div class="menu-item">
+        <%= link fa_icon("home"), to: page_path(@conn, :index), title: "Home" %> takes you to this page.
+      </div>
+    </div>
+    </div>
   <%= end %>
 </div>
 

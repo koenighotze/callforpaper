@@ -10,6 +10,7 @@
     <title>Conference and CfP Administration</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/font-awesome.min.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/cfp.css") %>">
   </head>
 
   <body>
