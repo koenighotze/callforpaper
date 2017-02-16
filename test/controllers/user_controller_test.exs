@@ -17,9 +17,12 @@ defmodule Callforpapers.UserControllerTest do
     assert html_response(conn, 200) =~ "New user"
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn} do
+  test "creates the user and redirects to the home page if valid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), user: @valid_attrs
-    assert redirected_to(conn) == user_path(conn, :index)
+    assert redirected_to(conn) == page_path(conn, :index)
+
+    # Test flash message
+
     assert Repo.get_by(User, @valid_attrs)
   end
 

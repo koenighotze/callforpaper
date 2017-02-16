@@ -38,8 +38,9 @@ defmodule Callforpapers.UserController do
     case Repo.insert(changeset) do
       {:ok, _user} ->
         conn
-        |> put_flash(:info, "User created successfully.")
-        |> redirect(to: user_path(conn, :index))
+        |> put_flash(:info, "User created successfully. Please log is using your credentials")
+        # TODO hier muss der Login passieren
+        |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

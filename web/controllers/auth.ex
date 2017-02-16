@@ -1,6 +1,5 @@
 defmodule Callforpapers.Auth do
   import Plug.Conn
-
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   import Phoenix.Controller
   import Logger
@@ -23,7 +22,6 @@ defmodule Callforpapers.Auth do
   end
 
   def login(conn, user) do
-    info("Logging in")
     conn
     |> put_current_user(user)
     |> put_session(:user_id, user.id)
@@ -31,21 +29,11 @@ defmodule Callforpapers.Auth do
   end
 
   def put_current_user(conn, user) do
-    # token = Phoenix.Token.sign(conn, @salt, user.id)
-
-    # debug("Assigning token #{token} to user #{user.id}")
-
     conn = conn
     |> assign(:current_user, user)
-    # |> assign(:user_token, token)
-
-    debug("Assigns are #{inspect conn.assigns}")
-
-    conn
   end
 
   def logout(conn) do
-    info("Logging out")
     configure_session(conn, drop: true)
   end
 
@@ -63,6 +51,7 @@ defmodule Callforpapers.Auth do
   end
 
   def authenticate_user(conn, _opts) do
+    info("Authenticating user #{inspect conn}")
     # Todo: think of a smarter way... maybe check for the key or something
     case conn.assigns.current_user do
       nil -> conn
@@ -87,14 +76,13 @@ defmodule Callforpapers.Auth do
   end
 
   def presenter_only(conn, _opts) do
-    conn =
-      if User.is_organizer?(conn.assigns.current_user) do
-        conn
-        |> Phoenix.Controller.put_flash(:error, "Only for presenters")
-        |> redirect(to: Helpers.page_path(conn, :index))
-        |> halt()
-      else
-        conn
-      end
+    if User.is_organizer?(conn.assigns.current_user) do
+      conn
+      |> Phoenix.Controller.put_flash(:error, "Only for presenters")
+      |> redirect(to: Helpers.page_path(conn, :index))
+      |> halt()
+    else
+      conn
+    end
   end
 end
