@@ -80,6 +80,12 @@ defmodule Callforpapers.SubmissionTest do
     %{submission: submission, talk: talk} = prepare_submission
 
     assert Submission.title(submission) == talk.title
+  end
 
+  test "a talk cannot be submitted twice to the same call for papers" do
+    %{cfp: cfp, talk: talk} = prepare_submission
+
+    error = catch_error %Submission{submission_id: talk.id, cfp_id: cfp.id} |> Repo.insert!
+    assert %Ecto.ConstraintError{constraint: "filings_submission_id_cfp_id_index"} = error
   end
 end
