@@ -15,3 +15,7 @@ div.menu-container {
   padding: 5px;
   justify-content: center;
 }
+
+span.error-block {
+/* todo style errors */
+}
