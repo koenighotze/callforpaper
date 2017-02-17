@@ -38,9 +38,6 @@ defmodule Callforpapers.Submission do
     |> changeset(%{status: "accepted"})
   end
 
-  # %{id: filing.id, presenter: filing.submission.user.name, submission_id: filing.submission.id, title: filing.submission.title, status: filing.status}
-  #
-  #
   def presenter(filing) do
     filing.submission.user.name
   end
@@ -59,5 +56,6 @@ defmodule Callforpapers.Submission do
     |> Validators.validate_enum(:status, valid_states)
     |> assoc_constraint(:submission)
     |> assoc_constraint(:cfp)
+    |> unique_constraint(:cfp_id, name: :filings_submission_id_cfp_id_index, message: "A talk cannot be submitted twice to the same conference")
   end
 end

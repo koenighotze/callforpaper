@@ -51,7 +51,6 @@ defmodule Callforpapers.Auth do
   end
 
   def authenticate_user(conn, _opts) do
-    info("Authenticating user #{inspect conn}")
     # Todo: think of a smarter way... maybe check for the key or something
     case conn.assigns.current_user do
       nil -> conn
