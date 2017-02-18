@@ -23,10 +23,19 @@ defmodule Callforpapers.ConferenceTest do
     refute conf.valid?
   end
 
-    test "the start day must not be after the end day" do
+  test "the start day must not be after the end day" do
     conf =
       %Conference{}
       |> Conference.changeset(%{start: ~D{2000-10-11}, end: ~D{2000-10-10}, title: "opadsadsasdadsadsasdasden"})
     refute conf.valid?
+  end
+
+  test "the conference title must be unique" do
+    orga = insert_organizer
+    orga |> insert_conference
+
+    %Ecto.InvalidChangesetError{changeset: %{errors: [title: _]}} =
+      catch_error orga
+      |> insert_conference
   end
 end

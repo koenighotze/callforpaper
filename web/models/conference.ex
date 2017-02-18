@@ -28,6 +28,7 @@ defmodule Callforpapers.Conference do
     |> cast(params, [:title, :start, :end])
     |> validate_required([:title, :start, :end])
     |> validate_length(:title, min: 10, max: 50)
+    |> unique_constraint(:title, name: :conferences_title_index)
     |> assoc_constraint(:user)
     |> Validators.validate_before(:start, :end)
   end
