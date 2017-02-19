@@ -37,7 +37,7 @@
         <%= link fw_icon("eye"), title: "Show", to: callforpapers_path(@conn, :show, callforpapers) %>
         <%= if Callforpapers.User.is_organizer?(@current_user) do %>
           <%= link fw_icon("pencil"), title: "Edit", to: callforpapers_path(@conn, :edit, callforpapers) %>
-          <%= link fw_icon("trash"), title: "Delete", to: callforpapers_path(@conn, :delete, callforpapers), method: :delete, data: [confirm: "Are you sure?"] %>
+          <%= link fw_icon("trash"), title: "Delete", to: callforpapers_path(@conn, :delete, callforpapers), method: :delete, data: [confirm: "Are you sure? All submissions to this cfp will be delted, too."] %>
         <% else %>
           <%= link fw_icon("send"), title: "Submit talk", to: submission_path(@conn, :new) %>
         <% end %>
