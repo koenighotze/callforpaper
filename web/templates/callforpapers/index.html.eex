@@ -26,12 +26,20 @@
       <td><%= callforpapers.conference.title %></td>
 
       <td class="text-right">
-        <%= link fa_icon("eye"), title: "Show", to: callforpapers_path(@conn, :show, callforpapers) %>
         <%= if Callforpapers.User.is_organizer?(@current_user) do %>
-          <%= link fa_icon("pencil"), title: "Edit", to: callforpapers_path(@conn, :edit, callforpapers) %>
-          <%= link fa_icon("trash"), title: "Delete", to: callforpapers_path(@conn, :delete, callforpapers), method: :delete, data: [confirm: "Are you sure?"] %>
+          <%= if callforpapers.status == "open" do %>
+            <%= link fw_icon("lock"), title: "Close", to: callforpapers_path(@conn, :edit, callforpapers) %>
+          <% else %>
+            <%= link fw_icon("unlock"), title: "Open", to: callforpapers_path(@conn, :edit, callforpapers) %>
+          <% end %>
+        <% end %>
+
+        <%= link fw_icon("eye"), title: "Show", to: callforpapers_path(@conn, :show, callforpapers) %>
+        <%= if Callforpapers.User.is_organizer?(@current_user) do %>
+          <%= link fw_icon("pencil"), title: "Edit", to: callforpapers_path(@conn, :edit, callforpapers) %>
+          <%= link fw_icon("trash"), title: "Delete", to: callforpapers_path(@conn, :delete, callforpapers), method: :delete, data: [confirm: "Are you sure?"] %>
         <% else %>
-          <%= link fa_icon("send"), title: "Submit talk", to: submission_path(@conn, :new) %>
+          <%= link fw_icon("send"), title: "Submit talk", to: submission_path(@conn, :new) %>
         <% end %>
       </td>
     </tr>

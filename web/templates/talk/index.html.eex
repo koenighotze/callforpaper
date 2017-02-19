@@ -19,9 +19,9 @@
       <td><%= talk.externallink %></td>
 
       <td class="text-right">
-        <%= link fa_icon("eye"), title: "Show", to: talk_path(@conn, :show, talk) %>
-        <%= link fa_icon("pencil"), title: "Edit", to: talk_path(@conn, :edit, talk) %>
-        <%= link fa_icon("trash"), title: "Delete", to: talk_path(@conn, :delete, talk), method: :delete, data: [confirm: "Are you sure?"] %>
+        <%= link fw_icon("eye"), title: "Show", to: talk_path(@conn, :show, talk) %>
+        <%= link fw_icon("pencil"), title: "Edit", to: talk_path(@conn, :edit, talk) %>
+        <%= link fw_icon("trash"), title: "Delete", to: talk_path(@conn, :delete, talk), method: :delete, data: [confirm: "Are you sure?"] %>
       </td>
     </tr>
 <% end %>

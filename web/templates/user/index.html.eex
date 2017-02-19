@@ -16,9 +16,9 @@
       <td><%= user.email %></td>
 
       <td class="text-right">
-        <%= link fa_icon("eye"), title: "Show", to: user_path(@conn, :show, user) %>
-        <%= link fa_icon("pencil"), title: "Edit", to: user_path(@conn, :edit, user) %>
-        <%= link fa_icon("trash"), title: "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"] %>
+        <%= link fw_icon("eye"), title: "Show", to: user_path(@conn, :show, user) %>
+        <%= link fw_icon("pencil"), title: "Edit", to: user_path(@conn, :edit, user) %>
+        <%= link fw_icon("trash"), title: "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"] %>
       </td>
     </tr>
 <% end %>

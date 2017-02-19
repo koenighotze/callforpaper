@@ -4,5 +4,6 @@
                         conn: @conn,
                         cfp_stati: @cfp_stati,
                         conferences: @conferences,
+                        mode: :edit,
                         action: callforpapers_path(@conn, :update, @cfp) %>
 

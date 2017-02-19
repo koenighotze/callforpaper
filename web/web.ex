@@ -55,6 +55,7 @@ defmodule Callforpapers.Web do
 
       import Callforpapers.Router.Helpers
       import Callforpapers.ErrorHelpers
+      import Callforpapers.FontAwesome
       import Callforpapers.Gettext
       import FontAwesomePhoenix.HTML
     end

@@ -17,19 +17,14 @@
     <%= error_tag f, :end %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :status, class: "control-label" %>
-    <%= select f, :status, @cfp_stati, class: "form-control" %>
+  <%= if @mode == :new do %>
+    <div class="form-group">
+      <%= label f, :conference_id, class: "control-label" %>
+      <%= select f, :conference_id, @conferences, class: "form-control", prompt: "--- Please select ---" %>
 
-    <%= error_tag f, :status %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :conference_id, class: "control-label" %>
-    <%= select f, :conference_id, @conferences, class: "form-control", prompt: "--- Please select ---" %>
-
-    <%= error_tag f, :conference_id %>
-  </div>
+      <%= error_tag f, :conference_id %>
+    </div>
+  <% end %>
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>

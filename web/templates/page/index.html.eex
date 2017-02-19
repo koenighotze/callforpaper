@@ -10,34 +10,34 @@
 
       <%= if Callforpapers.User.is_organizer?(@current_user) do %>
         <div class="menu-item">
-          <%= link fa_icon("users", class: "fa-fw"), to: user_path(@conn, :index), title: "Presenters" %>
+          <%= link fw_icon("users"), to: user_path(@conn, :index), title: "Presenters" %>
           allows managment of all registered users.
         </div>
 
         <div class="menu-item">
-          <%= link fa_icon("graduation-cap", class: "fa-fw"), to: conference_path(@conn, :index), title: "Conferences" %> takes you to the conference administration.
+          <%= link fw_icon("graduation-cap"), to: conference_path(@conn, :index), title: "Conferences" %> takes you to the conference administration.
         </div>
       <% end %>
 
       <div class="menu-item">
-        <%= link fa_icon("volume-up", class: "fa-fw"), to: callforpapers_path(@conn, :index), title: "Call-for-Papers" %> takes you to the call-for-papers section.
+        <%= link fw_icon("volume-up"), to: callforpapers_path(@conn, :index), title: "Call-for-Papers" %> takes you to the call-for-papers section.
       </div>
 
       <%= if Callforpapers.User.is_presenter?(@current_user) do %>
         <div class="menu-item">
-          <%= link fa_icon("book", class: "fa-fw"), to: talk_path(@conn, :index), title: "My talks" %> shows you your current presentations.
+          <%= link fw_icon("book"), to: talk_path(@conn, :index), title: "My talks" %> shows you your current presentations.
         </div>
 
         <div class="menu-item">
-          <%= link fa_icon("send", class: "fa-fw"), to: submission_path(@conn, :index), title: "My Submissions" %> takes you to your submissions.
+          <%= link fw_icon("send"), to: submission_path(@conn, :index), title: "My Submissions" %> takes you to your submissions.
         </div>
       <% end %>
 
       <div class="menu-item">
-        <%= link  fa_icon("power-off", class: "fa-fw"), to: session_path(@conn, :delete, @current_user), method: "delete", title: "Logout" %> logs you off.
+        <%= link  fw_icon("power-off"), to: session_path(@conn, :delete, @current_user), method: "delete", title: "Logout" %> logs you off.
       </div>
       <div class="menu-item">
-        <%= link fa_icon("home", class: "fa-fw"), to: page_path(@conn, :index), title: "Home" %> takes you to this page.
+        <%= link fw_icon("home"), to: page_path(@conn, :index), title: "Home" %> takes you to this page.
       </div>
     </div>
     </div>

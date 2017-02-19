@@ -26,8 +26,8 @@
 
       <td class="text-right">
         <%= if submission.status == "open" do %>
-          <%= link fa_icon("pencil"), title: "Edit", to: submission_path(@conn, :edit, submission) %>
-          <%= link fa_icon("trash"), title: "Delete", to: submission_path(@conn, :delete, submission), method: :delete, data: [confirm: "Are you sure?"] %>
+          <%= link fw_icon("pencil"), title: "Edit", to: submission_path(@conn, :edit, submission) %>
+          <%= link fw_icon("trash"), title: "Delete", to: submission_path(@conn, :delete, submission), method: :delete, data: [confirm: "Are you sure?"] %>
         <% end %>
       </td>
     </tr>

@@ -4,5 +4,6 @@
                         conn: @conn,
                         cfp_stati: @cfp_stati,
                         conferences: @conferences,
+                        mode: :new,
                         action: callforpapers_path(@conn, :create) %>
 
