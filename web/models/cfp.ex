@@ -9,6 +9,8 @@ defmodule Callforpapers.Cfp do
     field :status, :string
 
     belongs_to :conference, Callforpapers.Conference
+# TODO:        has_many :submissions, Callforpapers.Submission
+
 
     timestamps()
   end
