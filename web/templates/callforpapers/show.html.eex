@@ -55,8 +55,8 @@
       <tr>
         <td><%= Submission.title(submission) %></td>
         <td><%= Submission.presenter(submission) %></td>
-        <td><%= submission.submission.duration %></td>
-        <td><%= submission.submission.shortsummary %></td>
+        <td><%= submission.talk.duration %></td>
+        <td><%= submission.talk.shortsummary %></td>
         <td>
           <%= if submission.status == "accepted" do %>
             <%= fa_icon("check") %>

@@ -158,7 +158,7 @@ defmodule Callforpapers.TalkControllerTest do
   defp insert_valid_talk(user) do
     changeset =
       user
-      |> build_assoc(:submissions)
+      |> build_assoc(:talks)
       |> Talk.changeset(@valid_attrs)
     Repo.insert! changeset
   end

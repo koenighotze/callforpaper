@@ -9,7 +9,7 @@
 
   <li>
     <strong>Talk:</strong>
-    <%= @submission.submission_id %>
+    <%= @submission.talk_id %>
   </li>
 
   <li>

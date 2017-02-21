@@ -139,6 +139,6 @@ defmodule Callforpapers.ConferenceControllerTest do
 
   def insert_submission_for_cfp(presenter, cfp) do
     talk = presenter |> insert_talk
-    Repo.insert! %Submission{submission_id: talk.id, cfp_id: cfp.id}
+    Repo.insert! %Submission{talk_id: talk.id, cfp_id: cfp.id}
   end
 end

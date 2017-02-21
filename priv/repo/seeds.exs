@@ -50,10 +50,10 @@ cfp =
 |> Enum.each(fn title ->
     talk =
       presenter
-        |> build_assoc(:submissions)
+        |> build_assoc(:talks)
         |> Talk.changeset(%{title: title, shortsummary: lorem, duration: 60})
         |> Repo.insert!()
-    Repo.insert! %Submission{submission_id: talk.id, cfp_id: cfp.id}
+    Repo.insert! %Submission{talk_id: talk.id, cfp_id: cfp.id}
 end)
 
 

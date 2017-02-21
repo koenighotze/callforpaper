@@ -13,7 +13,7 @@ defmodule Callforpapers.User do
 
     field :role, :string, default: "presenter"
 
-    has_many :submissions, Callforpapers.Talk
+    has_many :talks, Callforpapers.Talk
     has_many :conferences, Callforpapers.Conference
 
     timestamps()
@@ -32,7 +32,7 @@ defmodule Callforpapers.User do
   end
 
   def talks_by_presenter(user) do
-    assoc(user, :submissions)
+    assoc(user, :talks)
   end
 
   def alphabetical(query) do
@@ -68,7 +68,7 @@ defmodule Callforpapers.User do
 
   def add_talk(user, talk_params) do
     user
-      |> build_assoc(:submissions)
+      |> build_assoc(:talks)
       |> Talk.changeset(talk_params)
       |> validate_unique_title(user)
   end

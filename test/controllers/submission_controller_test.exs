@@ -23,7 +23,7 @@ defmodule Callforpapers.SubmissionControllerTest do
     cfp = insert_organizer |> insert_conference |> insert_cfp
     talk = insert_presenter |> insert_talk
 
-    conn = post conn, submission_path(conn, :create), submission: Dict.merge(@valid_attrs, cfp_id: cfp.id, submission_id: talk.id)
+    conn = post conn, submission_path(conn, :create), submission: Dict.merge(@valid_attrs, cfp_id: cfp.id, talk_id: talk.id)
     assert redirected_to(conn) == submission_path(conn, :index)
     assert Repo.get_by(Submission, @valid_attrs)
   end
@@ -60,7 +60,7 @@ defmodule Callforpapers.SubmissionControllerTest do
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
     cfp = insert_organizer |> insert_conference |> insert_cfp
     talk = insert_presenter |> insert_talk
-    filing = Repo.insert! %Submission{cfp_id: cfp.id, submission_id: talk.id}
+    filing = Repo.insert! %Submission{cfp_id: cfp.id, talk_id: talk.id}
 
     conn = put conn, submission_path(conn, :update, filing), submission: @valid_attrs
 
@@ -124,7 +124,7 @@ defmodule Callforpapers.SubmissionControllerTest do
   test "organizers cannot submit talks", %{conn: conn, user: organizer} do
     cfp = organizer |> insert_conference |> insert_cfp
     talk = insert_presenter |> insert_talk
-    conn = post conn, submission_path(conn, :create), submission: Dict.merge(@valid_attrs, cfp_id: cfp.id, submission_id: talk.id)
+    conn = post conn, submission_path(conn, :create), submission: Dict.merge(@valid_attrs, cfp_id: cfp.id, talk_id: talk.id)
     refute Repo.get_by(Submission, @valid_attrs)
 
     assert redirected_to(conn) == page_path(conn, :index)
@@ -140,9 +140,9 @@ defmodule Callforpapers.SubmissionControllerTest do
       |> Cfp.changeset(%{status: "closed"})
       |> Repo.update!
 
-    conn = post conn, submission_path(conn, :create), submission: Dict.merge(@valid_attrs, cfp_id: cfp.id, submission_id: talk.id)
+    conn = post conn, submission_path(conn, :create), submission: Dict.merge(@valid_attrs, cfp_id: cfp.id, talk_id: talk.id)
 
     assert redirected_to(conn) == submission_path(conn, :index)
-    refute Repo.get_by(Submission, %{cfp_id: cfp.id, submission_id: talk.id})
+    refute Repo.get_by(Submission, %{cfp_id: cfp.id, talk_id: talk.id})
   end
 end

@@ -4,7 +4,7 @@ defmodule Callforpapers.Talk do
   @required [:title, :shortsummary, :duration]
   @optional [:externallink]
 
-  schema "submissions" do
+  schema "talks" do
     field :title, :string
     field :shortsummary, :string
     field :duration, :integer

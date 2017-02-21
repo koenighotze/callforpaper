@@ -52,7 +52,7 @@ defmodule Callforpapers.CallforpapersController do
     callforpapers = Repo.get!(Cfp |> Cfp.with_conference, id)
 
     submissions =
-      (from f in Submission, where: f.cfp_id == ^id, preload: [{:submission, :user}])
+      (from f in Submission, where: f.cfp_id == ^id, preload: [{:talk, :user}])
       |> Repo.all
       |> Enum.sort(fn a, b -> Submission.title(a) < Submission.title(b) end)
 

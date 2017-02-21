@@ -21,7 +21,7 @@
             <%= fa_icon("remove") %>
           <% end %>
       </td>
-      <td><%= submission.submission.title %></td>
+      <td><%= submission.talk.title %></td>
       <td><%= submission.cfp.conference.title %></td>
 
       <td class="text-right">

@@ -3,7 +3,7 @@ defmodule Callforpapers.Submission do
 
   schema "filings" do
     field :status, :string, default: "open"
-    belongs_to :submission, Callforpapers.Talk
+    belongs_to :talk, Callforpapers.Talk
     belongs_to :cfp, Callforpapers.Cfp
 
     timestamps()
@@ -16,7 +16,7 @@ defmodule Callforpapers.Submission do
   end
 
   def with_talk(query) do
-    from q in query, preload: [{:submission, :user}]
+    from q in query, preload: [{:talk, :user}]
   end
 
   def open?(%{status: "open"}), do: true
@@ -39,11 +39,11 @@ defmodule Callforpapers.Submission do
   end
 
   def presenter(filing) do
-    filing.submission.user.name
+    filing.talk.user.name
   end
 
   def title(filing) do
-    filing.submission.title
+    filing.talk.title
   end
 
   @doc """
@@ -51,10 +51,10 @@ defmodule Callforpapers.Submission do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:status, :submission_id, :cfp_id])
-    |> validate_required([:status, :submission_id, :cfp_id])
+    |> cast(params, [:status, :talk_id, :cfp_id])
+    |> validate_required([:status, :talk_id, :cfp_id])
     |> Validators.validate_enum(:status, valid_states)
-    |> assoc_constraint(:submission)
+    |> assoc_constraint(:talk)
     |> assoc_constraint(:cfp)
     |> unique_constraint(:cfp_id, name: :filings_submission_id_cfp_id_index, message: "A talk cannot be submitted twice to the same conference")
   end

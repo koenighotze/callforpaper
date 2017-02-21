@@ -59,8 +59,8 @@ defmodule Callforpapers.CallforpapersViewTest do
     content = render_to_string(Callforpapers.CallforpapersView, "show.html", conn: conn, current_user: organizer, cfp: cfp, submissions: [ submission ])
 
     assert String.contains?(content, presenter.name)
-    assert String.contains?(content, submission.submission.title)
-    assert String.contains?(content, submission.submission.shortsummary)
-    assert String.contains?(content, submission.submission.duration |> to_string)
+    assert String.contains?(content, submission.talk.title)
+    assert String.contains?(content, submission.talk.shortsummary)
+    assert String.contains?(content, submission.talk.duration |> to_string)
   end
 end

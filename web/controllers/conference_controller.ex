@@ -13,15 +13,15 @@ defmodule Callforpapers.ConferenceController do
     all_cfp_ids = Repo.all(from c in Cfp, where: c.conference_id == ^conference_id, select: c.id)
 
     talks = Repo.all(from s in Submission,
-                           preload: [{:submission, :user}],
+                           preload: [{:talk, :user}],
                            where: s.status == "accepted" and s.cfp_id in ^all_cfp_ids)
             |> Enum.map(fn s ->
               %{
-                title: s.submission.title,
-                presenter: s.submission.user.name,
-                shortsummary: s.submission.shortsummary,
-                duration: s.submission.duration,
-                externallink: s.submission.externallink,
+                title: s.talk.title,
+                presenter: s.talk.user.name,
+                shortsummary: s.talk.shortsummary,
+                duration: s.talk.duration,
+                externallink: s.talk.externallink,
               }
             end)
 

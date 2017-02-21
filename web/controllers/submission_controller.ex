@@ -66,7 +66,7 @@ defmodule Callforpapers.SubmissionController do
       |> Submission.with_cfp
       |> Submission.with_talk
       |> Repo.all
-      |> Enum.filter(fn f -> f.submission.user.id == current_user.id end)
+      |> Enum.filter(fn f -> f.talk.user.id == current_user.id end)
     render(conn, "index.html", submissions: submissions)
   end
 

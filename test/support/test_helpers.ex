@@ -29,7 +29,7 @@ defmodule Callforpapers.TestHelpers do
   def insert_talk(presenter, attrs \\ %{}) do
     changes = Dict.merge(@default_submission, attrs)
     presenter
-    |> build_assoc(:submissions)
+    |> build_assoc(:talks)
     |> Talk.changeset(changes)
     |> Repo.insert!()
   end
@@ -53,13 +53,13 @@ defmodule Callforpapers.TestHelpers do
   end
 
   def submit_talk(talk, cfp) do
-    Repo.insert! %Submission{submission_id: talk.id, cfp_id: cfp.id}
+    Repo.insert! %Submission{talk_id: talk.id, cfp_id: cfp.id}
   end
 
   def insert_filing(organizer, presenter \\ nil) do
     presenter = presenter || insert_presenter
     submission = insert_submission(presenter)
     callforpapers = organizer |> insert_conference |> insert_cfp
-    Repo.insert! %Submission{submission_id: submission.id, cfp_id: callforpapers.id}
+    Repo.insert! %Submission{talk_id: submission.id, cfp_id: callforpapers.id}
   end
 end

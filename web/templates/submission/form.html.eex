@@ -14,11 +14,11 @@
   </div>
 
     <div class="form-group">
-    <%= label f, :submission_id, class: "control-label" %>
+    <%= label f, :talk_id, class: "control-label" %>
 
-    <%= select f, :submission_id, @talks, class: "form-control", prompt: "--- Please select ---" %>
+    <%= select f, :talk_id, @talks, class: "form-control", prompt: "--- Please select ---" %>
 
-    <%= error_tag f, :submission_id %>
+    <%= error_tag f, :talk_id %>
   </div>
 
   <div class="form-group">

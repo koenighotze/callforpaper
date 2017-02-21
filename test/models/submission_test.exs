@@ -5,7 +5,7 @@ defmodule Callforpapers.SubmissionTest do
 
   alias Callforpapers.Repo
 
-  @valid_attrs %{status: "open", cfp_id: 1, submission_id: 3}
+  @valid_attrs %{status: "open", cfp_id: 1, talk_id: 3}
   @invalid_attrs %{status: "ads"}
 
   test "changeset with valid attributes" do
@@ -24,7 +24,7 @@ defmodule Callforpapers.SubmissionTest do
   end
 
   test "submission_id is mandatory" do
-    changeset = Submission.changeset(%Submission{}, Dict.delete(@valid_attrs, :submission_id))
+    changeset = Submission.changeset(%Submission{}, Dict.delete(@valid_attrs, :talk_id))
     refute changeset.valid?
   end
 
@@ -42,11 +42,11 @@ defmodule Callforpapers.SubmissionTest do
     insert_organizer |> insert_conference
     submission = insert_presenter |> insert_talk
 
-    r = %Submission{submission_id: submission.id} |> Repo.insert!
+    r = %Submission{talk_id: submission.id} |> Repo.insert!
 
     found = Submission |> Submission.with_talk |> Repo.get(r.id)
 
-    assert found.submission.title == submission.title
+    assert found.talk.title == submission.title
   end
 
   test "with_cfp preloads the cfp and conference" do
@@ -64,7 +64,7 @@ defmodule Callforpapers.SubmissionTest do
     cfp = insert_organizer |> insert_conference |> insert_cfp
     presenter = insert_presenter
     talk = presenter |> insert_talk
-    submission = %Submission{submission_id: talk.id, cfp_id: cfp.id} |> Repo.insert!
+    submission = %Submission{talk_id: talk.id, cfp_id: cfp.id} |> Repo.insert!
     submission = Submission.with_talk(Submission) |> Repo.get(submission.id)
 
     %{cfp: cfp, presenter: presenter, talk: talk, submission: submission}
@@ -85,7 +85,7 @@ defmodule Callforpapers.SubmissionTest do
   test "a talk cannot be submitted twice to the same call for papers" do
     %{cfp: cfp, talk: talk} = prepare_submission
 
-    error = catch_error %Submission{submission_id: talk.id, cfp_id: cfp.id} |> Repo.insert!
-    assert %Ecto.ConstraintError{constraint: "filings_submission_id_cfp_id_index"} = error
+    error = catch_error %Submission{talk_id: talk.id, cfp_id: cfp.id} |> Repo.insert!
+    assert %Ecto.ConstraintError{constraint: "filings_talk_id_index"} = error
   end
 end
