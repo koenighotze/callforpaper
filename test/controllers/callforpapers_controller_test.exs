@@ -137,4 +137,30 @@ defmodule Callforpapers.CallforpapersControllerTest do
     conn = delete conn, callforpapers_path(conn, :delete, callforpapers)
     assert html_response(conn, 404)
   end
+
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "open opens a cfp", %{conn: conn, user: organizer} do
+    callforpapers = organizer |> insert_conference |> insert_cfp(%{status: "closed"})
+
+    conn = put conn, callforpapers_open_path(conn, :open, callforpapers)
+
+    assert redirected_to(conn) == callforpapers_path(conn, :index)
+    opened_cfp = Repo.get(Cfp, callforpapers.id)
+    assert get_flash(conn, :info) =~ "Callforpapers opened successfully."
+    assert opened_cfp.status == "open"
+  end
+
+  @tag login_as: "max"
+  @tag :as_organizer
+  test "close closes a cfp", %{conn: conn, user: organizer} do
+    callforpapers = organizer |> insert_conference |> insert_cfp(%{status: "open"})
+
+    conn = put conn, callforpapers_close_path(conn, :close, callforpapers)
+
+    assert redirected_to(conn) == callforpapers_path(conn, :index)
+    opened_cfp = Repo.get(Cfp, callforpapers.id)
+    assert get_flash(conn, :info) =~ "Callforpapers closed successfully."
+    assert opened_cfp.status == "closed"
+  end
 end

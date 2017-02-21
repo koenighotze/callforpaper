@@ -61,7 +61,6 @@ defmodule Callforpapers.CallforpapersViewTest do
     assert String.contains?(content, presenter.name)
     assert String.contains?(content, submission.submission.title)
     assert String.contains?(content, submission.submission.shortsummary)
+    assert String.contains?(content, submission.submission.duration |> to_string)
   end
-
-
 end

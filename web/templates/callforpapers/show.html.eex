@@ -45,6 +45,7 @@
         <th>Submission</th>
         <th>Presenter</th>
         <th>Short summary</th>
+        <th>Duration</th>
         <th>Status</th>
         <th></th>
       </tr>
@@ -54,6 +55,7 @@
       <tr>
         <td><%= Submission.title(submission) %></td>
         <td><%= Submission.presenter(submission) %></td>
+        <td><%= submission.submission.duration %></td>
         <td><%= submission.submission.shortsummary %></td>
         <td>
           <%= if submission.status == "accepted" do %>

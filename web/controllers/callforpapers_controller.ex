@@ -59,6 +59,34 @@ defmodule Callforpapers.CallforpapersController do
     render(conn, "show.html", cfp: callforpapers, submissions: submissions)
   end
 
+  defp set_cfp_stat(conn, id, state, info, warn) do
+    changeset =
+      Cfp
+      |> Repo.get!(id)
+      |> Cfp.changeset(%{status: state})
+
+    conn =
+      case Repo.update(changeset) do
+        {:ok, _} ->
+          conn
+          |> put_flash(:info, info)
+        {:error, _} ->
+          conn
+          |> put_flash(:warn, warn)
+      end
+
+    conn
+    |> redirect(to: callforpapers_path(conn, :index))
+  end
+
+  def open(conn, %{"callforpapers_id" => id}) do
+    set_cfp_stat(conn, id, "open", "Callforpapers opened successfully.", "Callforpapers could not be opened.")
+  end
+
+  def close(conn, %{"callforpapers_id" => id}) do
+    set_cfp_stat(conn, id, "closed", "Callforpapers closed successfully.", "Callforpapers could not be closed.")
+  end
+
   def edit(conn, %{"id" => id}) do
     callforpapers = Repo.get!(Cfp, id)
     changeset = Cfp.changeset(callforpapers)

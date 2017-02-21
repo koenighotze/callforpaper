@@ -8,7 +8,8 @@
   "dependencies": {
     "bower": "^1.8.0",
     "phoenix": "file:deps/phoenix",
-    "phoenix_html": "file:deps/phoenix_html"
+    "phoenix_html": "file:deps/phoenix_html",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "babel-brunch": "~6.0.0",

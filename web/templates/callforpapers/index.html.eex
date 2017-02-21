@@ -28,9 +28,9 @@
       <td class="text-right">
         <%= if Callforpapers.User.is_organizer?(@current_user) do %>
           <%= if callforpapers.status == "open" do %>
-            <%= link fw_icon("lock"), title: "Close", to: callforpapers_path(@conn, :edit, callforpapers) %>
+            <%= link fw_icon("lock"), title: "Close", method: :put, to: callforpapers_close_path(@conn, :close, callforpapers) %>
           <% else %>
-            <%= link fw_icon("unlock"), title: "Open", to: callforpapers_path(@conn, :edit, callforpapers) %>
+            <%= link fw_icon("unlock"), method: :put, title: "Open", to: callforpapers_open_path(@conn, :open, callforpapers) %>
           <% end %>
         <% end %>
 

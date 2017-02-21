@@ -21,7 +21,7 @@ defmodule Callforpapers.UserControllerTest do
     conn = post conn, user_path(conn, :create), user: @valid_attrs
     assert redirected_to(conn) == page_path(conn, :index)
 
-    get_flash(conn, :info) =~ "User created successfully. Please log is using your credentials"
+    assert get_flash(conn, :info) =~ "User created successfully. Please log is using your credentials"
 
     assert Repo.get_by(User, @valid_attrs)
   end
