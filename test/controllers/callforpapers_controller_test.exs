@@ -2,7 +2,6 @@ defmodule Callforpapers.CallforpapersControllerTest do
   use Callforpapers.ConnCase
 
   alias Callforpapers.CallforpapersController
-  alias Callforpapers.Conference
   alias Callforpapers.Cfp
 
   @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, start: %{day: 17, month: 3, year: 2010}, status: "open"}
@@ -98,23 +97,20 @@ defmodule Callforpapers.CallforpapersControllerTest do
 
   @tag login_as: "max"
   @tag :as_organizer
-  @tag :skip # check how to test assign
   test "load_conferences loads the conferences for the current user", %{conn: conn, user: user} do
-    insert_conference(user)
+    conf = insert_conference(user)
 
-    CallforpapersController.load_conferences(conn, [])
+    conn = CallforpapersController.load_conferences(conn, [])
 
-    conferences = Repo.get_by(Conference, %{user_id: user.id})
-
-    assert conn.assigns[:conferences] == conferences
+    assert conn.assigns[:conferences] == [{conf.title, conf.id}]
   end
 
   @tag login_as: "max"
   @tag :as_organizer
-  test "load_conferences returns nil if no conferences are found", %{conn: conn} do
-    CallforpapersController.load_conferences(conn, [])
+  test "load_conferences returns empty list if no conferences are found", %{conn: conn} do
+    conn = CallforpapersController.load_conferences(conn, [])
 
-    assert conn.assigns[:conferences] == nil
+    assert conn.assigns[:conferences] == []
   end
 
   @tag login_as: "max"
