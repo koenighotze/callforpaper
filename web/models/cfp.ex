@@ -11,7 +11,6 @@ defmodule Callforpapers.Cfp do
     belongs_to :conference, Callforpapers.Conference
 # TODO:        has_many :submissions, Callforpapers.Submission
 
-
     timestamps()
   end
 
@@ -40,6 +39,7 @@ defmodule Callforpapers.Cfp do
     |> assoc_constraint(:conference)
     |> cast_assoc(:conference)
     |> Validators.validate_before(:start, :end)
+    |> unique_constraint(:conference_id, name: :callforpapers_conference_id_index, message: "A conference may only have a single CfP.")
   end
 
   defimpl String.Chars, for: Callforpapers.Cfp do

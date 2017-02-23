@@ -7,7 +7,7 @@ defmodule Callforpapers.Conference do
     field :end, Ecto.Date
 
     belongs_to :user, Callforpapers.User
-    has_many :callforpapers, Callforpapers.Cfp
+    has_one :callforpapers, Callforpapers.Cfp
 
     timestamps()
   end

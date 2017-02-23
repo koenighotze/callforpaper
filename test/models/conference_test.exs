@@ -38,4 +38,6 @@ defmodule Callforpapers.ConferenceTest do
       catch_error orga
       |> insert_conference
   end
+
+
 end

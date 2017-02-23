@@ -39,7 +39,6 @@ defmodule Callforpapers.UserController do
       {:ok, _user} ->
         conn
         |> put_flash(:info, "User created successfully. Please log is using your credentials")
-        # TODO hier muss der Login passieren
         |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)

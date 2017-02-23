@@ -101,4 +101,19 @@ defmodule Callforpapers.CallforpapersTest do
     Repo.delete!(cfp)
     refute Repo.get(Callforpapers.Submission, submission.id)
   end
+
+  test "a conference cannot have multiple cfps" do
+      conf =
+        insert_organizer
+        |> insert_conference
+
+      conf
+      |> insert_cfp
+
+      %Ecto.InvalidChangesetError{
+        changeset: %{
+            errors: [conference_id: _]
+        }
+      } = catch_error conf |> insert_cfp
+  end
 end
