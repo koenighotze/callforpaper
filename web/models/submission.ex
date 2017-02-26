@@ -1,7 +1,7 @@
 defmodule Callforpapers.Submission do
   use Callforpapers.Web, :model
 
-  schema "filings" do
+  schema "submissions" do
     field :status, :string, default: "open"
     belongs_to :talk, Callforpapers.Talk
     belongs_to :cfp, Callforpapers.Cfp
